@@ -201,6 +201,8 @@ function panopoly_widgets_field_formatter_view($entity_type, $entity, $field, $i
     '#formatter' => $formatter,
     '#duration' => $duration,
     '#pager_style' => $pager_style,
+    '#entity_type' => $entity_type,
+    '#entity' => $entity,
     'slides' => array(),
   );
 
@@ -210,7 +212,9 @@ function panopoly_widgets_field_formatter_view($entity_type, $entity, $field, $i
       '#theme' => 'panopoly_spotlight_view',
       '#items' => $item_data,
       '#delta' => $delta,
-      '#settings' => $settings
+      '#settings' => $settings,
+      '#entity_type' => $entity_type,
+      '#entity' => $entity,
     );
   }
 

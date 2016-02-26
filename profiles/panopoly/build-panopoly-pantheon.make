@@ -9,4 +9,4 @@ projects[drupal][download][branch] = master
 
 ; Panopoly
 projects[panopoly][type] = profile
-projects[panopoly][version] = 1.30
+projects[panopoly][version] = 1.31

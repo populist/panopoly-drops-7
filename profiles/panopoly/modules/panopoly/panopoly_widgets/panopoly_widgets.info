@@ -81,7 +81,6 @@ features[defaultconfig][] = user_default_permissions:edit own audio files
 features[defaultconfig][] = user_default_permissions:edit own document files
 features[defaultconfig][] = user_default_permissions:edit own image files
 features[defaultconfig][] = user_default_permissions:edit own video files
-features[defaultconfig][] = user_default_permissions:use media wysiwyg
 features[defaultconfig][] = user_default_permissions:view files
 features[defaultconfig][] = user_default_permissions:view own files
 features[features_api][] = api:2
@@ -120,9 +119,9 @@ features[file_display][] = video__teaser__media_youtube_image
 features[file_display][] = video__teaser__media_youtube_video
 features[views_view][] = panopoly_widgets_general_content
 
-; Information added by Drupal.org packaging script on 2016-01-07
-version = "7.x-1.30"
+; Information added by Drupal.org packaging script on 2016-02-26
+version = "7.x-1.31"
 core = "7.x"
 project = "panopoly_widgets"
-datestamp = "1452140721"
+datestamp = "1456459177"
 

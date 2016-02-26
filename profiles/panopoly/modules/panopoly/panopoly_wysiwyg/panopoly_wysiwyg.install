@@ -60,3 +60,19 @@ function panopoly_wysiwyg_update_7103() {
 
   filter_format_save($format);
 }
+
+/**
+ * Make sure that users can insert into the WYSIWYG.
+ */
+function panopoly_wysiwyg_update_7104() {
+  // This is duplicated from panopoly_widgets_update_7016() where this code
+  // was originally place erroneously. We decided not to remove it for
+  // consistency (so sites that upgraded later would have the same settings
+  // as those we graded earlier) which is why this exists in both places.
+
+  $roles = user_roles(TRUE, 'access media browser');
+  foreach ($roles as $rid => $role) {
+    user_role_grant_permissions($rid, array('use media wysiwyg'));
+  }
+}
+

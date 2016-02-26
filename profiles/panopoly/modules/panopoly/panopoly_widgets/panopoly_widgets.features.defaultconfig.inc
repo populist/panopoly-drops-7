@@ -547,16 +547,6 @@ function panopoly_widgets_defaultconfig_user_default_permissions() {
     'module' => 'file_entity',
   );
 
-  // Exported permission: 'use media wysiwyg'.
-  $permissions['use media wysiwyg'] = array(
-    'name' => 'use media wysiwyg',
-    'roles' => array(
-      'administrator' => 'administrator',
-      'authenticated user' => 'authenticated user',
-    ),
-    'module' => 'media_wysiwyg',
-  );
-
   // Exported permission: 'view files'.
   $permissions['view files'] = array(
     'name' => 'view files',

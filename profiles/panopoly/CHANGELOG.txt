@@ -1,3 +1,14 @@
+Panopoly 7.x-1.31, 2016-02-25
+----------------------
+- Update to Drupal 7.43 for SA-CORE-2016-001.
+- Update Panopoly Widgets and WYSIWYG for Issue #2646372 by dsnopek:
+  Panopoly_widgets Schema Update 7016 Integrity constraint violation.
+- Phing build exposes too much to the public.
+- Update Panopoly Widgets for Issue #2653834 by dsnopek: Pass entity to
+  'panopoly_spotlight_wrapper' and 'panopoly_spotlight_view' theme functions.
+- Start testing upgrades from the 1.30 release.
+- Restored drupal-org.make after the 1.30 release.
+
 Panopoly 7.x-1.30, 2016-01-06
 ----------------------
 - Update Panopoly Test for Issue #2645668: "Use an image from elsewhere on the
