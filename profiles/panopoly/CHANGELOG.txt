@@ -1,3 +1,10 @@
+Panopoly 7.x-1.32, 2016-03-03
+----------------------
+- Update Panopoly Core for Issue #2679947 by cboyden: Security update to
+  fieldable panels panes 1.8.
+- Start testing upgrades from the 1.31 release.
+- Restored drupal-org.make after the 1.31 release.
+
 Panopoly 7.x-1.31, 2016-02-25
 ----------------------
 - Update to Drupal 7.43 for SA-CORE-2016-001.
