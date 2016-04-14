@@ -126,7 +126,13 @@ function panopoly_search_modules_enabled($modules) {
 function panopoly_search_search_api_query_alter($query) {
   // Mimick the logging from Drupal core's search module so that the
   // 'Top search phrase' report will work.
+
   $keys = $query->getOriginalKeys();
+  if (empty($keys)) {
+    // Don't log if keywords are empty.
+    return;
+  }
+
   $type = $query->getIndex()->getEntityType();
 
   // Try to make the type names match if possible.

@@ -36,7 +36,7 @@ default:
         Bryant Flipped Sidebar: ".bryant-flipped .radix-layouts-sidebar"
         # For Panels / Panopoly specific regions.
         CTools modal: "#modalContent"
-        Live preview: "fieldset.panopoly-magic-preview"
+        Live preview: ".panopoly-magic-preview"
         Linkit modal: "#linkit-modal"
         # For the Media Browser
         Media web tab: '#media-tab-media_internet'

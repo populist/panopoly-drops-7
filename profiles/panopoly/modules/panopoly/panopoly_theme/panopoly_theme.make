@@ -12,10 +12,14 @@ projects[radix_layouts][subdir] = contrib
 projects[respondjs][version] = 1.5
 projects[respondjs][subdir] = contrib
 
-libraries[respondjs][download][type] = git
-libraries[respondjs][download][url] = https://github.com/scottjehl/Respond.git
-libraries[respondjs][download][revision] = 86dea4ab1e93a275e2044965ab7452c3c1e2c6da
-libraries[respondjs][download][branch] = master
+; The RespondJS library is licenesed under the MIT license, and can't be
+; packaged on Drupal.org. Copy and paste the below into your distributions
+; .make file if you still need it, or clone manually from Git.
+
+;libraries[respondjs][download][type] = git
+;libraries[respondjs][download][url] = https://github.com/scottjehl/Respond.git
+;libraries[respondjs][download][revision] = 86dea4ab1e93a275e2044965ab7452c3c1e2c6da
+;libraries[respondjs][download][branch] = master
 
 ; Bundle a Few Panopoly Approved Themes
 

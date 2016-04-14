@@ -52,3 +52,12 @@ function panopoly_magic_update_7103() {
     variable_set('panopoly_magic_pane_add_preview', PANOPOLY_ADD_PREVIEW_AUTOMATIC);
   }
 }
+
+/**
+ * Preserve the legacy fieldset preview markup.
+ */
+function panopoly_magic_update_7104() {
+  if (variable_get('panopoly_magic_preview_use_legacy_fieldset', 'not set') === 'not set') {
+    variable_set('panopoly_magic_preview_use_legacy_fieldset', TRUE);
+  }
+}

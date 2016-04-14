@@ -1,3 +1,8 @@
+Panopoly Core 7.x-1.33, 2016-04-14
+---------------------------
+- Update to Features 2.9 for SA-CONTRIB-2016-020.
+- Remove debug code from Panels IPE.
+
 Panopoly Core 7.x-1.32, 2016-03-03
 ---------------------------
 - Security update to fieldable panels panes 1.8.

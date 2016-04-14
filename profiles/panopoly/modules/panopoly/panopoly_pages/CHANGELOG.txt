@@ -1,3 +1,7 @@
+Panopoly Pages 7.x-1.33, 2016-04-14
+----------------------------
+- No changes since last release.
+
 Panopoly Pages 7.x-1.32, 2016-03-03
 ----------------------------
 - No changes since last release.

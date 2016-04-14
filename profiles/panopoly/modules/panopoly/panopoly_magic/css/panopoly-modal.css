@@ -191,7 +191,8 @@
  * IPE a more consistent look
  * @see https://drupal.org/node/1717644
  */
-#modal-content fieldset {
+#modal-content fieldset,
+#modal-content .panopoly-magic-preview-wrapper {
   clear: none;
   width: auto;
   position: relative;
@@ -206,7 +207,8 @@
   padding: 0 0 10px;
 }
 
-#modal-content fieldset.panopoly-magic-preview {
+#modal-content fieldset.panopoly-magic-preview,
+#modal-content .panopoly-magic-preview-wrapper.panopoly-magic-preview {
   margin-top: 2em;
   margin-bottom: 5em;
   -webkitborder-top-right-radius: 0;
@@ -214,12 +216,14 @@
   border-top-right-radius: 0;
 }
 
-#modal-content fieldset.panopoly-magic-preview-single {
+#modal-content fieldset.panopoly-magic-preview-single,
+#modal-content .panopoly-magic-preview-wrapper.panopoly-magic-preview-single {
   margin-top: 10px;
   margin-bottom: 1em;
 }
 
-#modal-content fieldset.panopoly-magic-preview-single .fieldset-wrapper {
+#modal-content fieldset.panopoly-magic-preview-single .fieldset-wrapper,
+#modal-content .panopoly-magic-preview-wrapper.panopoly-magic-preview-single .panopoly-magic-preview-inner {
   font-size: 100%;
   max-width: 100%;
   overflow-y: auto;
@@ -227,11 +231,13 @@
   max-height: 375px;
 }
 
-#modal-content fieldset.panopoly-magic-preview-single .fieldset-wrapper .panopoly-spotlight img {
+#modal-content fieldset.panopoly-magic-preview-single .fieldset-wrapper .panopoly-spotlight img,
+#modal-content .panopoly-magic-preview-wrapper.panopoly-magic-preview-single .panopoly-magic-preview-inner .panopoly-spotlight img {
   width: 100%;
 }
   
-#modal-content fieldset legend {
+#modal-content fieldset legend,
+#modal-content .panopoly-magic-preview-wrapper .panopoly-magic-preview-title-wrapper {
   background: #dbdbdb;
   border: 1px solid #ccc;
   border-bottom: none;
@@ -254,38 +260,47 @@
   border-top-right-radius: 4px;
 }
   
-#modal-content fieldset.panopoly-magic-preview legend {
+#modal-content fieldset.panopoly-magic-preview legend,
+#modal-content .panopoly-magic-preview-wrapper.panopoly-magic-preview .panopoly-magic-preview-title-wrapper {
   -moz-border-radius-topright: 0;
   -webkit-border-top-right-radius: 0;
   border-top-right-radius: 0;
 }
   
-#modal-content .fieldset-legend {
+#modal-content .fieldset-legend,
+#modal-content .panopoly-magic-preview-title-inner {
   font: bold 12px/1.5em 'Open Sans', 'Lucida Sans', 'Lucida Grande', Verdana, sans-serif;
 }
   
+/** No .panopoly-magic-preview-wrapper version because it can't be collapsed. */
 #modal-content fieldset.collapsed legend {
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
   border-radius: 4px;
 }
 
-#modal-content fieldset legend a {
+#modal-content fieldset legend a,
+#modal-content .panopoly-magic-preview-wrapper .panopoly-magic-preview-title-wrapper a {
   color: #3b3b3b;
 }
 
 #modal-content fieldset legend a:hover,
 #modal-content fieldset legend a:focus,
-#modal-content fieldset legend a:active {
+#modal-content fieldset legend a:active,
+#modal-content .panopoly-magic-preview-wrapper .panopoly-magic-preview-title-inner a:hover,
+#modal-content .panopoly-magic-preview-wrapper .panopoly-magic-preview-title-inner a:focus,
+#modal-content .panopoly-magic-preview-wrapper .panopoly-magic-preview-title-inner a:active {
   color: #000;
 }
   
-#modal-content .fieldset-wrapper {
+#modal-content .fieldset-wrapper,
+#modal-content .panopoly-magic-preview-inner {
   padding: 0 10px;
   margin-top: 2.25em;
 }
 
-#modal-content .panopoly-magic-preview .fieldset-wrapper {
+#modal-content .panopoly-magic-preview .fieldset-wrapper,
+#modal-content .panopoly-magic-preview .panopoly-magic-preview-inner {
   max-width: 100%;
   overflow-y: auto;
   font-size: 75%;
@@ -295,11 +310,13 @@
 }
 
 #modal-content .panopoly-magic-preview .fieldset-wrapper table tr.even td, 
-#modal-content .panopoly-magic-preview .fieldset-wrapper table tr.odd td {
+#modal-content .panopoly-magic-preview .fieldset-wrapper table tr.odd td,
+#modal-content .panopoly-magic-preview .panopoly-magic-preview-inner table tr.even td, 
+#modal-content .panopoly-magic-preview .panopoly-magic-preview-inner table tr.odd td {
   padding: 3px 5px;
 }
 
-#modal-content .panopoly-magic-preview .fieldset-wrapper h2 {
+#modal-content .panopoly-magic-preview .panopoly-magic-preview-inner h2 {
   font-size: 150%;
   margin-top: .25em;
 }

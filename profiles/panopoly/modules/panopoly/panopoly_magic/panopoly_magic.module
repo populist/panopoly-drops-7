@@ -213,6 +213,18 @@ function panopoly_magic_configure_form($form, &$form_state) {
     '#description' => t('Some embedded javascript may cause issues with panopoly and the IPE, stripping the .js from your previews will fix this issue, but may alter the look of the preview.'),
   );
 
+  $form['panopoly_magic_preview_use_legacy_fieldset'] = array(
+    '#title' => t('Use legacy &lt;fieldset&gt; markup in preview'),
+    '#type' => 'select',
+    '#required' => TRUE,
+    '#options' => array(
+      '1' => t('Yes'),
+      '0' => t('No'),
+    ),
+    '#default_value' => variable_get('panopoly_magic_preview_use_legacy_fieldset', 0),
+    '#description' => t('The preview used to appear in a &lt;fieldset&gt;, however, that turned out to be problematic in some browsers. But if your theme depends on the old markup, you can enabled it.'),
+  );
+
   $form['advanced'] = array(
     '#title' => t('Advanced'),
     '#type' => 'fieldset',
@@ -1534,6 +1546,9 @@ function template_preprocess_panopoly_magic_preview(&$vars) {
   if (!empty($vars['single'])) {
     $vars['classes_array'][] = 'widget-preview-single';
   }
+
+  // For backcompat with themes that depend on the fieldset markup.
+  $vars['use_legacy_fieldset'] = variable_get('panopoly_magic_preview_use_legacy_fieldset', FALSE);
 }
 
 /**

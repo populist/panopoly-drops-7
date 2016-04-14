@@ -1,3 +1,18 @@
+Panopoly 7.x-1.33, 2016-04-14
+----------------------
+- Update Panopoly Theme for Issue #2706279 by dsnopek: Remove the Respondjs
+  library from Panopoly.
+- Update Panopoly Core for Issue #2706259: Update to Features 2.9 for SA-
+  CONTRIB-2016-020.
+- Update Panopoly Search for Issue #2694253 by dsnopek, cboyden: Don't log
+  searches for empty keywords.
+- Update Panopoly Core for Issue #2695563 by dsnopek: Remove debug code from
+  Panels IPE.
+- Update Panopoly Magic and Test for Issue #2467073 by cboyden, dsnopek,
+  segovia94: Preview fieldset overflows in Firefox if using a very large image.
+- Start testing upgrades from the 1.32 release.
+- Restored drupal-org.make after the 1.32 release.
+
 Panopoly 7.x-1.32, 2016-03-03
 ----------------------
 - Update Panopoly Core for Issue #2679947 by cboyden: Security update to
