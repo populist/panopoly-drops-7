@@ -1,3 +1,7 @@
+Panopoly Magic 7.x-1.34, 2016-04-20
+----------------------------
+- No changes since last release.
+
 Panopoly Magic 7.x-1.33, 2016-04-14
 ----------------------------
 - Preview fieldset overflows in Firefox if using a very large image.

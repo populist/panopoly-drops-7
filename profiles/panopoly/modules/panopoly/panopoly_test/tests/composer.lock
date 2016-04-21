@@ -999,12 +999,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Config.git",
-                "reference": "58ded81f1f582a87c528ef3dae9a859f78b5f374"
+                "reference": "d2d2b288abab05abc1f00a33c61c74ef9441ac61"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Config/zipball/58ded81f1f582a87c528ef3dae9a859f78b5f374",
-                "reference": "58ded81f1f582a87c528ef3dae9a859f78b5f374",
+                "url": "https://api.github.com/repos/symfony/Config/zipball/d2d2b288abab05abc1f00a33c61c74ef9441ac61",
+                "reference": "d2d2b288abab05abc1f00a33c61c74ef9441ac61",
                 "shasum": ""
             },
             "require": {
