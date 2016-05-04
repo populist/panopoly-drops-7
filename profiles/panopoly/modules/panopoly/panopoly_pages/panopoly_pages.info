@@ -67,9 +67,9 @@ features[variable][] = panelizer_node:panopoly_page_allowed_layouts_default
 features[variable][] = panelizer_node:panopoly_page_allowed_types_default
 features[variable][] = save_continue_panopoly_page
 
-; Information added by Drupal.org packaging script on 2016-04-21
-version = "7.x-1.34"
+; Information added by Drupal.org packaging script on 2016-05-04
+version = "7.x-1.35"
 core = "7.x"
 project = "panopoly_pages"
-datestamp = "1461203413"
+datestamp = "1462395893"
 

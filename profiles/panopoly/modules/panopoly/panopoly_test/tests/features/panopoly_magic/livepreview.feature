@@ -432,3 +432,18 @@ Feature: Live preview
     When I press "Update Preview"
       And I wait for live preview to finish
     Then I should see "Avert your eyes! It's not even worth to cast your gaze upon this widget."
+
+  @api @javascript @panopoly_widgets
+    Scenario: Make text widget title a link
+      Given I am logged in as a user with the "administrator" role
+        And Panopoly magic live previews are automatic
+        And I am viewing a landing page
+      When I customize this page with the Panels IPE
+        And I click "Add new pane"
+        And I click "Add text" in the "CTools modal" region
+      Then I should see "Configure new Add text"
+      When I fill in the following:
+        | Title   | Here's a title & then some |
+        And I check the box "Make title a link"
+        And I wait for AJAX to finish
+      Then I should see "Here's a title & then some"

@@ -24,7 +24,7 @@ projects[panelizer][subdir] = contrib
 projects[panelizer][patch][1623536] = http://drupal.org/files/issues/array-to-object-on-update-1623536-26.patch
 projects[panelizer][patch][2416505] = http://www.drupal.org/files/issues/panelizer-search_api-2416505-3.patch
 
-projects[fieldable_panels_panes][version] = 1.8
+projects[fieldable_panels_panes][version] = 1.10
 projects[fieldable_panels_panes][subdir] = contrib
 
 projects[pm_existing_pages][version] = 1.4

@@ -393,6 +393,18 @@ function panopoly_magic_form_alter(&$form, &$form_state, $form_id) {
     if ($form_id == 'fieldable_panels_panes_fieldable_panels_pane_content_type_edit_form') {
       // Hide the revision fieldset.
       $form['revision']['#access'] = FALSE;
+      // Hide the 'Admin' fieldset.
+      $form['admin']['#access'] = FALSE;
+      // Move the 'Admin title' under reusable like in FPP 1.8 and earlier.
+      $form['reusable']['admin_title'] = $form['admin']['admin_title'];
+      $form['reusable']['admin_title']['#states'] = array(
+        'visible' => array(
+          ':input[name="reusable"]' => array('checked' => TRUE),
+        )
+      );
+      unset($form['admin']['admin_title']);
+      // Move the warning down.
+      $form['reusable']['warning']['#weight'] = 100;
 
       // Add our own submit handler ALWAYS, not just when we are generating
       // a preview.
@@ -652,7 +664,7 @@ function panopoly_magic_render_fieldable_panels_pane_preview($type, $subtype, $c
     $block->title = '';
     if (empty($settings['extra_fields']['display']) || !empty($settings['extra_fields']['display']['title']['default']['visible'])) {
       if (!empty($entity->title)) {
-        $block->title = check_plain($entity->title);
+        $block->title = filter_xss_admin($entity->title);
       }
     }
 

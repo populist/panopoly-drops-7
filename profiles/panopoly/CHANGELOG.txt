@@ -1,3 +1,14 @@
+Panopoly 7.x-1.35, 2016-05-04
+----------------------
+- Update Panopoly Magic and Test for Issue #2483295 by dsnopek, humansky,
+  mglaman, cboyden: Title in FPP is double encoded when making a link.
+- Update Panopoly Core and Magic for Issue #2717509 by dsnopek: Update to
+  Fieldable Panels Panes 1.10 for SA-CONTRIB-2016-025.
+- Start testing upgrades from the 1.34 release.
+- Merge branch '7.x-1.35' of git.drupal.org:project/panopoly into 7.x-1.35.
+- Drop support for upgrading from Panopoly versions older than 1 year.
+- Restored drupal-org.make after the 1.34 release.
+
 Panopoly 7.x-1.34, 2016-04-20
 ----------------------
 - Update Panopoly Search for Issue #2710389 by dsnopek: Update to search_api

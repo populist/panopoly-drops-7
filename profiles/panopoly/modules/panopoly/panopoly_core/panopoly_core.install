@@ -86,6 +86,9 @@ function panopoly_core_update_dependencies() {
   $deps['module_filter'][7200] = array(
     'panopoly_core' => 7105,
   );
+  $deps['fieldable_panels_panes'][7111] = array(
+    'panopoly_core' => 7106,
+  );
   return $deps;
 }
 
@@ -232,4 +235,11 @@ function panopoly_core_update_7104() {
  */
 function panopoly_core_update_7105() {
   registry_rebuild();
+}
+
+/**
+ * Use the new FPP revision locking mode.
+ */
+function panopoly_core_update_7106() {
+  variable_set('fpp_revision_locking', 'lock');
 }
