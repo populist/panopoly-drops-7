@@ -1,3 +1,12 @@
+Panopoly 7.x-1.36, 2016-06-16
+----------------------
+- Update to Drupal 7.44 for SA-CORE-2016-002.
+- Update Panopoly Core for Issue #2063541 by lsolesen: Remove Open Sans?.
+- Update Panopoly Core for Issue #2728569 by dsnopek: CTools modal positioned
+  incorrectly in Bootstrap theme when message is present.
+- Start testing upgrades from the 1.35 release.
+- Restored drupal-org.make after the 1.35 release.
+
 Panopoly 7.x-1.35, 2016-05-04
 ----------------------
 - Update Panopoly Magic and Test for Issue #2483295 by dsnopek, humansky,
