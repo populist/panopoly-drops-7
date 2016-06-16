@@ -1,3 +1,10 @@
+Panopoly 7.x-1.37, 2016-06-16
+----------------------
+- Update Panopoly Core for Issue #2750185: Update Views to 3.14 for SA-
+  CONTRIB-2016-036.
+- Start testing upgrades from the 1.36 release.
+- Restored drupal-org.make after the 1.36 release.
+
 Panopoly 7.x-1.36, 2016-06-16
 ----------------------
 - Update to Drupal 7.44 for SA-CORE-2016-002.

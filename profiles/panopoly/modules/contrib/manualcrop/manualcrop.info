@@ -15,5 +15,5 @@ files[] = includes/views/manualcrop.views.inc
 version = "7.x-1.5+4-dev"
 core = "7.x"
 project = "manualcrop"
-datestamp = "1466071110"
+datestamp = "1466094920"
 

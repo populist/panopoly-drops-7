@@ -55,8 +55,8 @@ features[views_view][] = panopoly_database_search
 features[views_view][] = panopoly_search
 
 ; Information added by Drupal.org packaging script on 2016-06-16
-version = "7.x-1.36"
+version = "7.x-1.37"
 core = "7.x"
 project = "panopoly_search"
-datestamp = "1466067745"
+datestamp = "1466091889"
 

@@ -54,8 +54,8 @@ features[variable][] = user_picture_field_source_entity
 features[variable][] = user_picture_field_source_field
 
 ; Information added by Drupal.org packaging script on 2016-06-16
-version = "7.x-1.36"
+version = "7.x-1.37"
 core = "7.x"
 project = "panopoly_users"
-datestamp = "1466067772"
+datestamp = "1466091932"
 

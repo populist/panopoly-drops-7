@@ -8,5 +8,5 @@ package = Input filters
 version = "7.x-1.2+9-dev"
 core = "7.x"
 project = "caption_filter"
-datestamp = "1466071077"
+datestamp = "1466094887"
 

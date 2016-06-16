@@ -34,8 +34,8 @@ features[wysiwyg][] = panopoly_html_text
 features[wysiwyg][] = panopoly_wysiwyg_text
 
 ; Information added by Drupal.org packaging script on 2016-06-16
-version = "7.x-1.36"
+version = "7.x-1.37"
 core = "7.x"
 project = "panopoly_wysiwyg"
-datestamp = "1466067794"
+datestamp = "1466091994"
 
