@@ -20,7 +20,7 @@ projects[date_popup_authored][download][type] = git
 projects[date_popup_authored][download][revision] = baf315c
 projects[date_popup_authored][download][branch] = 7.x-1.x
 
-projects[admin_views][version] = 1.5
+projects[admin_views][version] = 1.6
 projects[admin_views][subdir] = contrib
 
 projects[save_draft][version] = 1.4

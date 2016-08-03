@@ -49,7 +49,7 @@ Feature: Preview of widgets on 'Add content' dialog
       And I click "Add new pane"
       And I click "Panopoly Test" in the "CTools modal" region
     Then I should not see "Abracadabra! Here is a simple pane."
-      And I should see "Add" in the "div" element with the "class" attribute set to "panopoly-magic-preview-title" in the "CTools modal" region
+      And I should see "Add Simple Pane" in the "div" element with the "class" attribute set to "panopoly-magic-preview-title" in the "CTools modal" region
     When I click "Preview Simple Pane widget" in the "CTools modal" region
     Then I should see "Abracadabra! Here is a simple pane."
     When I click "A simple pane for testing." in the "CTools modal" region
@@ -80,3 +80,18 @@ Feature: Preview of widgets on 'Add content' dialog
       And I wait for the Panels IPE to deactivate
     Then I should see "Abracadabra! Here is a simple pane."
 
+  @api @javascript @panopoly_magic
+  Scenario: Add Content link text for categories with multiple options contains widget labels
+    Given I am logged in as a user with the "administrator" role
+      And Panopoly magic live previews are disabled
+      And Panopoly magic add content previews are automatic
+      And I am viewing a landing page
+    When I customize this page with the Panels IPE
+      And I click "Add new pane"
+      And I click "Panopoly Test" in the "CTools modal" region
+    Then I should see "Abracadabra! Here is a simple pane."
+    When I click "Add Simple Pane" in the "CTools modal" region
+      And I press "Save" in the "CTools modal" region
+      And I press "Save"
+      And I wait for the Panels IPE to deactivate
+    Then I should see "Abracadabra! Here is a simple pane."

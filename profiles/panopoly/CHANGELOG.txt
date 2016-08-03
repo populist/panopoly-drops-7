@@ -1,3 +1,19 @@
+Panopoly 7.x-1.38, 2016-08-03
+----------------------
+- Update Panopoly Admin for Issue #2778555 by chrisgross: Update Admin Views to
+  1.6 for SA-CONTRIB-2016-041.
+- Update Panopoly Magic and Test for Issue #2773683 by cboyden, dsnopek: Can't
+  distinguish Add links on Add Content dialog.
+- Update Panopoly Widgets and Test for Issue #2013965 by dsnopek, caschbre,
+  lsolesen, Andrew_Mallis: ability to link images placed with image widget.
+- Revert "Issue #2765427: Update to Drupal 7.50".
+- Update to Drupal 7.50.
+- Assign UID 1 to 'administrator' role on install.
+- Update Panopoly Search for Issue #2418861 by dsnopek: Don't enable
+  pantheon_apachesolr on panopoly sites hosted on Pantheon by default.
+- Start testing upgrades from the 1.37 release.
+- Restored drupal-org.make after the 1.37 release.
+
 Panopoly 7.x-1.37, 2016-06-16
 ----------------------
 - Update Panopoly Core for Issue #2750185: Update Views to 3.14 for SA-

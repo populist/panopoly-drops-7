@@ -101,11 +101,11 @@ function _panopoly_install_help_block() {
  */
 function _panopoly_install_administrator_role() {
   // Load the administrator role created through features.
-  $admin_role = user_role_load_by_name('administrator');
-
-  // Assign user 1 the "administrator" role.
-  db_merge('users_roles')
-    ->key(array('uid' => 1, 'rid' => $admin_role->rid))
-    ->fields(array('uid' => 1, 'rid' => $admin_role->rid))
-    ->execute();
+  if ($admin_role = user_role_load_by_name('administrator')) {
+    // Assign user 1 the "administrator" role.
+    db_merge('users_roles')
+      ->key(array('uid' => 1, 'rid' => $admin_role->rid))
+      ->fields(array('uid' => 1, 'rid' => $admin_role->rid))
+      ->execute();
+  }
 }

@@ -1,3 +1,7 @@
+Panopoly Core 7.x-1.38, 2016-08-03
+---------------------------
+- No changes since last release.
+
 Panopoly Core 7.x-1.37, 2016-06-16
 ---------------------------
 - Update Views to 3.14 for SA-CONTRIB-2016-036.

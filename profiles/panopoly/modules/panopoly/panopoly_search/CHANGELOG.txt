@@ -1,3 +1,8 @@
+Panopoly Search 7.x-1.38, 2016-08-03
+-----------------------------
+- Don't enable pantheon_apachesolr on panopoly sites hosted on Pantheon by
+  default.
+
 Panopoly Search 7.x-1.37, 2016-06-16
 -----------------------------
 - No changes since last release.

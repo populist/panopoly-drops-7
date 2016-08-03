@@ -1529,7 +1529,8 @@ function panopoly_magic_preprocess_panels_add_content_modal(&$vars) {
  * Helper function to render the Panels add content link.
  */
 function _panopoly_magic_render_add_content_link($vars, $content_type, $title) {
-  $content_type['title'] = t('Add');
+  $content_type['title'] = t('Add <span class="element-invisible">@widget_name</span>', array('@widget_name' => $title));
+  $content_type['panopoly_magic_add_button'] = TRUE;
   // @todo: Investigate why view_panes are missing description.
   if (empty($content_type['description'])) {
     $content_type['description'] = $title;

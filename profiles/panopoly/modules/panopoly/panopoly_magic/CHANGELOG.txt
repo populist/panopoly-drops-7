@@ -1,3 +1,7 @@
+Panopoly Magic 7.x-1.38, 2016-08-03
+----------------------------
+- Can't distinguish Add links on Add Content dialog.
+
 Panopoly Magic 7.x-1.37, 2016-06-16
 ----------------------------
 - No changes since last release.
