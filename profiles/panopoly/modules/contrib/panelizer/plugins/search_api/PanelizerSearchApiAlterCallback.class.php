@@ -36,6 +36,17 @@ class PanelizerSearchApiAlterCallback extends SearchApiAbstractAlterCallback {
 
       $item->search_api_panelizer_content = NULL;
       $item->search_api_panelizer_title = NULL;
+
+      // If Search API specifies a language to view the item in, force the
+      // global language_content to be Search API item language. Fieldable
+      // panel panes will render in the correct language.
+      if (isset($item->search_api_language)) {
+        global $language_content;
+        $original_language_content = $language_content;
+        $languages = language_list();
+        $language_content = $languages[$item->search_api_language];
+      }
+
       try {
         if ($render_info = $entity_handler->render_entity($item, 'page_manager')) {
           $item->search_api_panelizer_content = $render_info['content'];
@@ -44,6 +55,11 @@ class PanelizerSearchApiAlterCallback extends SearchApiAbstractAlterCallback {
       }
       catch (Exception $e) {
         watchdog_exception('panelizer', $e, 'Error indexing Panelizer content for %entity_type with ID %entity_id', array('%entity_type' => $entity_type, '%entity_id' => $entity_id));
+      }
+
+      // Restore the language_content global if it was overridden.
+      if (isset($original_language_content)) {
+        $language_content = $original_language_content;
       }
     }
 
@@ -66,5 +82,4 @@ class PanelizerSearchApiAlterCallback extends SearchApiAbstractAlterCallback {
       ),
     );
   }
-
 }

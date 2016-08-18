@@ -10,7 +10,7 @@
 function panopoly_pages_field_default_field_bases() {
   $field_bases = array();
 
-  // Exported field_base: 'body'
+  // Exported field_base: 'body'.
   $field_bases['body'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -31,7 +31,7 @@ function panopoly_pages_field_default_field_bases() {
     'type' => 'text_with_summary',
   );
 
-  // Exported field_base: 'field_featured_categories'
+  // Exported field_base: 'field_featured_categories'.
   $field_bases['field_featured_categories'] = array(
     'active' => 1,
     'cardinality' => -1,
@@ -57,7 +57,7 @@ function panopoly_pages_field_default_field_bases() {
     'type' => 'taxonomy_term_reference',
   );
 
-  // Exported field_base: 'field_featured_status'
+  // Exported field_base: 'field_featured_status'.
   $field_bases['field_featured_status'] = array(
     'active' => 1,
     'cardinality' => 1,

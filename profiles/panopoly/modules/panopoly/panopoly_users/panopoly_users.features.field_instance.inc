@@ -10,7 +10,7 @@
 function panopoly_users_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance: 'user-user-field_user_about'
+  // Exported field_instance: 'user-user-field_user_about'.
   $field_instances['user-user-field_user_about'] = array(
     'bundle' => 'user',
     'default_value' => NULL,
@@ -52,7 +52,7 @@ function panopoly_users_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'user-user-field_user_picture'
+  // Exported field_instance: 'user-user-field_user_picture'.
   $field_instances['user-user-field_user_picture'] = array(
     'bundle' => 'user',
     'deleted' => 0,

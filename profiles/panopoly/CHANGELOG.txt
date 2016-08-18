@@ -1,3 +1,19 @@
+Panopoly 7.x-1.39, 2016-08-18
+----------------------
+- Update Panopoly Core for Issue #2786249: Panels 3.5 converts user configured
+  CSS IDs from underscores to dashes.
+- Update Panopoly Core, Admin, Pages, Search, Test, Users for Issue #2785825 by
+  dsnopek: Update Panels and Panelizer for SA-CONTRIB-2016-047 and SA-
+  CONTRIB-2016-048.
+- Drop support for upgrading from Panopoly versions older than 1 year.
+- Update Panopoly Core, Users and Pages for Issue #2429549 by HaiNguyen007,
+  dsnopek, DamienMcKenna, mglaman, hefox, mpotter: Update to latest Panelizer.
+- Update Panopoly Core for Issue #2753091 by cboyden: Patch Views Autocomplete
+  Filters for clunky autocomplete message.
+- Fix grammar in readme.
+- Start testing upgrades from the 1.37 release.
+- Restored drupal-org.make after the 1.38 release.
+
 Panopoly 7.x-1.38, 2016-08-03
 ----------------------
 - Update Panopoly Admin for Issue #2778555 by chrisgross: Update Admin Views to

@@ -11,7 +11,7 @@ function panopoly_core_field_default_field_instances() {
   $field_instances = array();
 
   // Exported field_instance:
-  // 'taxonomy_term-panopoly_categories-field_featured_image'
+  // 'taxonomy_term-panopoly_categories-field_featured_image'.
   $field_instances['taxonomy_term-panopoly_categories-field_featured_image'] = array(
     'bundle' => 'panopoly_categories',
     'deleted' => 0,

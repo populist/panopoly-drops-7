@@ -10,7 +10,7 @@
 function panopoly_users_field_default_field_bases() {
   $field_bases = array();
 
-  // Exported field_base: 'field_user_about'
+  // Exported field_base: 'field_user_about'.
   $field_bases['field_user_about'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -29,7 +29,7 @@ function panopoly_users_field_default_field_bases() {
     'type' => 'text_with_summary',
   );
 
-  // Exported field_base: 'field_user_picture'
+  // Exported field_base: 'field_user_picture'.
   $field_bases['field_user_picture'] = array(
     'active' => 1,
     'cardinality' => 1,

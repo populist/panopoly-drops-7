@@ -61,15 +61,26 @@ features[variable][] = node_submitted_panopoly_landing_page
 features[variable][] = node_submitted_panopoly_page
 features[variable][] = panelizer_defaults_node_panopoly_landing_page
 features[variable][] = panelizer_defaults_node_panopoly_page
+features[variable][] = panelizer_node:panopoly_landing_page:page_manager_selection
 features[variable][] = panelizer_node:panopoly_landing_page_allowed_layouts_default
 features[variable][] = panelizer_node:panopoly_landing_page_allowed_types_default
+features[variable][] = panelizer_node:panopoly_page:default_selection
+features[variable][] = panelizer_node:panopoly_page:featured_selection
+features[variable][] = panelizer_node:panopoly_page:page_manager_selection
+features[variable][] = panelizer_node:panopoly_page:teaser_selection
 features[variable][] = panelizer_node:panopoly_page_allowed_layouts_default
 features[variable][] = panelizer_node:panopoly_page_allowed_types_default
 features[variable][] = save_continue_panopoly_page
+features_exclude[variable][panelizer_node:panopoly_landing_page_allowed_layouts] = panelizer_node:panopoly_landing_page_allowed_layouts
+features_exclude[variable][panelizer_node:panopoly_landing_page_allowed_types] = panelizer_node:panopoly_landing_page_allowed_types
+features_exclude[variable][panelizer_node:panopoly_landing_page_default] = panelizer_node:panopoly_landing_page_default
+features_exclude[variable][panelizer_node:panopoly_page_allowed_layouts] = panelizer_node:panopoly_page_allowed_layouts
+features_exclude[variable][panelizer_node:panopoly_page_allowed_types] = panelizer_node:panopoly_page_allowed_types
+features_exclude[variable][panelizer_node:panopoly_page_default] = panelizer_node:panopoly_page_default
 
-; Information added by Drupal.org packaging script on 2016-08-03
-version = "7.x-1.38"
+; Information added by Drupal.org packaging script on 2016-08-18
+version = "7.x-1.39"
 core = "7.x"
 project = "panopoly_pages"
-datestamp = "1470253327"
+datestamp = "1471535289"
 

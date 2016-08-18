@@ -228,7 +228,7 @@ function DrupalPanelsIPE(cache_key, cfg) {
     // it clears out inline styles.
     $('.panels-ipe-on').show();
     ipe.showForm();
-    ipe.topParent.addClass('panels-ipe-editing');
+    $('body').add(ipe.topParent).addClass('panels-ipe-editing');
 
   };
 

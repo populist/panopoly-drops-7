@@ -1,3 +1,7 @@
+Panopoly Test 7.x-1.39, 2016-08-18
+---------------------------
+- Update Panels and Panelizer for SA-CONTRIB-2016-047 and SA-CONTRIB-2016-048.
+
 Panopoly Test 7.x-1.38, 2016-08-03
 ---------------------------
 - Can't distinguish Add links on Add Content dialog.

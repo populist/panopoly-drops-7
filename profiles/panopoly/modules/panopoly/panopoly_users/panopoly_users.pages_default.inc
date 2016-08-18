@@ -61,6 +61,8 @@ function panopoly_users_default_page_manager_handlers() {
   $display->cache = array();
   $display->title = 'Log in';
   $display->uuid = 'ec9fdc25-413c-4023-bf92-7a2b2442bb74';
+  $display->storage_type = 'page_manager';
+  $display->storage_id = 'pm_existing_pages_user_login_panel_context';
   $display->content = array();
   $display->panels = array();
   $pane = new stdClass();
@@ -141,6 +143,8 @@ function panopoly_users_default_page_manager_handlers() {
   $display->cache = array();
   $display->title = '';
   $display->uuid = 'de3e6d95-c9f6-4a27-bfc6-c714ec502abc';
+  $display->storage_type = 'page_manager';
+  $display->storage_id = 'pm_existing_pages_user_password_panel_context';
   $display->content = array();
   $display->panels = array();
   $pane = new stdClass();
@@ -221,6 +225,8 @@ function panopoly_users_default_page_manager_handlers() {
   $display->cache = array();
   $display->title = 'Create an Account';
   $display->uuid = 'ba74d07b-99c9-417c-b452-aa09928a10a6';
+  $display->storage_type = 'page_manager';
+  $display->storage_id = 'pm_existing_pages_user_register_panel_context';
   $display->content = array();
   $display->panels = array();
   $pane = new stdClass();
@@ -286,6 +292,8 @@ function panopoly_users_default_page_manager_handlers() {
   $display->cache = array();
   $display->title = '';
   $display->uuid = '60334f70-29be-439e-8de7-da92ff5b4d94';
+  $display->storage_type = 'page_manager';
+  $display->storage_id = 'user_edit_panel_context';
   $display->content = array();
   $display->panels = array();
   $pane = new stdClass();

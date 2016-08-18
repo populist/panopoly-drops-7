@@ -151,24 +151,29 @@ function panopoly_pages_strongarm() {
   $strongarm->name = 'panelizer_defaults_node_panopoly_landing_page';
   $strongarm->value = array(
     'status' => 1,
+    'help' => '',
     'view modes' => array(
       'page_manager' => array(
         'status' => 1,
+        'substitute' => '',
         'default' => 1,
         'choice' => 0,
       ),
       'default' => array(
         'status' => 0,
+        'substitute' => 0,
         'default' => 0,
         'choice' => 0,
       ),
       'teaser' => array(
         'status' => 0,
+        'substitute' => 0,
         'default' => 0,
         'choice' => 0,
       ),
       'featured' => array(
         'status' => 0,
+        'substitute' => 0,
         'default' => 0,
         'choice' => 0,
       ),
@@ -182,30 +187,48 @@ function panopoly_pages_strongarm() {
   $strongarm->name = 'panelizer_defaults_node_panopoly_page';
   $strongarm->value = array(
     'status' => 1,
+    'help' => '',
     'view modes' => array(
       'page_manager' => array(
         'status' => 1,
+        'substitute' => '',
         'default' => 1,
         'choice' => 0,
       ),
       'default' => array(
         'status' => 1,
+        'substitute' => '',
         'default' => 1,
         'choice' => 0,
       ),
       'teaser' => array(
         'status' => 1,
+        'substitute' => '',
         'default' => 1,
+        'choice' => 0,
+      ),
+      'search_result' => array(
+        'status' => 0,
+        'substitute' => 0,
+        'default' => 0,
         'choice' => 0,
       ),
       'featured' => array(
         'status' => 1,
+        'substitute' => '',
         'default' => 1,
         'choice' => 0,
       ),
     ),
   );
   $export['panelizer_defaults_node_panopoly_page'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'panelizer_node:panopoly_landing_page:page_manager_selection';
+  $strongarm->value = 'node:panopoly_landing_page:default';
+  $export['panelizer_node:panopoly_landing_page:page_manager_selection'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
@@ -220,6 +243,34 @@ function panopoly_pages_strongarm() {
   $strongarm->name = 'panelizer_node:panopoly_landing_page_allowed_types_default';
   $strongarm->value = 1;
   $export['panelizer_node:panopoly_landing_page_allowed_types_default'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'panelizer_node:panopoly_page:default_selection';
+  $strongarm->value = 'node:panopoly_page:default:default';
+  $export['panelizer_node:panopoly_page:default_selection'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'panelizer_node:panopoly_page:featured_selection';
+  $strongarm->value = 'node:panopoly_page:default:featured';
+  $export['panelizer_node:panopoly_page:featured_selection'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'panelizer_node:panopoly_page:page_manager_selection';
+  $strongarm->value = 'node:panopoly_page:default';
+  $export['panelizer_node:panopoly_page:page_manager_selection'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'panelizer_node:panopoly_page:teaser_selection';
+  $strongarm->value = 'node:panopoly_page:default:teaser';
+  $export['panelizer_node:panopoly_page:teaser_selection'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */

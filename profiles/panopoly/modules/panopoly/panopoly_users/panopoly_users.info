@@ -44,6 +44,9 @@ features[panelizer_defaults][] = user:user:default
 features[panelizer_defaults][] = user:user:default:default
 features[panelizer_defaults][] = user:user:default:featured
 features[variable][] = page_manager_user_view_disabled
+features[variable][] = panelizer_user:user:default_selection
+features[variable][] = panelizer_user:user:featured_selection
+features[variable][] = panelizer_user:user:page_manager_selection
 features[variable][] = panelizer_user:user_allowed_layouts_default
 features[variable][] = panelizer_user:user_allowed_types_default
 features[variable][] = pm_existing_pages_disabled_user_login
@@ -52,10 +55,14 @@ features[variable][] = pm_existing_pages_disabled_user_register
 features[variable][] = user_picture_field_source_bundle
 features[variable][] = user_picture_field_source_entity
 features[variable][] = user_picture_field_source_field
+features_exclude[variable][panelizer_user:user_allowed_layouts] = panelizer_user:user_allowed_layouts
+features_exclude[variable][panelizer_user:user_allowed_types] = panelizer_user:user_allowed_types
+features_exclude[variable][panelizer_user:user_default] = panelizer_user:user_default
+features_exclude[variable][panelizer_defaults_user_user] = panelizer_defaults_user_user
 
-; Information added by Drupal.org packaging script on 2016-08-03
-version = "7.x-1.38"
+; Information added by Drupal.org packaging script on 2016-08-18
+version = "7.x-1.39"
 core = "7.x"
 project = "panopoly_users"
-datestamp = "1470253372"
+datestamp = "1471535331"
 

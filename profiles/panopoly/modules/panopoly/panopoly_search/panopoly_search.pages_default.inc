@@ -95,6 +95,8 @@ function panopoly_search_default_page_manager_pages() {
   $display->cache = array();
   $display->title = 'Search Results';
   $display->uuid = 'b369b7fe-466f-4e52-b315-5070800e6d63';
+  $display->storage_type = 'page_manager';
+  $display->storage_id = 'page_panopoly_search_panel_context';
   $display->content = array();
   $display->panels = array();
   $pane = new stdClass();
@@ -246,6 +248,8 @@ function panopoly_search_default_page_manager_pages() {
   $display->cache = array();
   $display->title = 'Search Results';
   $display->uuid = '2d27c2cb-916a-4d51-8a64-9eba5a57a81e';
+  $display->storage_type = 'page_manager';
+  $display->storage_id = 'page_panopoly_search_panel_context_3';
   $display->content = array();
   $display->panels = array();
   $pane = new stdClass();

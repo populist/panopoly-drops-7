@@ -41,6 +41,27 @@ function panopoly_core_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'panelizer_taxonomy_term:panopoly_categories:default_selection';
+  $strongarm->value = 'taxonomy_term:panopoly_categories:default:default';
+  $export['panelizer_taxonomy_term:panopoly_categories:default_selection'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'panelizer_taxonomy_term:panopoly_categories:featured_selection';
+  $strongarm->value = 'taxonomy_term:panopoly_categories:default:featured';
+  $export['panelizer_taxonomy_term:panopoly_categories:featured_selection'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'panelizer_taxonomy_term:panopoly_categories:page_manager_selection';
+  $strongarm->value = 'taxonomy_term:panopoly_categories:default';
+  $export['panelizer_taxonomy_term:panopoly_categories:page_manager_selection'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'panelizer_taxonomy_term:panopoly_categories_allowed_layouts_default';
   $strongarm->value = 1;
   $export['panelizer_taxonomy_term:panopoly_categories_allowed_layouts_default'] = $strongarm;

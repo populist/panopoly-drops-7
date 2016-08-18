@@ -10,7 +10,7 @@
 function panopoly_pages_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance: 'node-panopoly_page-body'
+  // Exported field_instance: 'node-panopoly_page-body'.
   $field_instances['node-panopoly_page-body'] = array(
     'bundle' => 'panopoly_page',
     'default_value' => NULL,
@@ -79,7 +79,7 @@ function panopoly_pages_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-panopoly_page-field_featured_categories'
+  // Exported field_instance: 'node-panopoly_page-field_featured_categories'.
   $field_instances['node-panopoly_page-field_featured_categories'] = array(
     'bundle' => 'panopoly_page',
     'default_value' => NULL,
@@ -128,7 +128,7 @@ function panopoly_pages_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-panopoly_page-field_featured_image'
+  // Exported field_instance: 'node-panopoly_page-field_featured_image'.
   $field_instances['node-panopoly_page-field_featured_image'] = array(
     'bundle' => 'panopoly_page',
     'deleted' => 0,
@@ -222,7 +222,7 @@ function panopoly_pages_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-panopoly_page-field_featured_status'
+  // Exported field_instance: 'node-panopoly_page-field_featured_status'.
   $field_instances['node-panopoly_page-field_featured_status'] = array(
     'bundle' => 'panopoly_page',
     'default_value' => array(

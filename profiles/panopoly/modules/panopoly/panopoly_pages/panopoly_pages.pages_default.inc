@@ -56,6 +56,8 @@ function panopoly_pages_default_page_manager_handlers() {
   $display->cache = array();
   $display->title = '';
   $display->uuid = 'f9b8005f-1975-4cf6-b683-96ee55f9f3bb';
+  $display->storage_type = 'page_manager';
+  $display->storage_id = 'node_edit_panel_context_landing_page';
   $display->content = array();
   $display->panels = array();
   $pane = new stdClass();

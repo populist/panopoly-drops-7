@@ -43,6 +43,8 @@ function panopoly_admin_default_page_manager_handlers() {
   $display->cache = array();
   $display->title = '';
   $display->uuid = '56f6d0a5-d0cb-4670-8442-80de25b84871';
+  $display->storage_type = 'page_manager';
+  $display->storage_id = 'node_edit_panel_context';
   $display->content = array();
   $display->panels = array();
   $pane = new stdClass();
@@ -371,6 +373,8 @@ function panopoly_admin_default_page_manager_pages() {
   $display->cache = array();
   $display->title = 'Layout Library';
   $display->uuid = '2a4bbcf3-712e-44e2-9fd8-270a2fd6e47d';
+  $display->storage_type = 'page_manager';
+  $display->storage_id = 'page_panopoly_admin_layout_library_panel_context';
   $display->content = array();
   $display->panels = array();
   $pane = new stdClass();
@@ -482,6 +486,8 @@ function panopoly_admin_default_page_manager_pages() {
   $display->cache = array();
   $display->title = 'Page Library';
   $display->uuid = '7f2efae5-50a7-4f07-b1f7-f8edc2dd9326';
+  $display->storage_type = 'page_manager';
+  $display->storage_id = 'page_panopoly_admin_page_library_panel_context';
   $display->content = array();
   $display->panels = array();
   $pane = new stdClass();
@@ -612,6 +618,8 @@ function panopoly_admin_default_page_manager_pages() {
   $display->cache = array();
   $display->title = 'Pane Library';
   $display->uuid = '195ed3e8-b724-48fd-9057-9f5f54aa6a47';
+  $display->storage_type = 'page_manager';
+  $display->storage_id = 'page_panopoly_admin_pane_library_panel_context';
   $display->content = array();
   $display->panels = array();
   $pane = new stdClass();
