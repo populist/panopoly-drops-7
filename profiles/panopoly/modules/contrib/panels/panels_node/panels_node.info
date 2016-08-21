@@ -7,9 +7,9 @@ configure = admin/structure/panels
 core = 7.x
 files[] = panels_node.module
 
-; Information added by Drupal.org packaging script on 2016-08-17
-version = "7.x-3.6"
+; Information added by Drupal.org packaging script on 2016-08-20
+version = "7.x-3.7"
 core = "7.x"
 project = "panels"
-datestamp = "1471447743"
+datestamp = "1471704242"
 

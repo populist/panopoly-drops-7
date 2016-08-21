@@ -10,19 +10,15 @@ projects[ctools][subdir] = contrib
 projects[ctools][patch][2209775] = https://www.drupal.org/files/issues/ctools-readd_access_callback_params-2209775-24.patch
 projects[ctools][patch][2607626] = https://www.drupal.org/files/issues/ctools-close-modal-2607626-5.patch
 
-projects[panels][version] = 3.6
+projects[panels][version] = 3.7
 projects[panels][subdir] = contrib
-projects[panels][patch][2785915] = https://www.drupal.org/files/issues/panels-storage-backcompat-2785915-18.patch
-projects[panels][patch][2785917] = https://www.drupal.org/files/issues/panels-underscores-in-ids-2785917-4.patch
 
 projects[panels_breadcrumbs][version] = 2.2
 projects[panels_breadcrumbs][subdir] = contrib
 
-projects[panelizer][version] = 3.3
+projects[panelizer][version] = 3.4
 projects[panelizer][subdir] = contrib
 projects[panelizer][patch][1549608] = https://www.drupal.org/files/issues/panelizer-n1549608-26.patch
-projects[panelizer][patch][2785883] = https://www.drupal.org/files/issues/panelizer-n2785883-4.patch
-projects[panelizer][patch][2785945] = https://www.drupal.org/files/issues/panelizer-panels-storage-backcompat-2785945-2.patch
 
 projects[fieldable_panels_panes][version] = 1.10
 projects[fieldable_panels_panes][subdir] = contrib

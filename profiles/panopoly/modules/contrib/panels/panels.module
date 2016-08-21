@@ -335,17 +335,6 @@ function panels_permission() {
 }
 
 /**
- * Implementation of hook_flush_caches().
- *
- * We implement this so that we can be sure our legacy rendering state setting
- * in $conf is updated whenever caches are cleared.
- */
-//function panels_flush_caches() {
-//  $legacy = panels_get_legacy_state();
-//  $legacy->determineStatus();
-//}
-
-/**
  * Implements hook_flush_caches().
  */
 function panels_flush_caches() {
@@ -664,7 +653,6 @@ function panels_edit_layout($display, $finish, $destination = NULL, $allowed_lay
 
 /**
  * Forms the basis of a panel display
- *
  */
 class panels_display {
   var $args = array();

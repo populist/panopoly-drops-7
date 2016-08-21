@@ -1,3 +1,7 @@
+Panopoly Magic 7.x-1.40, 2016-08-20
+----------------------------
+- No changes since last release.
+
 Panopoly Magic 7.x-1.39, 2016-08-18
 ----------------------------
 - No changes since last release.

@@ -545,7 +545,7 @@ class panels_renderer_editor extends panels_renderer_standard {
         return 'update';
     }
 
-    return parent::get_panels_storage_op($method);
+    return parent::get_panels_storage_op_for_ajax($method);
   }
 
   /**

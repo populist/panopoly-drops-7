@@ -627,7 +627,7 @@ class panels_renderer_standard {
       // Pass long the css_class that is usually available.
       if (!empty($pane->css['css_class'])) {
         $class = ctools_context_keyword_substitute($pane->css['css_class'], array(), $this->display->context, array('css safe' => TRUE));
-        $content->css_class = check_plain(drupal_strtolower($class));
+        $content->css_class = check_plain($class);
       }
     }
 

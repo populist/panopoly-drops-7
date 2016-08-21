@@ -435,11 +435,23 @@ function panels_update_7301() {
 
 /**
  * Adding universally unique identifiers to panels.
+ *
+ * Note: This update hook is not written well. It calls apis which uses the
+ * most updated drupal database, causing missing columns or tables errors. To
+ * mitigate the issue, we've added updates from 7303 and 7305. Future updates
+ * should go below the 7305 update.
+ *
+ * See https://www.drupal.org/node/2787123 for more info.
  */
 function panels_update_7302() {
   if (!module_load_include('inc', 'ctools', 'includes/uuid')) {
     throw new DrupalUpdateException(t('Ctools UUID support not detected. You must update to a more recent version of the ctools module.'));
   }
+  // Run the 7303 update first to avoid caching issues.
+  // This *probably* should be placed right above update 7305, however it was
+  // tested here and re-testing this update is difficult, so it stays here.
+  panels_update_7303();
+
   // Load the schema.
   $schema = panels_schema_5();
   $msg = array();
@@ -490,6 +502,10 @@ function panels_update_7302() {
     ->fetchCol();
 
   $dids = array_unique(array_merge($display_dids, $pane_dids));
+
+  // Before using panels_save_display(), we have to make sure any new fields
+  // are added from future updates.
+  panels_update_7305();
 
   // If the Panels module is disabled we don't have access to
   // panels_load_displays().
@@ -551,7 +567,10 @@ function panels_update_7305() {
 
   foreach ($new_fields as $table => $fields) {
     foreach ($fields as $field_name) {
-      db_add_field($table, $field_name, $schema[$table]['fields'][$field_name]);
+      // Due to a previous failure, the column may already exist:
+      if (!db_field_exists($table, $field_name)) {
+        db_add_field($table, $field_name, $schema[$table]['fields'][$field_name]);
+      }
     }
   }
 }

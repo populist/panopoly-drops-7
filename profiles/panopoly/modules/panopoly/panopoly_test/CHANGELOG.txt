@@ -1,3 +1,7 @@
+Panopoly Test 7.x-1.40, 2016-08-20
+---------------------------
+- No changes since last release.
+
 Panopoly Test 7.x-1.39, 2016-08-18
 ---------------------------
 - Update Panels and Panelizer for SA-CONTRIB-2016-047 and SA-CONTRIB-2016-048.
