@@ -1,3 +1,8 @@
+Panopoly Core 7.x-1.41, 2016-11-17
+---------------------------
+- Add Panelizer patch to make 'administer panelizer' permission work correctly.
+- Add Panels patch to fix adding variants to tasks other than 'page'.
+
 Panopoly Core 7.x-1.40, 2016-08-20
 ---------------------------
 - Update to Panels 7.x-3.7 and Panelizer 7.x-3.4.

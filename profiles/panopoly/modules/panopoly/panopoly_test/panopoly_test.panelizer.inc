@@ -42,7 +42,7 @@ function panopoly_test_panelizer_defaults() {
   $display->title = '%node:title';
   $display->uuid = '9d26a711-39c5-4ef6-a421-e2feb7d9e4e3';
   $display->storage_type = 'panelizer_default';
-  $display->storage_id = 'node:panopoly_landing_page:default';
+  $display->storage_id = 'node:panopoly_test_landing_page:default';
   $display->content = array();
   $display->panels = array();
   $display->hide_title = PANELS_TITLE_FIXED;

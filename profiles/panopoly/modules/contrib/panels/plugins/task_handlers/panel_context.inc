@@ -219,23 +219,23 @@ function panels_panel_context_tab_operation($handler, $contexts, $args) {
  *   for the handler and pla
  */
 function &panels_panel_context_get_display(&$handler) {
-  if (isset($handler->conf['display'])) {
-    return $handler->conf['display'];
-  }
+  if (!isset($handler->conf['display'])) {
+    if (isset($handler->conf['did'])) {
+      $handler->conf['display'] = panels_load_display($handler->conf['did']);
+    }
 
-  if (isset($handler->conf['did'])) {
-    $handler->conf['display'] = panels_load_display($handler->conf['did']);
-
-    // Check for a valid display. If no valid display can be loaded, something
-    // is wrong and we'll create a new one.
-    if (!empty($handler->conf['display'])) {
-      return $handler->conf['display'];
+    // Check for again for a valid display. If no valid display could be loaded,
+    // something is wrong and we'll create a new one.
+    if (empty($handler->conf['display'])) {
+      $handler->conf['display'] = panels_new_display();
     }
   }
 
-  $handler->conf['display'] = panels_new_display();
+  $display =& $handler->conf['display'];
+  $display->storage_type = 'page_manager';
+  $display->storage_id = !empty($handler->name) ? $handler->name : 'new';
 
-  return $handler->conf['display'];
+  return $display;
 }
 
 /**
@@ -586,19 +586,6 @@ function panels_panel_context_edit_choose($form, &$form_state) {
 
   $form_state['display'] = &panels_panel_context_get_display($form_state['handler']);
 
-  // Grab the storage_type and storage_id and inject it into the display.
-  if (empty($form_state['display']->storage_type)) {
-    if (!isset($form_state[$form_state['task_id']]->storage_type)) {
-      watchdog('panels', "Unable to find the storage type for specified storage. Read 'Upgrading task handlers' in CHANGELOG.txt", array(), WATCHDOG_ERROR);
-      $form_state['display']->storage_type = 'unknown';
-    }
-    else {
-      $form_state['display']->storage_type = $form_state[$form_state['task_id']]->storage_type;
-    }
-    // When adding variants, we don't know the handler id yet. In that case,
-    // Mark it as new. We'll assign it later.
-    $form_state['display']->storage_id = !empty($form_state['handler_id']) ? $form_state['handler_id'] : 'new';
-  }
   // Tell the Panels form not to display buttons.
   $form_state['no buttons'] = TRUE;
 

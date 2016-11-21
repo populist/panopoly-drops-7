@@ -1,3 +1,18 @@
+Panopoly 7.x-1.41, 2016-11-17
+----------------------
+- Upgrade to Drupal 7.52.
+- Update Panopoly Widgets and Test for Issue #2340811 by dsnopek, mcrittenden:
+  Switch Image widget to use Media Browser.
+- Update Panopoly Magic for Issue #2748813 by dsnopek, adamsro: Redirected to
+  ajax endpoint when editing with IPE.
+- Incorrect storage_id in panopoly_test breaks some child distributions tests.
+- Update Panopoly Search for Issue #2790595 by mpotter, humansky: SolrPhpClient
+  cannot be downloaded.
+- Update Panopoly Core for Issue #2788861: Add Panelizer patch to make
+  'administer panelizer' permission work correctly.
+- Start testing upgrades from the 1.40 release.
+- Restored drupal-org.make after the 1.40 release.
+
 Panopoly 7.x-1.40, 2016-08-20
 ----------------------
 - Update Panopoly Core for Issue #2787195 by byronveale, dsnopek: Update to

@@ -16,10 +16,22 @@ Feature: Add image widget
       | Title   | Testing image widget title |
       | Editor  | plain_text                 |
       | Caption | Testing caption            |
-      And I attach the file "test-sm.png" to "files[field_basic_image_image_und_0]"
-      And I press "Upload"
-      And I fill in "Alternate text" with "Testing alt text"
-      And I press "Save" in the "CTools modal" region
+      And I click "Browse"
+      And I switch to the frame "mediaBrowser"
+      And I attach the file "test-sm.png" to "files[upload]"
+      And I press "Next"
+    Then I should see "Destination"
+    When I select the radio button "Public local files served by the webserver."
+      And I press "Next"
+    Then I should see a "#edit-submit" element
+      And I should see the "Crop" button
+    When I fill in the following:
+        | Alt Text   | Testing alt text   |
+        | Title Text | Testing title text |
+      And I press "Save"
+      And I switch out of all frames
+      And I wait 2 seconds
+    When I press "Save" in the "CTools modal" region
       And I press "Save"
       And I wait for the Panels IPE to deactivate
     Then I should see "Testing image widget title"
@@ -40,10 +52,22 @@ Feature: Add image widget
       | Title   | Testing image widget title              |
       | Editor  | plain_text                              |
       | URL     | https://www.drupal.org/project/panopoly |
-      And I attach the file "test-sm.png" to "files[field_basic_image_image_und_0]"
-      And I press "Upload"
-      And I fill in "Alternate text" with "Testing alt text"
-      And I press "Save" in the "CTools modal" region
+      And I click "Browse"
+      And I switch to the frame "mediaBrowser"
+      And I attach the file "test-sm.png" to "files[upload]"
+      And I press "Next"
+    Then I should see "Destination"
+    When I select the radio button "Public local files served by the webserver."
+      And I press "Next"
+    Then I should see a "#edit-submit" element
+      And I should see the "Crop" button
+    When I fill in the following:
+        | Alt Text   | Testing alt text   |
+        | Title Text | Testing title text |
+      And I press "Save"
+      And I switch out of all frames
+      And I wait 2 seconds
+    When I press "Save" in the "CTools modal" region
       And I press "Save"
       And I wait for the Panels IPE to deactivate
     Then I should see "Testing image widget title"

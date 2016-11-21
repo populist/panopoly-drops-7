@@ -20,4 +20,4 @@ projects[search_api_db][subdir] = contrib
 ; Solr PHP Client Library
 
 libraries[SolrPhpClient][download][type] = get
-libraries[SolrPhpClient][download][url] = http://solr-php-client.googlecode.com/files/SolrPhpClient.r60.2011-05-04.zip
+libraries[SolrPhpClient][download][url] = https://github.com/PTCInc/solr-php-client/archive/master.zip

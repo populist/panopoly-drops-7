@@ -1770,38 +1770,6 @@ function panels_page_wizard_panels_cache_set($key, $cache) {
 }
 
 /**
- * Alter the page wizard basic page, when panels is selected, to inject page
- * manager as the storage plugin for panels.
- * @param $form
- * @param $form_state
- */
-function panels_form_page_manager_page_form_basic_alter(&$form, &$form_state) {
-  $form['#validate'][] = 'panels_page_manager_handler_add_validate';
-}
-
-/**
- * Alter the variant add page, so when panels is selected, page manager is the
- * storage plugin for panels.
- * @param $form
- * @param $form_state
- */
-function panels_form_page_manager_handler_add_alter(&$form, &$form_state) {
-  $form['#validate'][] = 'panels_page_manager_handler_add_validate';
-}
-
-/**
- * Perform the validation check to see if panel context is selected to use
- * page manager as the storage plugin.
- * @param $form
- * @param $form_state
- */
-function panels_page_manager_handler_add_validate($form, &$form_state) {
-  if($form_state['values']['handler'] == 'panel_context') {
-    $form_state['page']->storage_type = 'page_manager';
-  }
-}
-
-/**
  * Implements hook_default_page_manager_handlers_alter().
  *
  * If a default Panels display has no storage type, set it.

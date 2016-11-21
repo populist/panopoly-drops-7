@@ -12,6 +12,7 @@ projects[ctools][patch][2607626] = https://www.drupal.org/files/issues/ctools-cl
 
 projects[panels][version] = 3.7
 projects[panels][subdir] = contrib
+projects[panels][patch][2787637] = https://www.drupal.org/files/issues/panels-storage-alt-task-2787637-6.patch
 
 projects[panels_breadcrumbs][version] = 2.2
 projects[panels_breadcrumbs][subdir] = contrib
@@ -19,6 +20,7 @@ projects[panels_breadcrumbs][subdir] = contrib
 projects[panelizer][version] = 3.4
 projects[panelizer][subdir] = contrib
 projects[panelizer][patch][1549608] = https://www.drupal.org/files/issues/panelizer-n1549608-26.patch
+projects[panelizer][patch][2788851] = https://www.drupal.org/files/issues/panelizer-administer-panelizer-2788851-2.patch
 
 projects[fieldable_panels_panes][version] = 1.10
 projects[fieldable_panels_panes][subdir] = contrib

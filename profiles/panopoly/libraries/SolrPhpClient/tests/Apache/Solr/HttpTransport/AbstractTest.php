@@ -1,34 +1,34 @@
 <?php
 /**
- * Copyright (c) 2007-2011, Servigistics, Inc.
- * All rights reserved.
+ * Copyright (c) 2007-2013, PTC Inc.
+ * All rights reserved. 
+ * 
+ * Redistribution and use in source and binary forms, with or without 
+ * modification, are permitted provided that the following conditions are met: 
+ * 
+ *  - Redistributions of source code must retain the above copyright notice, 
+ *    this list of conditions and the following disclaimer. 
+ *  - Redistributions in binary form must reproduce the above copyright 
+ *    notice, this list of conditions and the following disclaimer in the 
+ *    documentation and/or other materials provided with the distribution. 
+ *  - Neither the name of PTC Inc. nor the names of its contributors may be
+ *    used to endorse or promote products derived from this software without
+ *    specific prior written permission. 
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE 
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+ * POSSIBILITY OF SUCH DAMAGE. 
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- *  - Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
- *  - Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- *  - Neither the name of Servigistics, Inc. nor the names of
- *    its contributors may be used to endorse or promote products derived from
- *    this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- *
- * @copyright Copyright 2007-2011 Servigistics, Inc. (http://servigistics.com)
- * @license http://solr-php-client.googlecode.com/svn/trunk/COPYING New BSD
+ * @copyright Copyright 2007-2013 PTC Inc. (http://ptc.com)
+ * @license https://raw.github.com/PTCInc/solr-php-client/master/COPYING 3-Clause BSD
  *
  * @package Apache
  * @subpackage Solr
@@ -100,7 +100,7 @@ abstract class Apache_Solr_HttpTransport_AbstractTest extends PHPUnit_Framework_
 		
 		$response = $fixture->performGetRequest(self::GET_URL);
 		
-		$this->assertType('Apache_Solr_HttpTransport_Response', $response);
+		$this->assertInstanceOf('Apache_Solr_HttpTransport_Response', $response);
 		
 		$this->assertEquals(200, $response->getStatusCode(), 'Status code was not 200');
 		$this->assertEquals(self::GET_RESPONSE_MIME_TYPE, $response->getMimeType(), 'mimetype was not correct');
@@ -113,7 +113,7 @@ abstract class Apache_Solr_HttpTransport_AbstractTest extends PHPUnit_Framework_
 		$fixture = $this->getFixture();
 		$response = $fixture->performGetRequest(self::GET_URL, self::TIMEOUT);
 		
-		$this->assertType('Apache_Solr_HttpTransport_Response', $response);
+		$this->assertInstanceOf('Apache_Solr_HttpTransport_Response', $response);
 		
 		$this->assertEquals(200, $response->getStatusCode(), 'Status code was not 200');
 		$this->assertEquals(self::GET_RESPONSE_MIME_TYPE, $response->getMimeType(), 'mimetype was not correct');
@@ -129,7 +129,7 @@ abstract class Apache_Solr_HttpTransport_AbstractTest extends PHPUnit_Framework_
 		$response = $fixture->performHeadRequest(self::GET_URL);
 		
 		// we should get everything the same as a get, except the body
-		$this->assertType('Apache_Solr_HttpTransport_Response', $response);
+		$this->assertInstanceOf('Apache_Solr_HttpTransport_Response', $response);
 		
 		$this->assertEquals(200, $response->getStatusCode(), 'Status code was not 200');
 		$this->assertEquals(self::GET_RESPONSE_MIME_TYPE, $response->getMimeType(), 'mimetype was not correct');
@@ -143,7 +143,7 @@ abstract class Apache_Solr_HttpTransport_AbstractTest extends PHPUnit_Framework_
 		$response = $fixture->performHeadRequest(self::GET_URL, self::TIMEOUT);
 		
 		// we should get everything the same as a get, except the body
-		$this->assertType('Apache_Solr_HttpTransport_Response', $response);
+		$this->assertInstanceOf('Apache_Solr_HttpTransport_Response', $response);
 		
 		$this->assertEquals(200, $response->getStatusCode(), 'Status code was not 200');
 		$this->assertEquals(self::GET_RESPONSE_MIME_TYPE, $response->getMimeType(), 'mimetype was not correct');
@@ -158,7 +158,7 @@ abstract class Apache_Solr_HttpTransport_AbstractTest extends PHPUnit_Framework_
 		
 		$response = $fixture->performPostRequest(self::POST_URL, self::POST_DATA, self::POST_REQUEST_CONTENT_TYPE);
 		
-		$this->assertType('Apache_Solr_HttpTransport_Response', $response);
+		$this->assertInstanceOf('Apache_Solr_HttpTransport_Response', $response);
 		
 		$this->assertEquals(200, $response->getStatusCode(), 'Status code was not 200');
 		$this->assertEquals(self::POST_RESPONSE_MIME_TYPE, $response->getMimeType(), 'mimetype was not correct');
@@ -171,7 +171,7 @@ abstract class Apache_Solr_HttpTransport_AbstractTest extends PHPUnit_Framework_
 		$fixture = $this->getFixture();
 		$response = $fixture->performPostRequest(self::POST_URL, self::POST_DATA, self::POST_REQUEST_CONTENT_TYPE, self::TIMEOUT);
 		
-		$this->assertType('Apache_Solr_HttpTransport_Response', $response);
+		$this->assertInstanceOf('Apache_Solr_HttpTransport_Response', $response);
 		
 		$this->assertEquals(200, $response->getStatusCode(), 'Status code was not 200');
 		$this->assertEquals(self::POST_RESPONSE_MIME_TYPE, $response->getMimeType(), 'mimetype was not correct');

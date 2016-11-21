@@ -1,39 +1,38 @@
 <?php
 /**
- * Copyright (c) 2007-2011, Servigistics, Inc.
- * All rights reserved.
+ * Copyright (c) 2007-2013, PTC Inc.
+ * All rights reserved. 
+ * 
+ * Redistribution and use in source and binary forms, with or without 
+ * modification, are permitted provided that the following conditions are met: 
+ * 
+ *  - Redistributions of source code must retain the above copyright notice, 
+ *    this list of conditions and the following disclaimer. 
+ *  - Redistributions in binary form must reproduce the above copyright 
+ *    notice, this list of conditions and the following disclaimer in the 
+ *    documentation and/or other materials provided with the distribution. 
+ *  - Neither the name of PTC Inc. nor the names of its contributors may be
+ *    used to endorse or promote products derived from this software without
+ *    specific prior written permission. 
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE 
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+ * POSSIBILITY OF SUCH DAMAGE. 
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- *  - Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
- *  - Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- *  - Neither the name of Servigistics, Inc. nor the names of
- *    its contributors may be used to endorse or promote products derived from
- *    this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- *
- * @copyright Copyright 2007-2011 Servigistics, Inc. (http://servigistics.com)
- * @license http://solr-php-client.googlecode.com/svn/trunk/COPYING New BSD
- * @version $Id: $
+ * @copyright Copyright 2007-2013 PTC Inc. (http://ptc.com)
+ * @license https://raw.github.com/PTCInc/solr-php-client/master/COPYING 3-Clause BSD
  *
  * @package Apache
  * @subpackage Solr
- * @author Donovan Jimenez <djimenez@conduit-it.com>
+ * @author Donovan Jimenez
  */
 
 // Require Apache_Solr_HttpTransport_Abstract
@@ -62,6 +61,15 @@ class Apache_Solr_HttpTransport_FileGetContents extends Apache_Solr_HttpTranspor
 	private $_getContext, $_headContext, $_postContext;
 	
 	/**
+	 * For POST operations, we're already using the Header context value for
+	 * specifying the content type too, so we have to keep our computed
+	 * authorization header around
+	 * 
+	 * @var string
+	 */
+	private $_authHeader = "";
+	
+	/**
 	 * Initializes our reuseable get and post stream contexts
 	 */
 	public function __construct()
@@ -69,6 +77,20 @@ class Apache_Solr_HttpTransport_FileGetContents extends Apache_Solr_HttpTranspor
 		$this->_getContext = stream_context_create();
 		$this->_headContext = stream_context_create();
 		$this->_postContext = stream_context_create();
+	}
+	
+	public function setAuthenticationCredentials($username, $password)
+	{
+		// compute the Authorization header
+		$this->_authHeader = "Authorization: Basic " . base64_encode($username . ":" . $password);
+		
+		// set it now for get and head contexts
+		stream_context_set_option($this->_getContext, 'http', 'header', $this->_authHeader);
+		stream_context_set_option($this->_headContext, 'http', 'header', $this->_authHeader);
+		
+		// for post, it'll be set each time, so add an \r\n so it can be concatenated
+		// with the Content-Type
+		$this->_authHeader .= "\r\n";
 	}
 
 	public function performGetRequest($url, $timeout = false)
@@ -87,7 +109,7 @@ class Apache_Solr_HttpTransport_FileGetContents extends Apache_Solr_HttpTranspor
 			// use the default timeout pulled from default_socket_timeout otherwise
 			stream_context_set_option($this->_getContext, 'http', 'timeout', $this->getDefaultTimeout());
 		}
-
+		
 		// $http_response_headers will be updated by the call to file_get_contents later
 		// see http://us.php.net/manual/en/wrappers.http.php for documentation
 		// Unfortunately, it will still create a notice in analyzers if we don't set it here
@@ -136,8 +158,8 @@ class Apache_Solr_HttpTransport_FileGetContents extends Apache_Solr_HttpTranspor
 					// set HTTP method
 					'method' => 'POST',
 
-					// Add our posted content type
-					'header' => "Content-Type: $contentType",
+					// Add our posted content type (and auth header - see setAuthentication)
+					'header' => "{$this->_authHeader}Content-Type: {$contentType}",
 
 					// the posted content
 					'content' => $rawPost,

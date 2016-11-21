@@ -60,9 +60,9 @@ features_exclude[variable][panelizer_user:user_allowed_types] = panelizer_user:u
 features_exclude[variable][panelizer_user:user_default] = panelizer_user:user_default
 features_exclude[variable][panelizer_defaults_user_user] = panelizer_defaults_user_user
 
-; Information added by Drupal.org packaging script on 2016-08-20
-version = "7.x-1.40"
+; Information added by Drupal.org packaging script on 2016-11-17
+version = "7.x-1.41"
 core = "7.x"
 project = "panopoly_users"
-datestamp = "1471712466"
+datestamp = "1479408801"
 

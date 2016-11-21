@@ -44,7 +44,9 @@
     if (!preview_widget.hasClass('panopoly-magic-loading')) {
       preview_widget.addClass('panopoly-magic-loading');
       submit = function () {
-        $form.find('.ctools-auto-submit-click').click();
+        if (document.contains(form)) {
+          $form.find('.ctools-auto-submit-click').click();
+        }
       };
       if (typeof timeout === 'number') {
         return setTimeout(submit, timeout);
