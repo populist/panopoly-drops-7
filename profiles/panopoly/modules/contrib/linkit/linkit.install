@@ -111,6 +111,9 @@ function linkit_update_7300() {
      )
   );
 
+  // Make sure our schema changes are reflected in the cached schema or
+  // subsequent update hooks making use of it might fail.
+  drupal_get_schema('linkit_profiles', TRUE);
 
   foreach ($old_profiles as $profile) {
     $data = unserialize($profile->data);
@@ -209,15 +212,50 @@ function linkit_update_7301() {
 }
 
 /**
- * Set URL type to "Entity view page" to preserve current behavior.
+ * Reverted.
  */
 function linkit_update_7302() {
+  // This is the broken verison of 7304
+}
+
+/**
+ * Fixed 7302. Set URL type to "Entity view page" to preserve current behavior.
+ */
+function linkit_update_7303() {
   require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'linkit') . '/plugins/linkit_search/file.class.php';
   $profiles = linkit_profile_load_all();
+  $show_notice = FALSE;
   foreach ($profiles as $profile) {
-    if (isset($profile->data['entity:file'])) {
-      $profile->data['entity:file'] = LINKIT_FILE_URL_TYPE_ENTITY;
+    // If the broken 7302 has been applied, and no other changes has been made, there is not way to get the data back.
+    // Lets add the default settings instead.
+    if (isset($profile->data['entity:file']) && $profile->data['entity:file'] == LINKIT_FILE_URL_TYPE_ENTITY) {
+      $profile->data['entity:file'] = array(
+        'result_description' => '',
+        'bundles' => array(
+          'image' => 0,
+          'video' => 0,
+          'audio' => 0,
+          'document' => 0,
+        ),
+        'group_by_bundle' => 0,
+        'show_scheme' => 0,
+        'group_by_scheme' => 0,
+        'url_type' => 'entity',
+        'image_extra_info' => array(
+          'thumbnail' => 'thumbnail',
+          'dimensions' => 'dimensions',
+        ),
+      );
       ctools_export_crud_save('linkit_profiles', $profile);
+      $show_notice = TRUE;
+    }
+    else if (isset($profile->data['entity:file']) && !isset($profile->data['entity:file']['url_type'])) {
+      $profile->data['entity:file']['url_type'] = LINKIT_FILE_URL_TYPE_ENTITY;
+      ctools_export_crud_save('linkit_profiles', $profile);
+    }
+
+    if ($show_notice) {
+      return t('A previous update may have changed the settings for the "managed file" search plugin in all your linkit profiles.');
     }
   }
 }

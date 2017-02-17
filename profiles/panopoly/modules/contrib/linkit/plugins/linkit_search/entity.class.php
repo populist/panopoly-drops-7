@@ -97,7 +97,7 @@ class LinkitSearchPluginEntity extends LinkitSearchPlugin {
    *   The entity label, or FALSE if not found.
    */
   function createLabel($entity) {
-    return entity_label($this->plugin['entity_type'], $entity);
+    return filter_xss(entity_label($this->plugin['entity_type'], $entity));
   }
 
    /**

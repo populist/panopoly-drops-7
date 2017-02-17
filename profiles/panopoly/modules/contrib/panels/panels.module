@@ -6,7 +6,7 @@
  * Core functionality for the Panels engine.
  */
 
-define('PANELS_REQUIRED_CTOOLS_API', '2.0.8');
+define('PANELS_REQUIRED_CTOOLS_API', '2.0.9');
 
 /**
  * The current working panels version.
@@ -20,7 +20,7 @@ define('PANELS_REQUIRED_CTOOLS_API', '2.0.8');
  *   ; Requires Panels v7.x-3.4 or newer.
  *   dependencies[] = panels (>=3.4)
  */
-define('PANELS_VERSION', '7.x-3.6');
+define('PANELS_VERSION', '7.x-3.8');
 
 
 define('PANELS_TITLE_FIXED', 0); // Hide title use to be true/false. So false remains old behavior.
@@ -317,7 +317,19 @@ function panels_permission() {
     ),
     'administer panels styles' => array(
       'title' => t("Administer Panels styles"),
+      'description' => t("DEPRECATED: Modules using this permission should use specific style permissions. See Issue #2329419 for more info."),
+    ),
+    'administer panels display styles' => array(
+      'title' => t("Administer Panels display styles"),
+      'description' => t("Allows a user to administer the styles of Panel displays."),
+    ),
+    'administer panels pane styles' => array(
+      'title' => t("Administer Panels pane styles"),
       'description' => t("Allows a user to administer the styles of Panel panes."),
+    ),
+    'administer panels region styles' => array(
+      'title' => t("Administer Panels region styles"),
+      'description' => t("Allows a user to administer the styles of Panel regions."),
     ),
     'use panels caching features' => array(
       'title' => t("Configure caching settings on Panels"),

@@ -371,8 +371,8 @@ function panels_panel_context_save(&$handler, $update) {
   ctools_include('css');
   ctools_css_clear('panel_context:' . $handler->name);
 
-  if (isset($page->conf['temp_layout'])) {
-    unset($page->conf['temp_layout']);
+  if (isset($handler->conf['temp_layout'])) {
+    unset($handler->conf['temp_layout']);
   }
 }
 

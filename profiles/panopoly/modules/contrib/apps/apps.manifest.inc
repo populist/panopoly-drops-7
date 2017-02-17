@@ -525,8 +525,18 @@ function apps_add_app_info(&$apps) {
   $set_cache = FALSE;
   foreach ($apps as $id => $app) {
     if (!isset($info[$app['machine_name']])) {
-       $info[$app['machine_name']] = ($i = module_invoke($app['machine_name'], 'apps_app_info')) ? $i : array();
-       $set_cache = TRUE;
+      $info[$app['machine_name']] = array();
+      // Check if app is local.
+      $module_cache = system_rebuild_module_data();
+      if (isset($module_cache[$app['machine_name']])) {
+        if (!module_exists($app['machine_name'])) {
+          // Module is in the codebase but not installed.
+          module_load_include('module', $app['machine_name']);
+          module_load_include('app.inc', $app['machine_name']);
+        }
+        $info[$app['machine_name']] = ($i = module_invoke($app['machine_name'], 'apps_app_info')) ? $i : array();
+      }
+      $set_cache = TRUE;
     }
     $apps[$id] += $info[$app['machine_name']];
     // Add defaults

@@ -87,6 +87,6 @@ Feature: Add image widget
       And I click "Add new pane"
       And I click "Add image" in the "CTools modal" region
     Then I should see "Configure new Add image"
-    When I click "Search for existing content" in the "CTools modal" region
+    When I click the 2nd "Search for existing content" in the "CTools modal" region
     Then I should see "Linkit"
 

@@ -2,134 +2,149 @@
  * @file
  * Linkit field ui functions
  */
+(function($, behavior) {
+  'use strict';
 
-(function ($) {
+  Drupal.behaviors[behavior] = {
+    attach: function(context, settings) {
+      // If there is no fields, just stop here.
+      if (undefined === settings.linkit || null === settings.linkit.fields) {
+        return false;
+      }
 
-Drupal.behaviors.linkit_field = {
-  attach : function(context, settings) {
-    // If there is no fields, just stop here.
+      $.each(settings.linkit.fields, function(i, instance) {
+        $('#' + instance.source, context).once(behavior, function() {
+          var element = this;
 
-    if (settings.linkit == undefined || settings.linkit.fields == null) {
-      return false;
-    }
+          $('.linkit-field-' + instance.source).click(function(event) {
+            event.preventDefault();
 
-    $.each(settings.linkit.fields, function(field_name, field) {
-      $('#' + field_name, context).once('linkit_field', function() {
-        $('.linkit-field-' + field_name).click(function() {
-          // Set profile.
-          Drupal.settings.linkit.currentInstance.profile = Drupal.settings.linkit.fields[field_name].profile;
+            // Only care about selection if the element is a textarea.
+            if ('textarea' === element.nodeName.toLowerCase()) {
+              instance.selection = Drupal.linkit.getDialogHelper('field').getSelection(element);
+            }
 
-          // Set the name of the source field..
-          Drupal.settings.linkit.currentInstance.source = field_name;
-
-          // Set the source type.
-          Drupal.settings.linkit.currentInstance.helper = 'field';
-
-          // Only care about selection if the element is a textarea.
-          if ($('textarea#' + field_name).length) {
-            var selection =  Drupal.linkit.getDialogHelper('field').getSelection($('#' + field_name).get(0));
-            // Save the selection.
-            Drupal.settings.linkit.currentInstance.selection = selection;
-          }
-
-          // Suppress profile changer.
-          Drupal.settings.linkit.currentInstance.suppressProfileChanger = true;
-
-          // Create the modal.
-          Drupal.linkit.createModal();
-
-         return false;
+            Drupal.settings.linkit.currentInstance = instance;
+            Drupal.linkit.createModal();
+          });
         });
       });
-    });
-  }
-};
-
-/**
- * Linkit field dialog helper.
- */
-Drupal.linkit.registerDialogHelper('field', {
-  init : function() {},
-  afterInit : function () {},
+    }
+  };
 
   /**
-   * Insert the link into the field.
-   *
-   * @param {Object} link
-   *   The link object.
+   * Linkit field dialog helper.
    */
-  insertLink : function(data) {
-    var source = $('#' + Drupal.settings.linkit.currentInstance.source),
-      field_settings = Drupal.settings.linkit.fields[Drupal.settings.linkit.currentInstance.source],
+  Drupal.linkit.registerDialogHelper('field', {
+    afterInit: function() {},
 
-    // Call the insert plugin.
-    link = Drupal.linkit.getInsertPlugin(field_settings.insert_plugin).insert(data, field_settings);
+    /**
+     * Insert the link into the field.
+     *
+     * @param {Object} data
+     *   The link object.
+     */
+    insertLink: function(data) {
+      var instance = Drupal.settings.linkit.currentInstance,
+          // Call the insert plugin.
+          link = Drupal.linkit.getInsertPlugin(instance.insertPlugin).insert(data, instance);
 
-    if (typeof Drupal.settings.linkit.currentInstance.selection != 'undefined') {
-      // Replace the selection and insert the link there.
-      this.replaceSelection(source.get(0), Drupal.settings.linkit.currentInstance.selection, link);
-    }
-    else {
-      // Replace the field value.
-      this.replaceFieldValue(source.get(0), link);
-    }
+      if (instance.hasOwnProperty('selection')) {
+        // Replace the selection and insert the link there.
+        this.replaceSelection(instance.source, instance.selection, link);
+      }
+      else if (instance.hasOwnProperty('titleField')) {
+        // The "linkContent" property will always be present when AJAX used.
+        // Otherwise, if you use simple insert without autocomplete, then this
+        // property will be undefined and title field should not be filled in.
+        //
+        // @see Drupal.behaviors.linkitSearch.attach
+        if (instance.hasOwnProperty('linkContent')) {
+          this.replaceFieldValue(instance.titleField, instance.linkContent);
+        }
 
-    // Link field can have a title field. If they have, we populate the title
-    // field with the search result title if any.
-    if (typeof field_settings.title_field != 'undefined' && typeof Drupal.settings.linkit.currentInstance.linkContent != 'undefined') {
-      this.replaceFieldValue($('#' + field_settings.title_field).get(0), Drupal.settings.linkit.currentInstance.linkContent);
-    }
-  },
+        // The "path" property will always be present after dialog was
+        // opened and contain raw URL.
+        //
+        // @see Drupal.behaviors.linkitDashboard.attach
+        this.replaceFieldValue(instance.source, data.path);
+      }
+      else {
+        // Replace the field value.
+        this.replaceFieldValue(instance.source, link);
+      }
+    },
 
-  /**
-   * Get field selection.
-   */
-  getSelection : function(e) {
-    // Mozilla and DOM 3.0.
-    if ('selectionStart' in e) {
-        var l = e.selectionEnd - e.selectionStart;
-        return { start: e.selectionStart, end: e.selectionEnd, length: l, text: e.value.substr(e.selectionStart, l) };
-    }
-    // IE.
-    else if(document.selection) {
-        e.focus();
-        var r = document.selection.createRange(),
-          tr = e.createTextRange(),
-          tr2 = tr.duplicate();
-        tr2.moveToBookmark(r.getBookmark());
-        tr.setEndPoint('EndToStart',tr2);
+    /**
+     * Get field selection.
+     */
+    getSelection: function(element) {
+      var object = {
+        start: element.value.length,
+        end: element.value.length,
+        length: 0,
+        text: ''
+      };
 
-        if (r == null || tr == null) {
-          return { start: e.value.length, end: e.value.length, length: 0, text: '' };
+      // Mozilla and DOM 3.0.
+      if ('selectionStart' in element) {
+        var length = element.selectionEnd - element.selectionStart;
+
+        object = {
+          start: element.selectionStart,
+          end: element.selectionEnd,
+          length: length,
+          text: element.value.substr(element.selectionStart, length)
+        };
+      }
+      // IE.
+      else if (document.selection) {
+        element.focus();
+
+        var range = document.selection.createRange(),
+            textRange = element.createTextRange(),
+            textRangeDuplicate = textRange.duplicate();
+
+        textRangeDuplicate.moveToBookmark(range.getBookmark());
+        textRange.setEndPoint('EndToStart', textRangeDuplicate);
+
+        if (!(range || textRange)) {
+          return object;
         }
 
         // For some reason IE doesn't always count the \n and \r in the length.
-        var text_part = r.text.replace(/[\r\n]/g,'.'),
-          text_whole = e.value.replace(/[\r\n]/g,'.'),
-          the_start = text_whole.indexOf(text_part, tr.text.length);
-        return { start: the_start, end: the_start + text_part.length, length: text_part.length, text: r.text };
+        var text_part = range.text.replace(/[\r\n]/g, '.'),
+            text_whole = element.value.replace(/[\r\n]/g, '.'),
+            the_start = text_whole.indexOf(text_part, textRange.text.length);
+
+        object = {
+          start: the_start,
+          end: the_start + text_part.length,
+          length: text_part.length,
+          text: range.text
+        };
+      }
+
+      return object;
+    },
+
+    /**
+     * Replace the field selection.
+     */
+    replaceSelection: function(id, selection, text) {
+      var field = this.getField(id);
+      field.value = field.value.substr(0, selection.start) + text + field.value.substr(selection.end, field.value.length);
+    },
+
+    /**
+     * Replace the field value.
+     */
+    replaceFieldValue: function(id, text) {
+      this.getField(id).value = text;
+    },
+
+    getField: function(id) {
+      return document.getElementById(id);
     }
-    // Browser not supported.
-    else {
-      return { start: e.value.length, end: e.value.length, length: 0, text: '' };
-    }
-  },
-
-   /**
-   * Replace the field selection.
-   */
-  replaceSelection : function (e, selection, text) {
-    var start_pos = selection.start;
-    var end_pos = start_pos + text.length;
-    e.value = e.value.substr(0, start_pos) + text + e.value.substr(selection.end, e.value.length);
-  },
-
-   /**
-   * Replace the field value.
-   */
-  replaceFieldValue : function (e, text) {
-    e.value = text;
-  }
-});
-
-})(jQuery);
+  });
+})(jQuery, 'linkitField');

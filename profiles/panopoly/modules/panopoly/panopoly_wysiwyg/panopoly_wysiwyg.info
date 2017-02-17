@@ -33,9 +33,9 @@ features[variable][] = media_wysiwyg_wysiwyg_browser_plugins
 features[wysiwyg][] = panopoly_html_text
 features[wysiwyg][] = panopoly_wysiwyg_text
 
-; Information added by Drupal.org packaging script on 2016-11-17
-version = "7.x-1.41"
+; Information added by Drupal.org packaging script on 2017-02-17
+version = "7.x-1.42"
 core = "7.x"
 project = "panopoly_wysiwyg"
-datestamp = "1479408833"
+datestamp = "1487349679"
 

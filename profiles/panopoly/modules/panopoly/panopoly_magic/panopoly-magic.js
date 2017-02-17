@@ -34,6 +34,10 @@
   // Used to make sure we don't wrap Drupal.wysiwygAttach() more than once.
   var wrappedWysiwygAttach = false;
 
+  // Used to make sure we don't wrap insertLink() on the Linkit field helper
+  // more than once.
+  var wrappedLinkitField = false;
+
   // Triggers the CTools autosubmit on the given form. If timeout is passed,
   // it'll set a timeout to do the actual submit rather than calling it directly
   // and return the timer handle.
@@ -123,6 +127,18 @@
       return originalFunc.apply(this, arguments);
     };
   }
+
+  // Used to wrap a function with an afterFunc (we use it for wrapping
+  // insertLink() on the Linkit field helper);
+  function wrapFunctionAfter(parent, name, afterFunc) {
+    var originalFunc = parent[name];
+    parent[name] = function () {
+      var retval = originalFunc.apply(this, arguments);
+      afterFunc.apply(this, arguments);
+      return retval;
+    };
+  }
+
 
   /**
    * Improves the Auto Submit Experience for CTools Modals
@@ -224,6 +240,18 @@
 
       // Prevent ctools auto-submit from firing when changing text formats.
       $(':input.filter-list').addClass('ctools-auto-submit-exclude');
+
+      // Handle Linkit fields.
+      if (!wrappedLinkitField && typeof Drupal.linkit !== 'undefined') {
+        var linkitFieldHelper = Drupal.linkit.getDialogHelper('field');
+        if (typeof linkitFieldHelper !== 'undefined') {
+          wrapFunctionAfter(linkitFieldHelper, 'insertLink', function (data) {
+            var element = document.getElementById(Drupal.settings.linkit.currentInstance.source);
+            triggerSubmit(element.form);
+          });
+          wrappedLinkitField = true;
+        }
+      }
 
     }
   }

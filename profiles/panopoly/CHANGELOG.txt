@@ -1,3 +1,44 @@
+7.x-1.42, 2017-02-17
+-------------------
+- Update Panopoly Test for Issue #2850972: Rename 'tests' directory to 'behat'.
+- Update Panopoly Test for Issue #2850954: Add composer.lock to .gitignore in
+  panopoly_test.
+- Drop support for updating from Panopoly version that were release more than a
+  year ago.
+- Update to Drupal 7.54.
+- Update Panopoly Core, Widgets and Images for Issue #2828987 by dsnopek,
+  humansky, cboyden, mazze, byronveale, Steve Hanson, ndeet, mpotter: Update
+  Media module to 7.x-2.0-rc3.
+- Update Panopoly Widgets for Issue #2623318 by dsnopek: Spotlight title display
+  problems at mobile width.
+- Update Panopoly Test for Issue #2717277 by dsnopek: Upload screenshots to
+  imgur on failed tests.
+- Update Panopoly Core for Issue #2803347 by dsnopek, cboyden: Update Behat
+  Drupal extension to 3.2.2.
+- Update Panopoly Core for Issue #2789503 by cboyden, dsnopek, temkin: Update
+  CTools to 1.12 and Panels to 3.8.
+- Update to Drupal core 7.53.
+- Update Panopoly Widgets and Test for Issue #2771333 by dsnopek: Use linkit on
+  path for "Make title a link" for all FPP widgets.
+- Revert "Update Panopoly Core for Issue #2789503 by cboyden, temkin, dsnopek:
+  Update CTools to 1.12 and Panels to 3.8".
+- Update Panopoly Core for Issue #2789503 by cboyden, temkin, dsnopek: Update
+  CTools to 1.12 and Panels to 3.8.
+- Update Panopoly Widgets, WYSIWYG and Test for Issue #2173535 by dsnopek: Use
+  linkit on Spotlight.
+- Update Panopoly Widgets for Issue #2832255 by dsnopek, cboyden: URLs truncated
+  on Image widgets.
+- Update Panopoly Magic for Issue #2379145 by dsnopek: Panopoly Magic live
+  preview does not render field collections.
+- Update Panopoly Magic for Issue #2813391 by dsnopek, cboyden: Preview doesn't
+  refresh after link is inserted into field with Linkit.
+- Merge branch '7.x-1.x' of git.drupal.org:project/panopoly into 7.x-1.x.
+- Update Panopoly Core and Pages for Issue #2597273 by dsnopek: Update to
+  Pathauto 1.3.
+- Update Panopoly Core and Search for Issue #2765427 by dsnopek, humansky, Jon
+  Nunan: Fix tests and 'drush' installation with Drupal 7.50 and greater.
+- Restored drupal-org.make after the 1.41 release.
+
 Panopoly 7.x-1.41, 2016-11-17
 ----------------------
 - Upgrade to Drupal 7.52.

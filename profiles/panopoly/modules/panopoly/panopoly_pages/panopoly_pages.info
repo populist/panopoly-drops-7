@@ -77,10 +77,13 @@ features_exclude[variable][panelizer_node:panopoly_landing_page_default] = panel
 features_exclude[variable][panelizer_node:panopoly_page_allowed_layouts] = panelizer_node:panopoly_page_allowed_layouts
 features_exclude[variable][panelizer_node:panopoly_page_allowed_types] = panelizer_node:panopoly_page_allowed_types
 features_exclude[variable][panelizer_node:panopoly_page_default] = panelizer_node:panopoly_page_default
+features_exclude[variable][pathauto_node_panopoly_landing_page_pattern] = pathauto_node_panopoly_landing_page_pattern
+features_exclude[variable][pathauto_node_panopoly_page_pattern] = pathauto_node_panopoly_page_pattern
+features_exclude[variable][pathauto_taxonomy_term_panopoly_categories_pattern] = pathauto_taxonomy_term_panopoly_categories_pattern
 
-; Information added by Drupal.org packaging script on 2016-11-17
-version = "7.x-1.41"
+; Information added by Drupal.org packaging script on 2017-02-17
+version = "7.x-1.42"
 core = "7.x"
 project = "panopoly_pages"
-datestamp = "1479408760"
+datestamp = "1487349611"
 

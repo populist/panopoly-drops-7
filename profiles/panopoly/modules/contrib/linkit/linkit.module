@@ -326,10 +326,10 @@ function linkit_module_implements_alter(&$implementations, $hook) {
  * Implements hook_element_info_alter().
  */
 function linkit_element_info_alter(&$types) {
-  // Append a process function for the field integration.
+  // Append a after_build function for the field integration.
   foreach (linkit_get_allowed_field_elements() as $element) {
     if (isset($types[$element])) {
-      $types[$element]['#process'][] = 'linkit_process_field_element';
+      $types[$element]['#after_build'][] = 'linkit_field_element_after_build';
     }
   }
 
@@ -556,7 +556,7 @@ function linkit_dashboard_form($form, &$form_state) {
       '#options' => $_profiles,
       '#ajax' => array(
         'callback' => 'linkit_change_profile',
-        'wrapper' => 'linkit-dashbaord-ajax-wrapper',
+        'wrapper' => 'linkit-dashboard-ajax-wrapper',
         'method' => 'replaceWith',
         'effect' => 'fade',
         'event' => 'click',
@@ -577,7 +577,7 @@ function linkit_dashboard_form($form, &$form_state) {
   $form['linkit_container'] = array(
     '#type' => 'container',
     '#weight' => 100,
-    '#prefix' => '<div id="linkit-dashbaord-ajax-wrapper">',
+    '#prefix' => '<div id="linkit-dashboard-ajax-wrapper">',
     '#suffix' => '</div>',
     '#attached' => array(
       'js' => array(
@@ -823,7 +823,10 @@ function linkit_parse_url($url, $parts) {
   // Internal URL.
   // We can not use the url_is_external() as it treats all absolute links as
   // external and treats all stream wrappers as internal.
-  $local_url = trim($path_info['scheme'] . '://' . $path_info['host'] . base_path(), '/') == $base_url;
+  $local_hosts = array($base_url);
+  // Give other modules a chance to add/remove/alter the local hosts.
+  drupal_alter('linkit_local_hosts', $local_hosts);
+  $local_url = in_array(trim($path_info['scheme'] . '://' . $path_info['host'] . base_path(), '/'), $local_hosts);
   $local_stream_wrapper = isset($local_stream_wrappers[$path_info['scheme']]);
   //@TODO: maybe file_valid_uri() ?
 
@@ -1046,12 +1049,17 @@ function linkit_pre_render_editor_element($element) {
 
     $profiles_formats = array();
 
+    $use_imce = FALSE;
+
     // First we need to figure out which formats that the current user can access have active Linkit profiles for them.
     foreach ($all_formats as $format) {
       // Load the first profile that is assigned to this text format.
       $profile = linkit_profile_load_by_format($format);
 
       if ($profile) {
+        if (isset($profile->data['imce']) && $profile->data['imce'] == 1) {
+          $use_imce = TRUE;
+        }
         $profiles_formats[$format] = array('profile' => $profile->name);
       }
     }
@@ -1068,7 +1076,7 @@ function linkit_pre_render_editor_element($element) {
       );
 
       // Configure Linkit to have an IMCE selector.
-      if (module_invoke('imce', 'access') && isset($profile->data['imce']) && $profile->data['imce'] == 1) {
+      if (module_invoke('imce', 'access') && $use_imce) {
         $field_js['data']['linkit']['IMCEurl'] = url('imce', array('query' => array(
           'app' => 'Linkit|sendto@Drupal.linkit.IMCECallback',
           'absolute' => TRUE,

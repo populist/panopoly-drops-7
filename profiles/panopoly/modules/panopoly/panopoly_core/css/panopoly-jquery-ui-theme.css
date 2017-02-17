@@ -52,7 +52,7 @@
 }
 
 .ui-front {
-  z-index: 100;
+  z-index: 10001 !important;
 }
 
 
@@ -283,7 +283,6 @@ button.ui-button::-moz-focus-inner {
   background-color: transparent;
 }
 .ui-dialog .ui-dialog-titlebar {
-  padding: 0;
   position: relative;
   height: 50px;
   font-size: 16px;

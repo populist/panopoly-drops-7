@@ -125,6 +125,10 @@
 
       // Add event listener.
       editor.on('doubleclick', function(evt) {
+        if (evt.data.dialog !== 'link') {
+          return;
+        }
+
         // Delete the default link dialog.
         delete evt.data.dialog;
 

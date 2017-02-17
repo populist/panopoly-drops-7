@@ -39,3 +39,10 @@ Feature: Add spotlight widget
       | Description                                | Testing description |
       And I press "edit-return"
     Then I should see "Image field is required"
+
+  # NOTE: we use the @panopoly_wysiwyg tag because that is where Linkit comes
+  #       from in a default install
+  @api @javascript @panopoly_widgets @panopoly_wysiwig
+  Scenario: Linkit is enabled on the link field
+    When I click the 2nd "Search for existing content" in the "CTools modal" region
+    Then I should see "Linkit"

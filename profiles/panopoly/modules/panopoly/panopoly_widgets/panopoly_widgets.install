@@ -397,3 +397,10 @@ function panopoly_widgets_update_7018() {
   features_revert(array('panopoly_widgets' => array('field_instance')));
 }
 
+/**
+ * Make sure the image widget disables URL truncating.
+ */
+function panopoly_widgets_update_7019() {
+  features_revert(array('panopoly_widgets' => array('field_instance')));
+}
+

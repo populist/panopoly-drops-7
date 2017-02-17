@@ -11,17 +11,23 @@ language: php
 sudo: false
 
 php:
-  - 5.4
+  - 5.6
 
 matrix:
   fast_finish: true
   allow_failures:
-    - php: 7
-    - php: hhvm
+    - php: "7"
+      env: UPGRADE=none INSTALL_PANOPOLY_DEMO_FROM_APPS=1
+    - php: "hhvm"
+      env: UPGRADE=none INSTALL_PANOPOLY_DEMO_FROM_APPS=1
   include:
+    - php: "7"
+      env: UPGRADE=none INSTALL_PANOPOLY_DEMO_FROM_APPS=1
     - php: "5.5"
       env: UPGRADE=none INSTALL_PANOPOLY_DEMO_FROM_APPS=1
-    - php: "5.6"
+    - php: "5.4"
+      env: UPGRADE=none INSTALL_PANOPOLY_DEMO_FROM_APPS=1
+    - php: "hhvm"
       env: UPGRADE=none INSTALL_PANOPOLY_DEMO_FROM_APPS=1
 
 env:
@@ -48,7 +54,7 @@ env:
     - DRUPAL_TI_DB_URL="mysql://root:@127.0.0.1/drupal_travis_db"
     # Note: Do not add a trailing slash here.
     - DRUPAL_TI_WEBSERVER_URL="http://127.0.0.1"
-    # Note: http://cgit.drupalcode.org/panopoly_test/tree/tests/behat.travis.yml depends on that port.
+    # Note: http://cgit.drupalcode.org/panopoly_test/tree/behat/behat.travis.yml depends on that port.
     - DRUPAL_TI_WEBSERVER_PORT="8888"
 
     # Simpletest specific commandline arguments, the DRUPAL_TI_SIMPLETEST_GROUP is appended at the end.
@@ -56,7 +62,7 @@ env:
 
     # === Behat specific variables.
     # This is relative to $TRAVIS_BUILD_DIR
-    - DRUPAL_TI_BEHAT_DIR="./profiles/panopoly/modules/panopoly/panopoly_test/tests"
+    - DRUPAL_TI_BEHAT_DIR="./profiles/panopoly/modules/panopoly/panopoly_test/behat"
     # These arguments are passed to the bin/behat command.
     - DRUPAL_TI_BEHAT_ARGS=""
     # Specify the filename of the behat.yml with the $DRUPAL_TI_DRUPAL_DIR variables.
@@ -104,10 +110,6 @@ env:
     - UPGRADE=7.x-1.33
     - UPGRADE=7.x-1.32
     - UPGRADE=7.x-1.31
-    - UPGRADE=7.x-1.30
-    - UPGRADE=7.x-1.29
-    - UPGRADE=7.x-1.28
-    - UPGRADE=7.x-1.27
 
 # Cache Composer & Drush directories.
 cache:

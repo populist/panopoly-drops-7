@@ -1,3 +1,13 @@
+7.x-1.42, 2017-02-17
+-------------------
+- Update Media module to 7.x-2.0-rc3.
+- Update CTools to 1.12 and Panels to 3.8.
+- Revert "Issue #2789503 by cboyden, temkin, dsnopek: Update CTools to 1.12 and
+  Panels to 3.8".
+- Update CTools to 1.12 and Panels to 3.8.
+- Update to Pathauto 1.3.
+- Fix tests and 'drush' installation with Drupal 7.50 and greater.
+
 Panopoly Core 7.x-1.41, 2016-11-17
 ---------------------------
 - Add Panelizer patch to make 'administer panelizer' permission work correctly.

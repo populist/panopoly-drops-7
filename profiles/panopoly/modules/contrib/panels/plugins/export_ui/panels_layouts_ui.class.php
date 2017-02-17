@@ -78,6 +78,8 @@ class panels_layouts_ui extends ctools_export_ui {
       $display->layout_settings = $form_state['item']->settings;
       $display->cache_key = $cache_key;
       $display->editing_layout = TRUE;
+      $display->storage_type = 'panels_layouts_ui';
+      $display->storage_id = 'panels_layouts_ui';
 
       $cache->display = $display;
       $cache->content_types = $content_types;

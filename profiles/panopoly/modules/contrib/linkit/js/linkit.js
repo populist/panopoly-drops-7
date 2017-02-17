@@ -6,10 +6,14 @@
 (function ($) {
 
 // Create the Linkit namespaces.
-Drupal.linkit = Drupal.linkit || {};
+Drupal.linkit = Drupal.linkit || { 'excludeIdSelectors': {} };
 Drupal.linkit.currentInstance = Drupal.linkit.currentInstance || {};
 Drupal.linkit.dialogHelper = Drupal.linkit.dialogHelper || {};
 Drupal.linkit.insertPlugins = Drupal.linkit.insertPlugins || {};
+
+// Exclude ids from ajax_html_ids during AJAX requests.
+Drupal.linkit.excludeIdSelectors.ckeditor = ['[id^="cke_"]'];
+Drupal.linkit.excludeIdSelectors.tokens = ['[id^="token-"]'];
 
 /**
  * Create the modal dialog.
@@ -140,6 +144,12 @@ Drupal.linkit.registerDialogHelper = function(name, helper) {
 
 /**
  * Get a dialog helper.
+ *
+ * @param {String} name
+ *   The name of helper.
+ *
+ * @return {Object}
+ *   Dialog helper object.
  */
 Drupal.linkit.getDialogHelper = function(name) {
   return Drupal.linkit.dialogHelper[name];
@@ -158,5 +168,31 @@ Drupal.linkit.registerInsertPlugin = function(name, plugin) {
 Drupal.linkit.getInsertPlugin = function(name) {
   return Drupal.linkit.insertPlugins[name];
 };
+
+var oldBeforeSerialize = (Drupal.ajax ? Drupal.ajax.prototype.beforeSerialize : false);
+if (oldBeforeSerialize) {
+  /**
+   * Filter the ajax_html_ids list sent in AJAX requests.
+   *
+   * This avoids hitting like max_input_vars, which defaults to 1000,
+   * even with just a few active editor instances.
+   */
+  Drupal.ajax.prototype.beforeSerialize = function (element, options) {
+    var ret = oldBeforeSerialize.call(this, element, options);
+    var excludeSelectors = [];
+    $.each(Drupal.linkit.excludeIdSelectors, function () {
+      if ($.isArray(this)) {
+        excludeSelectors = excludeSelectors.concat(this);
+      }
+    });
+    if (excludeSelectors.length > 0) {
+      options.data['ajax_html_ids[]'] = [];
+      $('[id]:not(' + excludeSelectors.join(',') + ')').each(function () {
+        options.data['ajax_html_ids[]'].push(this.id);
+      });
+    }
+    return ret;
+  }
+}
 
 })(jQuery);

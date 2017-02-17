@@ -1,3 +1,12 @@
+7.x-1.42, 2017-02-17
+-------------------
+- Rename 'tests' directory to 'behat'.
+- Add composer.lock to .gitignore in panopoly_test.
+- Upload screenshots to imgur on failed tests.
+- Update Behat Drupal extension to 3.2.2.
+- Use linkit on path for "Make title a link" for all FPP widgets.
+- Use linkit on Spotlight.
+
 Panopoly Test 7.x-1.41, 2016-11-17
 ---------------------------
 - Switch Image widget to use Media Browser.

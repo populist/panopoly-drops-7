@@ -489,6 +489,25 @@ function panopoly_widgets_fieldable_panels_pane_view($entity, $view_mode, $langc
 }
 
 /**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function panopoly_widgets_form_fieldable_panels_panes_fieldable_panels_pane_content_type_edit_form_alter(&$form, &$form_state) {
+  if (isset($form['widget_settings']['link'])) {
+    // For when panopoly_magic is enabled.
+    $element =& $form['widget_settings']['link'];
+  }
+  else {
+    $element =& $form['link'];
+  }
+
+  $element['path']['#linkit'] = array(
+    'enable' => TRUE,
+    'profile' => 'content_fields',
+    'button_text' => t('Search for existing content'),
+  );
+}
+
+/**
  * Rewrites the node title by poisening the node_load() static cache.
  *
  * We use this to support overriding the title of 'Content item' widgets.

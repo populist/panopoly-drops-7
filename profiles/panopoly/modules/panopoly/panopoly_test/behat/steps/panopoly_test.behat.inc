@@ -10,6 +10,8 @@ use Drupal\Component\Utility\Random;
 use Drupal\DrupalExtension\Context\RawDrupalContext;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Drupal\DrupalExtension\Hook\Scope\AfterUserCreateScope;
+use Behat\Testwork\Tester\Result\TestResult;
+use Behat\Mink\Exception\UnsupportedDriverActionException;
 
 class TestSubContext extends RawDrupalContext implements DrupalSubContextInterface {
 
@@ -130,13 +132,81 @@ class TestSubContext extends RawDrupalContext implements DrupalSubContextInterfa
    *
    * @AfterStep
    */
-  public function afterStep($event) {
+  public function afterStepWaitForJavascript($event) {
     if (isset($this->javascript) && $this->javascript && empty($this->iframe)) {
       $text = $event->getStep()->getText();
       if (preg_match('/(follow|press|click|submit|viewing|visit|reload|attach)/i', $text)) {
         $this->iWaitForAjax();
       }
     }
+  }
+
+  /**
+   * After a failed step, upload a screenshot.
+   *
+   * @AfterStep
+   */
+  public function afterStepTakeScreenshot($event) {
+    if ($event->getTestResult()->getResultCode() === TestResult::FAILED && ($imgur_client_id = getenv('IMGUR_CLIENT_ID')))  {
+      $driver = $this->getSession()->getDriver();
+
+      // Get the screenshot if the driver supports it.
+      try {
+        $image = $driver->getScreenshot();
+      }
+      catch (UnsupportedDriverActionException $e) {
+        return;
+      }
+
+      // Upload the image.
+      $title = preg_replace('/[^a-zA-Z0-9\._-]/', '_', $event->getStep()->getText());
+      $url = $this->uploadScreenshot($image, $title, $imgur_client_id);
+      // @todo Is there a Behat API we can use to write to the screen?
+      print "Screenshot uploaded to $url\n";
+    }
+  }
+
+  /**
+   * Uploads a screenshot to imgur.
+   *
+   * @param string $image
+   *   The image data.
+   * @param string $title
+   *   The image title.
+   * @param string $imgur_client_id
+   *   The Client ID for your application registered with imgur
+   *
+   * @see https://api.imgur.com/oauth2
+   */
+  protected function uploadScreenshot($image, $title, $imgur_client_id) {
+    // @todo This should use Guzzle rather than curl directly
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+      CURLOPT_URL => "https://api.imgur.com/3/image",
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_ENCODING => "",
+      CURLOPT_MAXREDIRS => 10,
+      CURLOPT_TIMEOUT => 30,
+      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+      CURLOPT_CUSTOMREQUEST => "POST",
+      CURLOPT_POSTFIELDS => "image=".urlencode(base64_encode($image))."&title=$title",
+      CURLOPT_HTTPHEADER => array(
+        "authorization: Client-ID $imgur_client_id",
+        "cache-control: no-cache",
+        "content-type: application/x-www-form-urlencoded"
+      ),
+    ));
+
+    $response = curl_exec($curl);
+    $error = curl_error($curl);
+    curl_close($curl);
+
+    $payload = json_decode($response);
+    if ($error || property_exists($payload, 'error')) {
+      return;
+    }
+
+    return $payload->data->link;
   }
 
   /**
@@ -770,6 +840,32 @@ class TestSubContext extends RawDrupalContext implements DrupalSubContextInterfa
       throw new \Exception("$module did not have $dependency dependency at $key position");
     }
 
+  }
+
+  /**
+   * @When /^I click the (?P<count>\d+)(?:st|nd|rd|th) "(?P<link>[^"]*)" in the "(?P<region>[^"]*)" region$/
+   */
+  public function clickNthLink($count, $link, $region) {
+    $session = $this->getSession();
+    $region = $session->getPage()->find('region', $region);
+
+    // We index from zero, rather than one.
+    $index = $count - 1;
+
+    foreach ($region->findAll('xpath', '//a[text()="' . $link . '"]') as $element) {
+      if ($index == 0) {
+        $element->click();
+        return;
+      }
+      elseif ($index < 0) {
+        break;
+      }
+      else {
+        $index--;
+      }
+    }
+
+    throw new \Exception(sprintf("Cannot find link with text '%s' and index %d", $link, $count));
   }
 
 }

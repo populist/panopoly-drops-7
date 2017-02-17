@@ -172,6 +172,8 @@
 .better-autocomplete {
   background-color: transparent;
   border-bottom: none;
+  box-shadow: none;
+  z-index: inherit;
 }
 .better-autocomplete > .result.status-ok {
   background: #397928;

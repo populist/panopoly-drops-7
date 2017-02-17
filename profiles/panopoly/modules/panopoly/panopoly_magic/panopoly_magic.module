@@ -379,8 +379,16 @@ function panopoly_magic_form_alter(&$form, &$form_state, $form_id) {
           $entity->fpid = NULL;
         }
 
+        // Process any field collection fields that may be present.
+        $field_collection_fields = _panopoly_magic_process_field_collection_fields('fieldable_panels_pane', $entity->bundle, $entity, $form, $form_state);
+
         field_attach_form_validate('fieldable_panels_pane', $entity, $form, $form_state);
         field_attach_submit('fieldable_panels_pane', $entity, $form, $form_state);
+
+        // Add back any field collection fields.
+        foreach ($field_collection_fields as $field_collection_field => $field_collection_value) {
+          $entity->$field_collection_field = $field_collection_value;
+        }
 
         // Set the callback to use for rendering the preview.
         $preview_callback = 'panopoly_magic_render_fieldable_panels_pane_preview';
@@ -600,6 +608,50 @@ function _panopoly_magic_add_path_to_ajax($element) {
   foreach (element_children($element) as $key) {
     _panopoly_magic_add_path_to_ajax($element[$key]);
   }
+}
+
+/**
+ * Process any field collection fields, returning psuedo values for them.
+ */
+function _panopoly_magic_process_field_collection_fields($entity_type, $bundle, $entity, $form, &$form_state) {
+  $field_collection_fields = array();
+
+  $instances = field_info_instances($entity_type, $bundle);
+  foreach ($instances as $instance) {
+    $field_name = $instance['field_name'];
+    $field = field_info_field($field_name);
+    if ($field['type'] == 'field_collection') {
+      $langcode = entity_language($entity_type, $entity);
+      if (!$langcode) {
+        $langcode = LANGUAGE_NONE;
+      }
+
+      foreach (element_children($form[$field_name][$langcode]) as $index) {
+        // Only address the numeric children.
+        if (!is_numeric($index)) {
+          continue;
+        }
+        $element = $form[$field_name][$langcode][$index];
+
+        // Create a new field collection entity with the values.
+        $field_collection_item = entity_create('field_collection_item', array('field_name' => $field_name));
+        $field_collection_item->setHostEntity($entity_type, $entity, $langcode, FALSE);
+        field_attach_form_validate('field_collection_item', $field_collection_item, $element, $form_state);
+        field_attach_submit('field_collection_item', $field_collection_item, $element, $form_state);
+        _field_invoke_multiple('load', 'field_collection_item', array($field_collection_item->item_id => $field_collection_item));
+
+        // Stash it for later use.
+        $field_collection_fields[$field_name][$langcode][] = array(
+          'entity' => $field_collection_item,
+        );
+      }
+
+      // Clear out the field so the values don't get submitted.
+      $entity->$field_name[$langcode] = array();
+    }
+  }
+
+  return $field_collection_fields;
 }
 
 /**

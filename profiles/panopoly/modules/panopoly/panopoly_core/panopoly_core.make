@@ -5,14 +5,15 @@ core = 7.x
 
 ; Panels and Chaos Tools Magic
 
-projects[ctools][version] = 1.9
+projects[ctools][version] = 1.12
 projects[ctools][subdir] = contrib
-projects[ctools][patch][2209775] = https://www.drupal.org/files/issues/ctools-readd_access_callback_params-2209775-24.patch
 projects[ctools][patch][2607626] = https://www.drupal.org/files/issues/ctools-close-modal-2607626-5.patch
+projects[ctools][patch][2787045] = https://www.drupal.org/files/issues/ctools-jquery_compatibility-2787045-14.patch
 
-projects[panels][version] = 3.7
+projects[panels][version] = 3.8
 projects[panels][subdir] = contrib
-projects[panels][patch][2787637] = https://www.drupal.org/files/issues/panels-storage-alt-task-2787637-6.patch
+projects[panels][patch][2790075] = https://www.drupal.org/files/issues/not_authorized_when-2790075-26.patch
+projects[panels][patch][2479879] = https://www.drupal.org/files/issues/panels-revert_allowed_types_to_variable-2479879-37.patch
 
 projects[panels_breadcrumbs][version] = 2.2
 projects[panels_breadcrumbs][subdir] = contrib
@@ -48,9 +49,8 @@ projects[views_bulk_operations][subdir] = contrib
 
 ; The Usual Suspects
 
-projects[pathauto][version] = 1.2
+projects[pathauto][version] = 1.3
 projects[pathauto][subdir] = contrib
-projects[pathauto][patch][936222] = http://drupal.org/files/issues/pathauto-persist-936222-195-pathauto-state.patch
 
 projects[token][version] = 1.6
 projects[token][subdir] = contrib
@@ -83,6 +83,7 @@ projects[link][subdir] = contrib
 
 projects[apps][version] = 1.0
 projects[apps][subdir] = contrib
+projects[apps][patch][2753413] = https://www.drupal.org/files/issues/apps-manifest-2753413-3.patch
 
 projects[features][version] = 2.10
 projects[features][subdir] = contrib
