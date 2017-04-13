@@ -30,6 +30,7 @@ stylesheets[all][] = panopoly-widgets-spotlight.css
 features[ctools][] = file_entity:file_default_displays:1
 features[ctools][] = linkit:linkit_profiles:1
 features[ctools][] = views:views_default:3.0
+features[defaultconfig][] = strongarm:media_wysiwyg_alignment
 features[defaultconfig][] = strongarm:media_wysiwyg_default_render
 features[defaultconfig][] = user_default_permissions:access media browser
 features[defaultconfig][] = user_default_permissions:add media from remote sources
@@ -124,9 +125,9 @@ features[linkit_profiles][] = content_fields
 features[views_view][] = panopoly_widgets_general_content
 features_exclude[dependencies][linkit] = linkit
 
-; Information added by Drupal.org packaging script on 2017-02-23
-version = "7.x-1.43"
+; Information added by Drupal.org packaging script on 2017-04-13
+version = "7.x-1.44"
 core = "7.x"
 project = "panopoly_widgets"
-datestamp = "1487817596"
+datestamp = "1492098403"
 

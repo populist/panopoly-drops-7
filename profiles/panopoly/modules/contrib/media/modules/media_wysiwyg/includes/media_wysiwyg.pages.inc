@@ -83,6 +83,28 @@ function media_wysiwyg_format_form($form, &$form_state, $file) {
       they are inserted into an editor.')
   );
 
+  // If necessary, display the alignment widget.
+  if (variable_get('media_wysiwyg_alignment', FALSE)) {
+    $align_default = empty($query_fields['alignment']) ? '' : $query_fields['alignment'];
+    $align_options = array(
+      '' => t('None'),
+      'left' => t('Left'),
+      'right' => t('Right'),
+      'center' => t('Center'),
+    );
+    if (!isset($align_options[$align_default])) {
+      // Safety code for a malformed token.
+      $align_default = '';
+    }
+    $form['options']['alignment'] = array(
+      '#type' => 'select',
+      '#title' => t('Alignment'),
+      '#options' => $align_options,
+      '#description' => t('Choose how you would like the media to be aligned with surrounding content.'),
+      '#default_value' => $align_default,
+    );
+  }
+
   // Add fields from the file, so that we can override them if necessary.
   $form['options']['fields'] = array();
   foreach ($fields as $field_name => $field_value) {

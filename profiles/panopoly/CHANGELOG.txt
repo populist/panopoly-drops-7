@@ -1,3 +1,11 @@
+7.x-1.44, 2017-04-13
+-------------------
+- Update Panopoly Widgets for Issue #2869079 by dsnopek: Update to Media 2.0.
+- Update Panopoly Widgets for Issue #2856834 by dsnopek: Incorrect image style
+  used in WYSIWYG on updated sites.
+- Start testing upgrades from the 1.43 release.
+- Restored drupal-org.make after the 1.43 release.
+
 7.x-1.43, 2017-02-22
 -------------------
 - Update Panopoly Core for Issue #2855019 by cboyden: Security update to Views
