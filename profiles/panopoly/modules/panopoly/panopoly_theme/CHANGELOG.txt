@@ -1,3 +1,7 @@
+7.x-1.45, 2017-05-11
+-------------------
+- No changes since last release.
+
 7.x-1.44, 2017-04-13
 -------------------
 - No changes since last release.

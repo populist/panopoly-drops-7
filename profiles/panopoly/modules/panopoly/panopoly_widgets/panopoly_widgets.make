@@ -21,7 +21,7 @@ projects[menu_block][subdir] = contrib
 projects[file_entity][version] = 2.0-beta3
 projects[file_entity][subdir] = contrib
 
-projects[media][version] = 2.0
+projects[media][version] = 2.1
 projects[media][subdir] = contrib
 projects[media][patch][2272567] = https://www.drupal.org/files/issues/media_dialog_appears_2272567-32.patch
 

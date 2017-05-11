@@ -1213,19 +1213,18 @@ function media_set_browser_params() {
     //   @see hook_media_browser_params_alter()
     $params = drupal_get_query_parameters();
 
-    $insecure_settings = array(
-      'file_directory',
-      'file_extensions',
-      'max_filesize',
-      'uri_scheme',
+    // Filter out everything except a whitelist of known safe options.
+    $safe_options = array(
+      'activePlugins',
+      'fid',
+      'id',
+      'multiselect',
+      'options',
+      'plugins',
+      'render',
+      'types',
     );
-
-    // Filter out insecure_settings.
-    foreach(array_keys($params) as $key) {
-      if (in_array($key, $insecure_settings)) {
-        unset($params[$key]);
-      }
-    }
+    $params = array_intersect_key($params, array_flip($safe_options));
 
     // Retrieve the security sensitive options from the cache.
     if (!empty($params['options']) && is_string($params['options']) && $options = cache_get('media_options:' . $params['options'], 'cache_form')) {

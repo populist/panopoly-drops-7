@@ -333,7 +333,7 @@ function media_wysiwyg_admin_config_browser_pre_submit(&$form, &$form_state) {
 function media_wysiwyg_filter_info() {
   $filters['media_filter'] = array(
     'title' => t('Convert Media tags to markup'),
-    'description' => t('This filter will convert [[{type:media... ]] tags into markup. This must be enabled for the Media WYSIWYG integration to work with this input format.'),
+    'description' => t('This filter will convert [[{type:media... ]] tags into markup. This must be enabled for the Media WYSIWYG integration to work with this input format. It is recommended to run this before the "@convert_urls" filter.', array('@convert_urls' => 'Convert URLs into links')),
     'process callback' => 'media_wysiwyg_filter',
     'weight' => 2,
     // @TODO not implemented

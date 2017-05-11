@@ -142,27 +142,49 @@ class TestSubContext extends RawDrupalContext implements DrupalSubContextInterfa
   }
 
   /**
+   * Explicitly take a screenshot.
+   *
+   * @Given I take a screenshot
+   */
+  public function takeScreenshot($title = NULL) {
+    static $title = 0;
+
+    $imgur_client_id = getenv('IMGUR_CLIENT_ID');
+    if (!$imgur_client_id) {
+      print "Environment variable IMGUR_CLIENT_ID not set, Unable to take screenshot\n";
+      return;
+    }
+
+    $driver = $this->getSession()->getDriver();
+
+    // Get the screenshot if the driver supports it.
+    try {
+      $image = $driver->getScreenshot();
+    }
+    catch (UnsupportedDriverActionException $e) {
+      return;
+    }
+
+    // Set default title.
+    if (!$title) {
+      $title = 'screenshot-' . (++$title);
+    }
+
+    // Upload the image.
+    $url = $this->uploadScreenshot($image, $title, $imgur_client_id);
+    // @todo Is there a Behat API we can use to write to the screen?
+    print "Screenshot uploaded to $url\n";
+  }
+
+  /**
    * After a failed step, upload a screenshot.
    *
    * @AfterStep
    */
   public function afterStepTakeScreenshot($event) {
-    if ($event->getTestResult()->getResultCode() === TestResult::FAILED && ($imgur_client_id = getenv('IMGUR_CLIENT_ID')))  {
-      $driver = $this->getSession()->getDriver();
-
-      // Get the screenshot if the driver supports it.
-      try {
-        $image = $driver->getScreenshot();
-      }
-      catch (UnsupportedDriverActionException $e) {
-        return;
-      }
-
-      // Upload the image.
+    if ($event->getTestResult()->getResultCode() === TestResult::FAILED && getenv('IMGUR_CLIENT_ID'))  {
       $title = preg_replace('/[^a-zA-Z0-9\._-]/', '_', $event->getStep()->getText());
-      $url = $this->uploadScreenshot($image, $title, $imgur_client_id);
-      // @todo Is there a Behat API we can use to write to the screen?
-      print "Screenshot uploaded to $url\n";
+      $this->takeScreenshot($title);
     }
   }
 

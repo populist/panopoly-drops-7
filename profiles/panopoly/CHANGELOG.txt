@@ -1,3 +1,19 @@
+7.x-1.45, 2017-05-11
+-------------------
+- Update Panopoly WYSIWYG for Issue #2876031 by dsnopek, NicholasS, cboyden:
+  Chrome v58 Cannot Edit Images - Tiny MCE Bug setBaseAndExtent.
+- Update Panopoly Widgets for Issue #2877428 by dsnopek, Steve Hanson: Update of
+  Media to 2.1 for security issue DRUPAL-SA-CONTRIB-2017-044.
+- Update Panopoly Test for Issue #2874638 by dsnopek, cboyden: Add a Behat step
+  to manually take a screenshot.
+- All Chrome tests failing with "Could not open connection: An unknown server-
+  side error".
+- Update Panopoly Widgets for Issue #2860930 by dsnopek, cboyden: Add option to
+  Submenu widget to control how many levels down to expand children, when using
+  the "Expand all children" option.
+- Start testing upgrades from the 1.44 release.
+- Restored drupal-org.make after the 1.44 release.
+
 7.x-1.44, 2017-04-13
 -------------------
 - Update Panopoly Widgets for Issue #2869079 by dsnopek: Update to Media 2.0.

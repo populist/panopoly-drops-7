@@ -7,7 +7,7 @@ default:
       # Set 'base_url' to the URL to view your Drupal site.
       # For example: http://mydrupalsite.com
       base_url: '@BASE_URL@'
-      files_path: './profiles/panopoly/modules/panopoly/panopoly_test/tests'
+      files_path: './profiles/panopoly/modules/panopoly/panopoly_test/behat'
     Drupal\DrupalExtension:
       drush:
         # Set 'root' to the full path to your Drupal code base.
