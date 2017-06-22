@@ -1,3 +1,44 @@
+7.x-1.46, 2017-06-21
+-------------------
+- Update Panopoly Test to revert patch from #2884143 that got accidentally
+  committed!.
+- Update to Drupal 7.56 for SA-CORE-2017-003.
+- Update Panopoly WYSIWYG, Magic and Test for Issue #2865140 by dsnopek,
+  cboyden: Update WYSIWYG to 2.4.
+- Update Panopoly Widgets, Magic and Test for Issue #2881473 by cboyden,
+  dsnopek: Fields shown when adding a reusable widget, even if the user doesn't
+  have permission to edit them.
+- Update Panopoly Search and Test for Issue #2854334 by dsnopek, cboyden: Page
+  title and H1 on search results page should give number of results for
+  accessibility.
+- Update Panopoly Core for Issue #2867870 by cboyden: Update Entity API to 1.8.
+- Update Panopoly Core for Issue #2778617 by aubjr_drupal, dsnopek, cboyden:
+  Update Link to v1.4.
+- Update Panopoly Core for Issue #2855737 by byronveale, candelas: Update Panels
+  3.9.
+- Update Panopoly Core for Issue #2875842 by dsnopek, cboyden: Update to FPP
+  1.11 and enable revision locking on existing sites.
+- Tests sometimes reaching 50 minute limit on Travis since switching to
+  'trusty'.
+- Update Panopoly Test for Issue #2878634: Tests sporadically failing with
+  "Element matching css "#edit-submit" not found" on Media tests - try adding a
+  wait.
+- Update Panopoly Search for Issue #2863077 by chrisgross: Update Search API
+  modules.
+- Re-run failed Behat scenarios once (in case of gremlins).
+- Update Panopoly Test for Issue #2875018 by cboyden: Abstract screenshot step
+  so it can be used without Imgur.
+- Try explicitly requesting the 'mysql' service.
+- Update Panopoly Core for Issue #2849268 by dsnopek, cboyden: Date picker month
+  and year are unreadable in Bootstrap-based theme.
+- Try with bigger screen dimensions on Travis CI.
+- Update Panopoly Widgets and Test for Issue #2774911 by dsnopek, annagaz,
+  cboyden: Use Media Browser on Spotlight widget.
+- Drop support for updating from Panopoly version that were release more than a
+  year ago.
+- Start testing upgrades from the 1.45 release.
+- Restored drupal-org.make after the 1.45 release.
+
 7.x-1.45, 2017-05-11
 -------------------
 - Update Panopoly WYSIWYG for Issue #2876031 by dsnopek, NicholasS, cboyden:

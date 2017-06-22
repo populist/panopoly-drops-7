@@ -1,3 +1,9 @@
+7.x-1.46, 2017-06-21
+-------------------
+- Update WYSIWYG to 2.4.
+- Fields shown when adding a reusable widget, even if the user doesn't have
+  permission to edit them.
+
 7.x-1.45, 2017-05-11
 -------------------
 - No changes since last release.

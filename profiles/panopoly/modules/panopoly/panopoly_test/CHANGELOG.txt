@@ -1,3 +1,16 @@
+7.x-1.46, 2017-06-21
+-------------------
+- Revert patch from #2884143 that got accidentally committed!.
+- Update WYSIWYG to 2.4.
+- Fields shown when adding a reusable widget, even if the user doesn't have
+  permission to edit them.
+- Page title and H1 on search results page should give number of results for
+  accessibility.
+- Tests sporadically failing with "Element matching css "#edit-submit" not
+  found" on Media tests - try adding a wait.
+- Abstract screenshot step so it can be used without Imgur.
+- Use Media Browser on Spotlight widget.
+
 7.x-1.45, 2017-05-11
 -------------------
 - Add a Behat step to manually take a screenshot.

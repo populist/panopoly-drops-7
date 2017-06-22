@@ -243,3 +243,52 @@ function panopoly_core_update_7105() {
 function panopoly_core_update_7106() {
   variable_set('fpp_revision_locking', 'lock');
 }
+
+/**
+ * Enable FPP revision locking (except when 'entity_translation' is enabled).
+ */
+function panopoly_core_update_7107() {
+  if (!module_exists('entity_translation')) {
+    variable_set('fpp_revision_locking', 'lock');
+  }
+}
+
+/**
+ * Update all Panelizer displays to point non-reusable FPPs to the vid instead
+ * of the fpid.
+ */
+function panopoly_core_update_7108(&$sandbox) {
+  if (function_exists('fieldable_panels_panes_update_7112')) {
+    return fieldable_panels_panes_update_7112($sandbox);
+  }
+}
+
+/**
+ * Update all Panel Nodes displays to point non-reusable FPPs to the vid instead
+ * of the fpid.
+ */
+function panopoly_core_update_7109(&$sandbox) {
+  if (function_exists('fieldable_panels_panes_update_7113')) {
+    return fieldable_panels_panes_update_7113($sandbox);
+  }
+}
+
+/**
+ * Update all Panelizer displays to point non-reusable FPPs to the vuuid instead
+ * of the uuid.
+ */
+function panopoly_core_update_7110(&$sandbox) {
+  if (function_exists('fieldable_panels_panes_update_7115')) {
+    return fieldable_panels_panes_update_7115($sandbox);
+  }
+}
+
+/**
+ * Update all Panel Nodes displays to point non-reusable FPPs to the vuuid
+ * instead of the uuid.
+ */
+function panopoly_core_update_7111(&$sandbox) {
+  if (function_exists('fieldable_panels_panes_update_7116')) {
+    return fieldable_panels_panes_update_7116($sandbox);
+  }
+}

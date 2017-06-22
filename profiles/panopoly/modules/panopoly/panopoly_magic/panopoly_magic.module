@@ -523,7 +523,12 @@ function panopoly_magic_form_alter(&$form, &$form_state, $form_id) {
   if (strpos($form_id, 'content_type_edit_form') || $form_id == 'ctools_entity_field_content_type_formatter_options') {
     $form['buttons']['cancel']['#access'] = FALSE;
     if (!empty($form['buttons']['return'])) {
-      $form['buttons']['return']['#value'] = t('Save');
+      if ($form_state['op'] == 'add') {
+        $form['buttons']['return']['#value'] = t('Add');
+      }
+      else {
+        $form['buttons']['return']['#value'] = t('Save');
+      }
     }
     $form['buttons']['#weight'] = -99;
   }

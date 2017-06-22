@@ -16,7 +16,7 @@ Feature: Add links widget
       | title                                  | Testing link title  |      
       | field_quick_links_links[und][0][title] | Testing url title   |
       | field_quick_links_links[und][0][url]   | http://drupal.org   |
-      And I press "Save" in the "CTools modal" region
+      And I press "Add" in the "CTools modal" region
       And I press "Save"
       And I wait for the Panels IPE to deactivate
     Then I should see "Testing link title"

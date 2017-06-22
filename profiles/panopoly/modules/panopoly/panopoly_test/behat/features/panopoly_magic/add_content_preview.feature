@@ -18,7 +18,7 @@ Feature: Preview of widgets on 'Add content' dialog
     When I click "Simple Pane" in the "CTools modal" region
     Then I should see "Abracadabra! Here is a simple pane."
     When I click "A simple pane for testing." in the "CTools modal" region
-      And I press "Save" in the "CTools modal" region
+      And I press "Add" in the "CTools modal" region
       And I press "Save"
       And I wait for the Panels IPE to deactivate
     Then I should see "Abracadabra! Here is a simple pane."
@@ -34,7 +34,7 @@ Feature: Preview of widgets on 'Add content' dialog
       And I click "Panopoly Test" in the "CTools modal" region
     Then I should see "Abracadabra! Here is a simple pane."
     When I click "A simple pane for testing." in the "CTools modal" region
-      And I press "Save" in the "CTools modal" region
+      And I press "Add" in the "CTools modal" region
       And I press "Save"
       And I wait for the Panels IPE to deactivate
     Then I should see "Abracadabra! Here is a simple pane."
@@ -53,7 +53,7 @@ Feature: Preview of widgets on 'Add content' dialog
     When I click "Preview Simple Pane widget" in the "CTools modal" region
     Then I should see "Abracadabra! Here is a simple pane."
     When I click "A simple pane for testing." in the "CTools modal" region
-      And I press "Save" in the "CTools modal" region
+      And I press "Add" in the "CTools modal" region
       And I press "Save"
       And I wait for the Panels IPE to deactivate
     Then I should see "Abracadabra! Here is a simple pane."
@@ -75,7 +75,7 @@ Feature: Preview of widgets on 'Add content' dialog
     And I should not see "Select a widget to show its preview"
     # Finally, make sure the add link still works
     When I click "Simple Pane" in the "CTools modal" region
-      And I press "Save" in the "CTools modal" region
+      And I press "Add" in the "CTools modal" region
       And I press "Save"
       And I wait for the Panels IPE to deactivate
     Then I should see "Abracadabra! Here is a simple pane."
@@ -91,7 +91,7 @@ Feature: Preview of widgets on 'Add content' dialog
       And I click "Panopoly Test" in the "CTools modal" region
     Then I should see "Abracadabra! Here is a simple pane."
     When I click "Add Simple Pane" in the "CTools modal" region
-      And I press "Save" in the "CTools modal" region
+      And I press "Add" in the "CTools modal" region
       And I press "Save"
       And I wait for the Panels IPE to deactivate
     Then I should see "Abracadabra! Here is a simple pane."

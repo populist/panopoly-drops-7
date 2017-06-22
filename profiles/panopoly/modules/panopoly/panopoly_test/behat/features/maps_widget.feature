@@ -17,7 +17,7 @@ Feature: Add map widget
       | Editor      | plain_text              |
       | Information | Testing text body field |
       | Address     | Ørnebjergvej 28, Vejle  |
-      And I press "Save" in the "CTools modal" region
+      And I press "Add" in the "CTools modal" region
       And I press "Save"
       And I wait for the Panels IPE to deactivate
     Then I should see "Widget title"

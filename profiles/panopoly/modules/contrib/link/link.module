@@ -207,7 +207,7 @@ function link_field_instance_settings_form($field, $instance) {
   $form['attributes']['class'] = array(
     '#type' => 'textfield',
     '#title' => t('Additional CSS Class'),
-    '#description' => t('When output, this link will have this class attribute. Multiple classes should be separated by spaces.'),
+    '#description' => t('When output, this link will have this class attribute. Multiple classes should be separated by spaces. Only alphanumeric characters and hyphens are allowed'),
     '#default_value' => empty($instance['settings']['attributes']['class']) ? '' : $instance['settings']['attributes']['class'],
   );
   $form['attributes']['configurable_title'] = array(
@@ -403,7 +403,7 @@ function _link_process(&$item, $delta, $field, $entity) {
 function _link_validate(&$item, $delta, $field, $entity, $instance, $langcode, &$optional_field_found, &$errors) {
   if ($item['url'] && !(isset($instance['default_value'][$delta]['url']) && $item['url'] === $instance['default_value'][$delta]['url'] && !$instance['required'])) {
     // Validate the link.
-    if (link_validate_url(trim($item['url'])) == FALSE) {
+    if (!link_validate_url(trim($item['url']), $langcode)) {
       $errors[$field['field_name']][$langcode][$delta][] = array(
         'error' => 'link_required',
         'message' => t('The value %value provided for %field is not a valid URL.', array(
@@ -448,13 +448,13 @@ function _link_validate(&$item, $delta, $field, $entity, $instance, $langcode, &
 /**
  * Clean up user-entered values for a link field according to field settings.
  *
- * @param array $item 
+ * @param array $item
  *   A single link item, usually containing url, title, and attributes.
- * @param int $delta 
+ * @param int $delta
  *   The delta value if this field is one of multiple fields.
- * @param array $field 
+ * @param array $field
  *   The CCK field definition.
- * @param object $entity 
+ * @param object $entity
  *   The entity containing this link.
  */
 function _link_sanitize(&$item, $delta, &$field, $instance, &$entity) {
@@ -474,16 +474,18 @@ function _link_sanitize(&$item, $delta, &$field, $instance, &$entity) {
     $entity_type == 'taxonomy_term' || $entity_type == 'taxonomy_vocabulary' ? str_replace('taxonomy_', '', $entity_type) : $entity_type
   );
   if (isset($instance['settings']['enable_tokens']) && $instance['settings']['enable_tokens']) {
-    global $user;
-    // Load the entity if necessary for entities in views.
-    if (isset($entity->{$property_id})) {
-      $entity_loaded = entity_load($entity_type, array($entity->{$property_id}));
-      $entity_loaded = array_pop($entity_loaded);
+    $text_tokens = token_scan($item['url']);
+    if (!empty($text_tokens)) {
+      // Load the entity if necessary for entities in views.
+      if (isset($entity->{$property_id})) {
+        $entity_loaded = entity_load($entity_type, array($entity->{$property_id}));
+        $entity_loaded = array_pop($entity_loaded);
+      }
+      else {
+        $entity_loaded = $entity;
+      }
+      $item['url'] = token_replace($item['url'], array($entity_token_type => $entity_loaded));
     }
-    else {
-      $entity_loaded = $entity;
-    }
-    $item['url'] = token_replace($item['url'], array($entity_token_type => $entity_loaded));
   }
 
   $type = link_validate_url($item['url']);
@@ -496,12 +498,12 @@ function _link_sanitize(&$item, $delta, &$field, $instance, &$entity) {
   $url_parts = _link_parse_url($url);
 
   if (!empty($url_parts['url'])) {
-    $item['url'] = $url_parts['url'];
-    $item += array(
-      'query' => isset($url_parts['query']) ? $url_parts['query'] : NULL,
+    $item['url'] = url($url_parts['url'],
+      array('query' => isset($url_parts['query']) ? $url_parts['query'] : NULL,
       'fragment' => isset($url_parts['fragment']) ? $url_parts['fragment'] : NULL,
       'absolute' => !empty($instance['settings']['absolute_url']),
       'html' => TRUE,
+      )
     );
   }
 
@@ -541,15 +543,18 @@ function _link_sanitize(&$item, $delta, &$field, $instance, &$entity) {
 
   // Replace title tokens.
   if ($title && ($instance['settings']['title'] == 'value' || $instance['settings']['enable_tokens'])) {
-    // Load the entity if necessary for entities in views.
-    if (isset($entity->{$property_id})) {
-      $entity_loaded = entity_load($entity_type, array($entity->{$property_id}));
-      $entity_loaded = array_pop($entity_loaded);
+    $text_tokens = token_scan($title);
+    if (!empty($text_tokens)) {
+      // Load the entity if necessary for entities in views.
+      if (isset($entity->{$property_id})) {
+        $entity_loaded = entity_load($entity_type, array($entity->{$property_id}));
+        $entity_loaded = array_pop($entity_loaded);
+      }
+      else {
+        $entity_loaded = $entity;
+      }
+      $title = token_replace($title, array($entity_token_type => $entity_loaded));
     }
-    else {
-      $entity_loaded = $entity;
-    }
-    $title = token_replace($title, array($entity_token_type => $entity_loaded));
     $title = filter_xss($title, array('b', 'br', 'code', 'em', 'i', 'img', 'span', 'strong', 'sub', 'sup', 'tt', 'u'));
     $item['html'] = TRUE;
   }
@@ -599,22 +604,25 @@ function _link_sanitize(&$item, $delta, &$field, $instance, &$entity) {
 
   // Handle "title" link attribute.
   if (!empty($item['attributes']['title']) && module_exists('token')) {
-    // Load the entity (necessary for entities in views).
-    if (isset($entity->{$property_id})) {
-      $entity_loaded = entity_load($entity_type, array($entity->{$property_id}));
-      $entity_loaded = array_pop($entity_loaded);
+    $text_tokens = token_scan($item['attributes']['title']);
+      if (!empty($text_tokens)) {
+      // Load the entity (necessary for entities in views).
+      if (isset($entity->{$property_id})) {
+        $entity_loaded = entity_load($entity_type, array($entity->{$property_id}));
+        $entity_loaded = array_pop($entity_loaded);
+      }
+      else {
+        $entity_loaded = $entity;
+      }
+      $item['attributes']['title'] = token_replace($item['attributes']['title'], array($entity_token_type => $entity_loaded));
     }
-    else {
-      $entity_loaded = $entity;
-    }
-    $item['attributes']['title'] = token_replace($item['attributes']['title'], array($entity_token_type => $entity_loaded));
     $item['attributes']['title'] = filter_xss($item['attributes']['title'], array('b', 'br', 'code', 'em', 'i', 'img', 'span', 'strong', 'sub', 'sup', 'tt', 'u'));
   }
   // Handle attribute classes.
   if (!empty($item['attributes']['class'])) {
     $classes = explode(' ', $item['attributes']['class']);
     foreach ($classes as &$class) {
-      $class = drupal_html_class($class);
+      $class = drupal_clean_css_identifier($class);
     }
     $item['attributes']['class'] = implode(' ', $classes);
   }
@@ -660,7 +668,7 @@ function _link_parse_url($url) {
  * Replaces the PHP parse_str() function.
  *
  * Because parse_str replaces the following characters in query parameters name
- * in order to maintain compability with deprecated register_globals directive:
+ * in order to maintain compatibility with deprecated register_globals directive:
  *
  *   - chr(32) ( ) (space)
  *   - chr(46) (.) (dot)
@@ -699,6 +707,9 @@ function link_theme() {
     ),
     'link_formatter_link_plain' => array(
       'variables' => array('element' => NULL, 'field' => NULL),
+    ),
+    'link_formatter_link_host' => array(
+      'variables' => array('element' => NULL),
     ),
     'link_formatter_link_absolute' => array(
       'variables' => array('element' => NULL, 'field' => NULL),
@@ -859,7 +870,7 @@ function link_field_process($element, $form_state, $complete_form) {
     );
   }
 
-  // If the title field is avaliable or there are field accepts multiple values
+  // If the title field is available or there are field accepts multiple values
   // then allow the individual field items display the required asterisk if needed.
   if (isset($element['title']) || isset($element['_weight'])) {
     // To prevent an extra required indicator, disable the required flag on the
@@ -882,6 +893,11 @@ function link_field_formatter_info() {
     ),
     'link_title_plain' => array(
       'label' => t('Title, as plain text'),
+      'field types' => array('link_field'),
+      'multiple values' => FIELD_BEHAVIOR_DEFAULT,
+    ),
+    'link_host' => array(
+      'label' => t('Host, as plain text'),
       'field types' => array('link_field'),
       'multiple values' => FIELD_BEHAVIOR_DEFAULT,
     ),
@@ -1016,6 +1032,14 @@ function theme_link_formatter_link_plain($vars) {
 }
 
 /**
+ * Theme function for 'host' text field formatter.
+ */
+function theme_link_formatter_link_host($vars) {
+  $host = @parse_url($vars['element']['url']);
+  return isset($host['host']) ? check_plain($host['host']) : '';
+}
+
+/**
  * Formats a link as an absolute URL.
  */
 function theme_link_formatter_link_absolute($vars) {
@@ -1142,7 +1166,7 @@ function link_views_api() {
 
 /**
  * Forms a valid URL if possible from an entered address.
- * 
+ *
  * Trims whitespace and automatically adds an http:// to addresses without a
  * protocol specified
  *
@@ -1173,13 +1197,13 @@ function link_cleanup_url($url, $protocol = 'http') {
 
 /**
  * Validates a URL.
- * 
+ *
  * Accepts all URLs following RFC 1738 standard for URL formation and all e-mail
  * addresses following the RFC 2368 standard for mailto address formation.
  *
  * @param string $text
  *   Url to be validated.
- * 
+ *
  * @return mixed
  *   Returns boolean FALSE if the URL is not valid. On success, returns one of
  *   the LINK_(linktype) constants.
@@ -1357,7 +1381,7 @@ function link_field_settings_form() {
 
 /**
  * Additional callback to adapt the property info of link fields.
- * 
+ *
  * @see entity_metadata_field_entity_property_info()
  */
 function link_field_property_info_callback(&$info, $entity_type, $field, $instance, $field_type) {

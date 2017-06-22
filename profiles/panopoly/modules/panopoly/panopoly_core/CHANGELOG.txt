@@ -1,3 +1,11 @@
+7.x-1.46, 2017-06-21
+-------------------
+- Update Entity API to 1.8.
+- Update Link to v1.4?.
+- Update Panels 3.9.
+- Update to FPP 1.11 and enable revision locking on existing sites.
+- Date picker month and year are unreadable in Bootstrap-based theme.
+
 7.x-1.45, 2017-05-11
 -------------------
 - No changes since last release.

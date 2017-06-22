@@ -204,8 +204,8 @@ function panopoly_search_default_page_manager_pages() {
   $pane->uuid = '3d1478d7-0f89-424e-824f-82483bc89651';
   $display->content['new-3d1478d7-0f89-424e-824f-82483bc89651'] = $pane;
   $display->panels['sidebar'][0] = 'new-3d1478d7-0f89-424e-824f-82483bc89651';
-  $display->hide_title = PANELS_TITLE_FIXED;
-  $display->title_pane = '0';
+  $display->hide_title = PANELS_TITLE_PANE;
+  $display->title_pane = 'new-15f4a1d6-8bf1-43cd-8ef3-a8b484aabe79';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
   $handler = new stdClass();
@@ -370,8 +370,8 @@ function panopoly_search_default_page_manager_pages() {
   $pane->uuid = '44eb1f21-6415-4344-ae5a-45172ed2cb8c';
   $display->content['new-44eb1f21-6415-4344-ae5a-45172ed2cb8c'] = $pane;
   $display->panels['sidebar'][0] = 'new-44eb1f21-6415-4344-ae5a-45172ed2cb8c';
-  $display->hide_title = PANELS_TITLE_FIXED;
-  $display->title_pane = '0';
+  $display->hide_title = PANELS_TITLE_PANE;
+  $display->title_pane = 'new-2693d0e2-3b32-4ca3-87b6-fa2ccec54399';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
   $pages['panopoly_search'] = $page;

@@ -23,6 +23,7 @@ Feature: Add image widget
     Then I should see "Destination"
     When I select the radio button "Public local files served by the webserver."
       And I press "Next"
+      And I wait 2 seconds
     Then I should see a "#edit-submit" element
       And I should see the "Crop" button
     When I fill in the following:
@@ -31,7 +32,7 @@ Feature: Add image widget
       And I press "Save"
       And I switch out of all frames
       And I wait 2 seconds
-    When I press "Save" in the "CTools modal" region
+    When I press "Add" in the "CTools modal" region
       And I press "Save"
       And I wait for the Panels IPE to deactivate
     Then I should see "Testing image widget title"
@@ -59,6 +60,7 @@ Feature: Add image widget
     Then I should see "Destination"
     When I select the radio button "Public local files served by the webserver."
       And I press "Next"
+      And I wait 2 seconds
     Then I should see a "#edit-submit" element
       And I should see the "Crop" button
     When I fill in the following:
@@ -67,7 +69,7 @@ Feature: Add image widget
       And I press "Save"
       And I switch out of all frames
       And I wait 2 seconds
-    When I press "Save" in the "CTools modal" region
+    When I press "Add" in the "CTools modal" region
       And I press "Save"
       And I wait for the Panels IPE to deactivate
     Then I should see "Testing image widget title"

@@ -17,7 +17,7 @@ Feature: Panopoly Magic allows the admin to toggle displaying seldom used pane s
       | Title   | Text widget title       |
       | Editor  | plain_text              |
       | Text    | Testing text body field |
-      And I press "Save" in the "CTools modal" region
+      And I press "Add" in the "CTools modal" region
     Then I should see "Text widget title"
       And I should see "Testing text body field"
     When I click "Style" in the "Boxton Content" region
@@ -40,7 +40,7 @@ Feature: Panopoly Magic allows the admin to toggle displaying seldom used pane s
       | Title   | Text widget title       |
       | Editor  | plain_text              |
       | Text    | Testing text body field |
-      And I press "Save" in the "CTools modal" region
+      And I press "Add" in the "CTools modal" region
     Then I should see "Text widget title"
       And I should see "Testing text body field"
     When I click "Style" in the "Boxton Content" region

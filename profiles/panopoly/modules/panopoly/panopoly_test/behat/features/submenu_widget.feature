@@ -41,7 +41,7 @@ Feature: Add submenu widget
         | override_title_text | Submenu title |
     When I select "1st level (primary)" from "edit-level"
       And I check the box "edit-expanded"
-    When I press "Save" in the "CTools modal" region
+    When I press "Add" in the "CTools modal" region
       And I press "Save"
       And I wait for the Panels IPE to deactivate
     # Because of #2177417 we have to reload the page for the correct output

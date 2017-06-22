@@ -22,7 +22,7 @@ Feature: Add a file to a page
       And I attach the file "test.txt" to "files[field_basic_file_file_und_0]"
       And I press "Upload"
     Then I should see "test.txt"
-    When I press "Save" in the "CTools modal" region
+    When I press "Add" in the "CTools modal" region
       And I press "Save"
       And I wait for the Panels IPE to deactivate
     Then I should see "Testing file title"

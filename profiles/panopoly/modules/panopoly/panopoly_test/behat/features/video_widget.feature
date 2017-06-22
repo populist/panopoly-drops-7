@@ -26,7 +26,7 @@ Feature: Add video widget
     Then I should see the "Remove" button in the "CTools modal" region
       # TODO: Disabled until #2264187 is fixed!
       #And I should see "Edit"
-    When I press "Save" in the "CTools modal" region
+    When I press "Add" in the "CTools modal" region
       And I press "Save"
       And I wait for the Panels IPE to deactivate
     Then I should see "Testing video"
@@ -46,7 +46,7 @@ Feature: Add video widget
     Then I should see the "Remove" button in the "CTools modal" region
       # TODO: Disabled until #2264187 is fixed!
       #And I should see "Edit"
-    When I press "Save" in the "CTools modal" region
+    When I press "Add" in the "CTools modal" region
       And I press "Save"
       And I wait for the Panels IPE to deactivate
     Then I should see "Testing video"

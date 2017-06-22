@@ -22,7 +22,7 @@ Feature: Add table widget
       | field_basic_table_table[und][0][tablefield][cell_1_1] | c-2-r-2      |
       | field_basic_table_table[und][0][tablefield][cell_2_0] | c-1-r-3      |
       | field_basic_table_table[und][0][tablefield][cell_2_1] | c-2-r-3      |
-      And I press "Save" in the "CTools modal" region
+      And I press "Add" in the "CTools modal" region
       And I press "Save"
       And I wait for the Panels IPE to deactivate
     Then I should see "Widget title"
@@ -43,7 +43,7 @@ Feature: Add table widget
       | field_basic_table_table[und][0][tablefield][cell_1_0] | c-1-r-2      |
       | field_basic_table_table[und][0][tablefield][cell_1_1] | c-2-r-2      |
       | field_basic_table_table[und][0][tablefield][cell_1_2] | c-3-r-2      |
-      And I press "Save" in the "CTools modal" region
+      And I press "Add" in the "CTools modal" region
       And I press "Save"
       And I wait for the Panels IPE to deactivate
     Then I should see "Widget title"

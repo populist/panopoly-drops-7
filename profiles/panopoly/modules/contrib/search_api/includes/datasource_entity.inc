@@ -166,6 +166,10 @@ class SearchApiEntityDataSourceController extends SearchApiAbstractDataSourceCon
               $bundle_column = 'vid';
               $bundles = db_query('SELECT vid FROM {taxonomy_vocabulary} WHERE machine_name IN (:bundles)', array(':bundles' => $bundles))->fetchCol();
             }
+            elseif ($this->entityType == 'flagging') {
+              $bundle_column = 'fid';
+              $bundles = db_query('SELECT fid FROM {flag} WHERE name IN (:bundles)', array(':bundles' => $bundles))->fetchCol();
+            }
             elseif ($this->entityType == 'comment') {
               // Comments are significantly more complicated, since they don't
               // store their bundle explicitly in their database table. Instead,
@@ -182,14 +186,17 @@ class SearchApiEntityDataSourceController extends SearchApiAbstractDataSourceCon
                 $bundles = db_query('SELECT nid FROM {node} WHERE type IN (:bundles)', array(':bundles' => $node_types))->fetchCol();
               }
               else {
-                return;
+                continue;
               }
             }
             else {
               $this->startTrackingFallback(array($index->machine_name => $index));
+              continue;
             }
           }
-          $query->condition($bundle_column, $bundles);
+          if ($bundles) {
+            $query->condition($bundle_column, $bundles);
+          }
         }
 
         // INSERT ... SELECT ...
@@ -271,10 +278,10 @@ class SearchApiEntityDataSourceController extends SearchApiAbstractDataSourceCon
     $form['bundles'] = array(
       '#type' => 'checkboxes',
       '#title' => t('Bundles'),
-      '#description' => t('Restrict the entity bundles that will be included in this index. Leave blank to include all bundles. This setting cannot be changed for existing indexes.'),
+      '#description' => t('Restrict the entity bundles that will be included in this index. Leave blank to include all bundles. This setting cannot be changed for enabled indexes.'),
       '#options' => array_map('check_plain', $options),
       '#attributes' => array('class' => array('search-api-checkboxes-list')),
-      '#disabled' => !empty($form_state['index']),
+      '#disabled' => !empty($form_state['index']) && $form_state['index']->enabled,
     );
     if (!empty($form_state['index']->options['datasource'])) {
       $form['bundles']['#default_value'] = drupal_map_assoc($form_state['index']->options['datasource']['bundles']);

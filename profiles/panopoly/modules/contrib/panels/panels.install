@@ -1,6 +1,10 @@
 <?php
 
 /**
+ * @file
+ */
+
+/**
  * Test requirements for installation and running.
  */
 function panels_requirements($phase) {
@@ -81,7 +85,7 @@ function panels_schema_9() {
   );
 
   return $schema;
- }
+}
 
 function panels_schema_8() {
   $schema = panels_schema_7();
@@ -308,7 +312,7 @@ function panels_schema_3() {
     ),
     'primary key' => array('pid'),
     'indexes' => array(
-      'did_idx' => array('did')
+      'did_idx' => array('did'),
     ),
   );
 
@@ -445,9 +449,7 @@ function panels_update_7300() {
  */
 function panels_update_7301() {
   // Load the schema.
-
   // Due to a previous failure, the field may already exist:
-
   $schema = panels_schema_4();
   $table = 'panels_pane';
   $field = 'locks';
@@ -627,7 +629,7 @@ function panels_update_7306() {
   }
 
   if (!empty($page_manager_panels)) {
-    // Check panels displays that only have empty storage types
+    // Check panels displays that only have empty storage types.
     $result = db_query("SELECT pd.did FROM {panels_display} pd WHERE pd.did IN (:dids) AND storage_type = ''", array(':dids' => array_keys($page_manager_panels)));
     foreach ($result as $row) {
       db_update('panels_display')

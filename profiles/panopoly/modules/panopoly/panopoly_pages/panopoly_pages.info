@@ -81,9 +81,9 @@ features_exclude[variable][pathauto_node_panopoly_landing_page_pattern] = pathau
 features_exclude[variable][pathauto_node_panopoly_page_pattern] = pathauto_node_panopoly_page_pattern
 features_exclude[variable][pathauto_taxonomy_term_panopoly_categories_pattern] = pathauto_taxonomy_term_panopoly_categories_pattern
 
-; Information added by Drupal.org packaging script on 2017-05-11
-version = "7.x-1.45"
+; Information added by Drupal.org packaging script on 2017-06-22
+version = "7.x-1.46"
 core = "7.x"
 project = "panopoly_pages"
-datestamp = "1494506065"
+datestamp = "1498107333"
 

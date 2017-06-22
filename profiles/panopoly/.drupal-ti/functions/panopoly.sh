@@ -108,9 +108,7 @@ function drupal_ti_ensure_drupal() {
 	fi
 
 	# Create database and install Drupal.
-	mysql -u root -e "create database $DRUPAL_TI_DB"
-	mysql -uroot -e "CREATE USER 'travis'@'localhost' IDENTIFIED BY '2c8c46dca2194b2621d4f1f462527a5a';"
-	mysql -uroot -e "GRANT ALL PRIVILEGES ON * . * TO 'travis'@'localhost';"
+	mysql -e "create database $DRUPAL_TI_DB"
 
 	mkdir -p "$DRUPAL_TI_DRUPAL_BASE"
 	cd "$DRUPAL_TI_DRUPAL_BASE"
@@ -179,8 +177,8 @@ function panopoly_optimize() {
 	echo "default_socket_timeout=3000" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 
 	# Increase the MySQL server timetout and packet size.
-	mysql -u root -e "SET GLOBAL wait_timeout = 36000;"
-	mysql -u root -e "SET GLOBAL max_allowed_packet = 33554432;"
+	mysql -e "SET GLOBAL wait_timeout = 36000;"
+	mysql -e "SET GLOBAL max_allowed_packet = 33554432;"
 }
 
 #

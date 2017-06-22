@@ -25,7 +25,7 @@ Feature: Add content list widget
       And I select "Asc" from "exposed[sort_order]"
       And I select "Title" from "exposed[sort_by]"
       And I wait 5 seconds
-      And I press "Save" in the "CTools modal" region
+      And I press "Add" in the "CTools modal" region
       And I press "Save"
       And I wait for the Panels IPE to deactivate
       And I wait 5 seconds

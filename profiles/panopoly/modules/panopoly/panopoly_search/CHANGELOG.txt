@@ -1,3 +1,9 @@
+7.x-1.46, 2017-06-21
+-------------------
+- Page title and H1 on search results page should give number of results for
+  accessibility.
+- Update Search API modules.
+
 7.x-1.45, 2017-05-11
 -------------------
 - No changes since last release.

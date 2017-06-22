@@ -1,3 +1,9 @@
+7.x-1.46, 2017-06-21
+-------------------
+- Fields shown when adding a reusable widget, even if the user doesn't have
+  permission to edit them.
+- Use Media Browser on Spotlight widget.
+
 7.x-1.45, 2017-05-11
 -------------------
 - Update of Media to 2.1 for security issue DRUPAL-SA-CONTRIB-2017-044.

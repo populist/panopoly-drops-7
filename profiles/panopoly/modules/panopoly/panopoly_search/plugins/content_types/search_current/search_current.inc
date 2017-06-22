@@ -33,15 +33,23 @@ function panopoly_search_search_current_content_type_render($subtype, $conf, $pa
   $pane->module  = 'search';
   $pane->delta   = 'form';
   $pane->title   = '';
+  $pane->content = '';
   $searches = search_api_current_search();
+  $count = NULL;
   if (isset($searches['search_api_views:panopoly_search:search_solr_results'])) {
     $count = $searches['search_api_views:panopoly_search:search_solr_results'][1]['result count'];
-    $pane->content = '<h2>' . t('!count matched !keys', array('!count' => format_plural($count, '1 item', '@count items'), '!keys' => '<em>' . check_plain($keys) . '</em>')) . '</h2>';
-    return $pane;
   } 
   elseif (isset($searches['search_api_views:panopoly_database_search:search_database_results'])) {
     $count = $searches['search_api_views:panopoly_database_search:search_database_results'][1]['result count'];
-    $pane->content = '<h2>' . t('!count matched !keys', array('!count' => format_plural($count, '1 item', '@count items'), '!keys' => '<em>' . check_plain($keys) . '</em>')) . '</h2>';
-    return $pane;
   }
+  if (!is_null($count)) {
+    $pane->title = t('Search results: @count matched %keys', array(
+      '@count' => format_plural($count, '1 item', '@count items'),
+      '%keys' => $keys
+    ));
+  }
+  else {
+    $pane->title = t('Search');
+  }
+  return $pane;
 }

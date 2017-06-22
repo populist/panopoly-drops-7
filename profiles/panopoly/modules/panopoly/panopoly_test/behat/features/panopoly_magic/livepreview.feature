@@ -30,7 +30,7 @@ Feature: Live preview
       And I fill in "path" with "http://drupal.org"
       And I wait for live preview to finish
     Then I should see the link "Widget title" in the "Live preview" region
-    When I press "Save" in the "CTools modal" region
+    When I press "Add" in the "CTools modal" region
       And I press "Save"
       And I wait for the Panels IPE to deactivate
     Then I should see "Widget title"
@@ -192,7 +192,7 @@ Feature: Live preview
       And I press "Update Preview"
     Then I should see "Widget title 1" in the "Live preview" region
       And I should see "Widget content 1" in the "Live preview" region
-    When I press "Save" in the "CTools modal" region
+    When I press "Add" in the "CTools modal" region
     Then I should see "Widget title 1" in the "h2" element in the "Boxton Content" region
       And I should see "Widget content 1"
     # Now try saving the page, and doing the same test, but with an existing widget.
@@ -227,7 +227,7 @@ Feature: Live preview
       And I press "Update Preview"
     Then I should see "Widget title 1" in the "Live preview" region
       And I should see "Widget content 1" in the "Live preview" region
-    When I press "Save" in the "CTools modal" region
+    When I press "Add" in the "CTools modal" region
     Then I should see "Widget title 1" in the "h2" element in the "Boxton Content" region
       And I should see "Widget content 1"
     # Now try saving the page, and doing the same test, but with an existing widget.
@@ -264,7 +264,7 @@ Feature: Live preview
       And I should see "Widget content 1" in the "Live preview" region
       And I should see "Widget title 1" in the "a" element with the "href" attribute set to "http://google.com" in the "Live preview" region
     # Now try saving the page, and doing the same test, but with an existing widget.
-    When I press "Save" in the "CTools modal" region
+    When I press "Add" in the "CTools modal" region
       And I press "Save"
       And I wait for the Panels IPE to deactivate
     When I customize this page with the Panels IPE
@@ -325,7 +325,7 @@ Feature: Live preview
     Then I should not see "ONLY IN PREVIEW" in the "Live preview" region
       And I should see "Widget content 1" in the "Live preview" region
     # Save for real, and then start editing again.
-    When I press "Save" in the "CTools modal" region
+    When I press "Add" in the "CTools modal" region
       And I press "Save"
       And I wait for the Panels IPE to deactivate
       And I customize this page with the Panels IPE

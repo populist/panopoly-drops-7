@@ -19,10 +19,20 @@ Feature: Add spotlight widget
       | field_basic_spotlight_items[und][0][title] | Testing item title  |
       | Link                                       | http://drupal.org   |
       | Description                                | Testing description |
-      And I attach the file "test-sm.png" to "files[field_basic_spotlight_items_und_0_fid]"
-      And I press the "Upload" button
-    #Then I should see the "Crop" button in the "CTools modal" region
-    When I press "Save" in the "CTools modal" region
+      And I click "Browse"
+      And I switch to the frame "mediaBrowser"
+      And I attach the file "test-sm.png" to "files[upload]"
+      And I press "Next"
+    Then I should see "Destination"
+    When I select the radio button "Public local files served by the webserver."
+      And I press "Next"
+      And I wait 2 seconds
+    Then I should see a "#edit-submit" element
+      And I should see the "Crop" button
+    When I press "Save"
+      And I switch out of all frames
+      And I wait 2 seconds
+    When I press "Add" in the "CTools modal" region
       And I press "Save"
       And I wait for the Panels IPE to deactivate
     Then I should see "Testing description"

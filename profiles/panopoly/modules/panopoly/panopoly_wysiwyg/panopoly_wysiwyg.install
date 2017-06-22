@@ -76,3 +76,41 @@ function panopoly_wysiwyg_update_7104() {
   }
 }
 
+/**
+ * Clean up the HTML wysiwyg profile.
+ */
+function panopoly_wysiwyg_update_7105() {
+  $unused_settings = array(
+    'block_formats',
+    'convert_fonts_to_spans',
+    'paste_auto_cleanup_on_paste',
+    'path_loc',
+    'remove_linebreaks',
+    'resizing',
+    'theme',
+    'toolbar_align',
+    'toolbar_loc',
+    'verify_html',
+  );
+
+  $query = db_select('wysiwyg', 'w')
+    ->fields('w', array('format', 'editor', 'settings'))
+    ->condition('w.format', 'panopoly_html_text')
+    ->condition('w.editor', 'markitup');
+
+  $profile = $query->execute()->fetchObject();
+  if ($profile) {
+    $settings = unserialize($profile->settings);
+    foreach ($unused_settings as $name) {
+      unset($settings[$name]);
+    }
+
+    db_update('wysiwyg')
+      ->condition('format', $profile->format)
+      ->fields(array(
+        'settings' => serialize($settings),
+      ))
+      ->execute();
+  }
+}
+

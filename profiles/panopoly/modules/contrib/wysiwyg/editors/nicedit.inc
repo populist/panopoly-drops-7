@@ -19,9 +19,11 @@ function wysiwyg_nicedit_editor() {
         'files' => array('nicEdit.js'),
       ),
     ),
+    'verified version range' => array('0.9', '0.9'),
     'version callback' => 'wysiwyg_nicedit_version',
+    'settings form callback' => 'wysiwyg_nicedit_settings_form',
     'settings callback' => 'wysiwyg_nicedit_settings',
-    'plugin callback' => 'wysiwyg_nicedit_plugins',
+    'plugin callback' => '_wysiwyg_nicedit_plugins',
     'versions' => array(
       '0.9' => array(
         'js files' => array('nicedit.js'),
@@ -43,6 +45,18 @@ function wysiwyg_nicedit_editor() {
 function wysiwyg_nicedit_version($editor) {
   // @see http://nicedit.com/forums/viewtopic.php?t=425
   return '0.9';
+}
+
+/**
+ * Enhances the editor profile settings form for NicEdit.
+ *
+ * @see http://wiki.nicedit.com/w/page/515/Configuration%20Options
+ */
+function wysiwyg_nicedit_settings_form(&$form, &$form_state) {
+  $form['basic']['language']['#access'] = FALSE;
+  // NicEdit only supports loading a single stylesheet, and only in FF2.
+  // This essentially means we're dropping stylesheet support for NiceEdit.
+  $form['css']['#access'] = FALSE;
 }
 
 /**
@@ -75,6 +89,7 @@ function wysiwyg_nicedit_settings($editor, $config, $theme) {
   }
 
   // Add editor content stylesheet.
+  // @todo Drop stylsheet support since it's only used in FF2.
   if (isset($config['css_setting'])) {
     if ($config['css_setting'] == 'theme') {
       $css = drupal_get_path('theme', variable_get('theme_default', NULL)) . '/style.css';
@@ -83,7 +98,11 @@ function wysiwyg_nicedit_settings($editor, $config, $theme) {
       }
     }
     elseif ($config['css_setting'] == 'self' && isset($config['css_path'])) {
-      $settings['externalCSS'] = strtr($config['css_path'], array('%b' => base_path(), '%t' => drupal_get_path('theme', variable_get('theme_default', NULL))));
+      $settings['externalCSS'] = strtr($config['css_path'], array(
+        '%b' => base_path(),
+        '%t' => drupal_get_path('theme', variable_get('theme_default', NULL)),
+        '%q' => variable_get('css_js_query_string', ''),
+      ));
     }
   }
 
@@ -93,7 +112,7 @@ function wysiwyg_nicedit_settings($editor, $config, $theme) {
 /**
  * Return internal plugins for this editor; semi-implementation of hook_wysiwyg_plugin().
  */
-function wysiwyg_nicedit_plugins($editor) {
+function _wysiwyg_nicedit_plugins($editor) {
   return array(
     'default' => array(
       'buttons' => array(

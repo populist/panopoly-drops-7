@@ -10,16 +10,11 @@
 function panopoly_wysiwyg_wysiwyg_default_profiles() {
   $profiles = array();
 
-  // Exported profile: panopoly_html_text
+  // Exported profile: panopoly_html_text.
   $profiles['panopoly_html_text'] = array(
     'format' => 'panopoly_html_text',
     'editor' => 'markitup',
     'settings' => array(
-      'default' => 1,
-      'user_choose' => 0,
-      'show_toggle' => 0,
-      'theme' => 'advanced',
-      'language' => 'en',
       'buttons' => array(
         'default' => array(
           'bold' => 1,
@@ -28,31 +23,26 @@ function panopoly_wysiwyg_wysiwyg_default_profiles() {
           'link' => 1,
         ),
       ),
-      'toolbar_loc' => 'top',
-      'toolbar_align' => 'left',
-      'path_loc' => 'bottom',
-      'resizing' => 1,
-      'verify_html' => 1,
-      'preformatted' => 0,
-      'convert_fonts_to_spans' => 1,
-      'remove_linebreaks' => 1,
-      'apply_source_formatting' => 0,
-      'paste_auto_cleanup_on_paste' => 1,
-      'block_formats' => 'h1,h2,h3,h4,h5,h6',
+      'theme' => '',
+      'language' => 'en',
       'css_setting' => 'theme',
       'css_path' => '',
-      'css_classes' => '',
     ),
+    'preferences' => array(
+      'default' => 1,
+      'user_choose' => 0,
+      'show_toggle' => 0,
+      'add_to_summaries' => 0,
+      'version' => '1.1.14',
+    ),
+    'name' => 'formatpanopoly_html_text',
   );
 
-  // Exported profile: panopoly_wysiwyg_text
+  // Exported profile: panopoly_wysiwyg_text.
   $profiles['panopoly_wysiwyg_text'] = array(
     'format' => 'panopoly_wysiwyg_text',
     'editor' => 'tinymce',
     'settings' => array(
-      'default' => 1,
-      'user_choose' => 0,
-      'show_toggle' => 0,
       'theme' => 'advanced',
       'language' => 'en',
       'buttons' => array(
@@ -102,21 +92,29 @@ function panopoly_wysiwyg_wysiwyg_default_profiles() {
           'break' => 1,
         ),
       ),
-      'toolbar_loc' => 'top',
-      'toolbar_align' => 'left',
-      'path_loc' => 'bottom',
-      'resizing' => 1,
       'verify_html' => 1,
       'preformatted' => 0,
       'convert_fonts_to_spans' => 1,
       'remove_linebreaks' => 1,
       'apply_source_formatting' => 0,
       'paste_auto_cleanup_on_paste' => 1,
-      'block_formats' => 'h1,h2,h3,h4,h5,h6',
       'css_setting' => 'theme',
       'css_path' => '',
-      'css_classes' => '',
+      'theme_advanced_statusbar_location' => 'bottom',
+      'theme_advanced_toolbar_location' => 'top',
+      'theme_advanced_toolbar_align' => 'left',
+      'theme_advanced_blockformats' => 'h1,h2,h3,h4,h5,h6',
+      'theme_advanced_styles' => '',
+      'theme_advanced_resizing' => 1,
     ),
+    'preferences' => array(
+      'add_to_summaries' => FALSE,
+      'default' => 1,
+      'show_toggle' => 0,
+      'user_choose' => 0,
+      'version' => '3.5.11',
+    ),
+    'name' => 'formatpanopoly_wysiwyg_text',
   );
 
   return $profiles;

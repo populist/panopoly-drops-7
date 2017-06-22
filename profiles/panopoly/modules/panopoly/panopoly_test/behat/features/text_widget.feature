@@ -16,7 +16,7 @@ Feature: Add text widget
       | Title   | Text widget title       |
       | Editor  | plain_text              |
       | Text    | Testing text body field |
-      And I press "Save" in the "CTools modal" region
+      And I press "Add" in the "CTools modal" region
       And I press "Save"
       And I wait for the Panels IPE to deactivate
     Then I should see "Text widget title"

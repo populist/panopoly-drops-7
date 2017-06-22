@@ -83,39 +83,23 @@
     };
   }
 
-  // A function to run before Drupal.wysiwygAttach() with the same arguments.
-  function beforeWysiwygAttach(context, params) {
-    var editorId = params.field,
-        editorType = params.editor,
-        format = params.format;
-
-    if (Drupal.settings.wysiwyg.configs[editorType] && Drupal.settings.wysiwyg.configs[editorType][format]) {
-      wysiwygConfigAlter(params, Drupal.settings.wysiwyg.configs[editorType][format]);
-    }
+  // A function to run before Drupal.wysiwyg.editor.attach.tinymce() with the
+  // same arguments.
+  function wysiwygTinymceBeforeAttach(context, params, settings) {
+    var onWysiwygChange = onWysiwygChangeFactory(params.field);
+    settings['setup'] = function (editor) {
+      editor.onChange.add(onWysiwygChange);
+      editor.onKeyUp.add(onWysiwygChange);
+    };
   }
 
-  // Wouldn't it be great if WYSIWYG gave us an alter hook to change the
-  // settings of the editor before it was attached? Well, we'll just have to
-  // roll our own. :-)
-  function wysiwygConfigAlter(params, config) {
-    var editorId = params.field,
-        editorType = params.editor,
-        onWysiwygChange = onWysiwygChangeFactory(editorId);
-
-    switch (editorType) {
-      case 'markitup':
-        $.each(['afterInsert', 'onEnter'], function (index, funcName) {
-          config[funcName] = onWysiwygChange;
-        });
-        break;
-
-      case 'tinymce':
-        config['setup'] = function (editor) {
-          editor.onChange.add(onWysiwygChange);
-          editor.onKeyUp.add(onWysiwygChange);
-        }
-        break;
-    }
+  // A function to run before Drupal.wysiwyg.editor.attach.markitup() with the
+  // same arguments.
+  function wysiwygMarkitupBeforeAttach(context, params, settings) {
+    var onWysiwygChange = onWysiwygChangeFactory(params.field);
+    $.each(['afterInsert', 'onEnter'], function (index, funcName) {
+      settings[funcName] = onWysiwygChange;
+    });
   }
 
   // Used to wrap a function with a beforeFunc (we use it for wrapping
@@ -200,8 +184,9 @@
       });
 
       // Handle WYSIWYG fields.
-      if (!wrappedWysiwygAttach && typeof Drupal.wysiwygAttach == 'function') {
-        wrapFunctionBefore(Drupal, 'wysiwygAttach', beforeWysiwygAttach);
+      if (!wrappedWysiwygAttach && typeof Drupal.wysiwyg != 'undefined' && typeof Drupal.wysiwyg.editor.attach.tinymce == 'function' && typeof Drupal.wysiwyg.editor.attach.markitup == 'function') {
+        wrapFunctionBefore(Drupal.wysiwyg.editor.attach, 'tinymce', wysiwygTinymceBeforeAttach);
+        //wrapFunctionBefore(Drupal.wysiwyg.editor.attach, 'markitup', wysiwygMarkitupBeforeAttach);
         wrappedWysiwygAttach = true;
 
         // Since the Drupal.behaviors run in a non-deterministic order, we can
