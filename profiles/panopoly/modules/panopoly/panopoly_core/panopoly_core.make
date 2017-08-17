@@ -34,7 +34,7 @@ projects[fape][subdir] = contrib
 
 ; Views Magic
 
-projects[views][version] = 3.15
+projects[views][version] = 3.17
 projects[views][subdir] = contrib
 projects[views][patch][2037469] = http://drupal.org/files/views-exposed-sorts-2037469-1.patch
 
@@ -70,7 +70,7 @@ projects[date][version] = 2.9
 projects[date][subdir] = contrib
 projects[date][patch][2375235] = https://www.drupal.org/files/issues/calendar_pager_broken-2375235-35.patch
 
-projects[entityreference][version] = 1.1
+projects[entityreference][version] = 1.5
 projects[entityreference][subdir] = contrib
 
 projects[field_group][version] = 1.5

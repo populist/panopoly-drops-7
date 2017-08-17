@@ -170,7 +170,7 @@ Drupal.wysiwyg.editor.instance.tinymce = {
         // current selection.
         ed.onNodeChange.add(function(ed, command, node) {
           if (typeof Drupal.wysiwyg.plugins[plugin].isNode == 'function') {
-            command.setActive(plugin, Drupal.wysiwyg.plugins[plugin].isNode(node));
+            command.setActive('drupal_' + plugin, Drupal.wysiwyg.plugins[plugin].isNode(node));
           }
         });
       },

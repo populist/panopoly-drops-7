@@ -10,10 +10,7 @@ dependencies[] = libraries (>=2.1)
 
 files[] = includes/views/manualcrop.views.inc
 
-
-; Information added by drush on 2017-06-22
+; Information added by drush on 2015-06-03
 version = "7.x-1.5+4-dev"
-core = "7.x"
 project = "manualcrop"
-datestamp = "1498108498"
-
+datestamp = "1433337514"

@@ -3,10 +3,7 @@ description = Filter to parse [caption] tags and allow image alignment.
 core = 7.x
 package = Input filters
 
-
-; Information added by drush on 2017-06-22
+; Information added by drush on 2013-08-22
 version = "7.x-1.2+9-dev"
-core = "7.x"
 project = "caption_filter"
-datestamp = "1498108492"
-
+datestamp = "1377214596"

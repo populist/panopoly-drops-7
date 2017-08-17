@@ -1,3 +1,16 @@
+7.x-1.47, 2017-08-17
+-------------------
+- Update Panopoly Core for Issue #2902677 by collinhaines, byronveale: Update
+  Views to 3.17.
+- Update Panopoly Core for Issue #2902696 by collinhaines: Update Entity
+  reference to 1.5.
+- Drop support for updating from Panopoly version that were release more than a
+  year ago.
+- Update Panopoly WYSIWYG for Issue #2890125 by cboyden: Media button isn't
+  highlighted when an image is selected.
+- Start testing upgrades from the 1.46 release.
+- Restored drupal-org.make after the 1.46 release.
+
 7.x-1.46, 2017-06-21
 -------------------
 - Update Panopoly Test to revert patch from #2884143 that got accidentally
