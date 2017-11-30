@@ -1,3 +1,8 @@
+7.x-1.48, 2017-11-30
+-------------------
+- Edit file button appears on Media style selector modal.
+- Update to Media 2.13 and File Entity 2.12.
+
 7.x-1.47, 2017-08-17
 -------------------
 - No changes since last release.

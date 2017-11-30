@@ -3,8 +3,6 @@ default:
     default:
       paths: 
         features: 'features'
-      filters:
-        tags: "~@chrome"
       contexts:
         - FeatureContext
         - Drupal\DrupalExtension\Context\DrupalContext
@@ -14,7 +12,17 @@ default:
   extensions:
     Behat\MinkExtension:
       goutte: ~
-      selenium2: ~
+      selenium2:
+        browser: chrome
+        capabilities:
+          browser: chrome
+          browserName: chrome
+          browserVersion: ANY
+          chrome:
+            switches:
+              - "--headless"
+              - "--disable-gpu"
+          version: ANY
       #base_url: http://mydrupalsite.com
       #files_path: './profiles/panopoly/modules/panopoly/panopoly_test/tests'
     Drupal\DrupalExtension:
@@ -62,15 +70,3 @@ default:
         Footer: ".region-footer"
         Search: "#search-form"
         Panopoly Magic Style Settings: "#panels-edit-style-settings-form #edit-general-settings"
-
-# Setup for Google Chrome only tests.
-chrome:
-  suites:
-    default:
-      filters:
-        tags: "@chrome"
-  extensions:
-    Behat\MinkExtension:
-      selenium2:
-        browser: chrome
-        capabilities: {"browser": "chrome", "browserName": "chrome", "browserVersion": "ANY", "version": "ANY"}

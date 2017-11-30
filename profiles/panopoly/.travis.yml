@@ -19,8 +19,6 @@ php:
 matrix:
   fast_finish: true
   allow_failures:
-    - php: "7"
-      env: UPGRADE=none INSTALL_PANOPOLY_DEMO_FROM_APPS=1
     - php: "hhvm"
       env: UPGRADE=none INSTALL_PANOPOLY_DEMO_FROM_APPS=1
   include:
@@ -106,15 +104,12 @@ env:
     #- DRUPAL_TI_RUNNERS="phpunit simpletest behat"
   matrix:
     - UPGRADE=none     INSTALL_PANOPOLY_DEMO_FROM_APPS=1
+    - UPGRADE=7.x-1.47
     - UPGRADE=7.x-1.46
     - UPGRADE=7.x-1.45
     - UPGRADE=7.x-1.44
     - UPGRADE=7.x-1.43
     - UPGRADE=7.x-1.42
-    - UPGRADE=7.x-1.41
-    - UPGRADE=7.x-1.40
-    - UPGRADE=7.x-1.39
-    - UPGRADE=7.x-1.38
 
 # Cache Composer & Drush directories.
 cache:

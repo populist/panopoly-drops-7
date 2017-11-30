@@ -1,3 +1,11 @@
+7.x-1.48, 2017-11-30
+-------------------
+- Fieldable panels pane entities added erroneously to pane configuration.
+- Widget output when editing with IPE can be different than when viewing the
+  page normally (easily reproducable with "Submenu" widget).
+- PHP7 Error: Indirect access to variable (revert unintentional change).
+- PHP7 Error: Indirect access to variable.
+
 7.x-1.47, 2017-08-17
 -------------------
 - No changes since last release.

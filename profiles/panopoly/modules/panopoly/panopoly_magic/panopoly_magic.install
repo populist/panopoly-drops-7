@@ -61,3 +61,24 @@ function panopoly_magic_update_7104() {
     variable_set('panopoly_magic_preview_use_legacy_fieldset', TRUE);
   }
 }
+
+/**
+ * Remove extra unnecessary configuration from FPP panes.
+ */
+function panopoly_magic_update_7105() {
+  $result = db_query("SELECT pid, configuration FROM {panels_pane} WHERE type = 'fieldable_panels_pane'");
+  foreach ($result as $pane) {
+    $pane->configuration = unserialize($pane->configuration);
+    if (isset($pane->configuration['fieldable_panels_pane'])) {
+      unset($pane->configuration['fieldable_panels_pane']);
+
+      // Write back to the database.
+      db_update('panels_pane')
+        ->fields(array(
+          'configuration' => serialize($pane->configuration),
+        ))
+        ->condition('pid', $pane->pid)
+        ->execute();
+    }
+  }
+}

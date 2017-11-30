@@ -120,7 +120,7 @@ function media_wysiwyg_pre_render_text_format($element) {
   $tagmap = array();
 
   foreach (array('value', 'summary') as $column) {
-    if (isset($element[$column])) {
+    if (isset($element[$column]['#value'])) {
       $tagmap += _media_wysiwyg_generate_tagMap($element[$column]['#value']);
     }
   }
@@ -281,7 +281,7 @@ function media_wysiwyg_form_media_admin_config_browser_alter(&$form, &$form_stat
 
   $options = array();
   foreach(field_info_field_types() as $key => $type) {
-    $options[$key] = $type['label'];
+    $options[$key] = (!empty($type['label']))? $type['label'] : ucfirst(str_replace("_"," ",$key));
   }
   asort($options);
   $form['wysiwyg']['media_wysiwyg_wysiwyg_override_field_types'] = array(
@@ -313,6 +313,20 @@ function media_wysiwyg_form_media_admin_config_browser_alter(&$form, &$form_stat
     '#description' => t('If checked, there will be an alignment (left/right/center) option when embedding media in a WYSIWYG.'),
   );
 
+  $form['wysiwyg']['media_wysiwyg_external_link'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Provide the ability to link media to pages'),
+    '#default_value' => variable_get('media_wysiwyg_external_link', FALSE),
+    '#description' => t('If checked there will be a new field when embedding that will allow users to link to the media to urls'),
+  );
+
+  $form['wysiwyg']['media_wysiwyg_remove_media_class'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Remove the ".media" class from embedded media'),
+    '#description' => t('If checked, the ".media" class will be removed from embedded media. Particularlly for sites using Bootstrap, the ".media" class can cause CSS to be unexpectedly applied to embedded media.'),
+    '#default_value' => variable_get('media_wysiwyg_remove_media_class', FALSE),
+  );
+
   $form['#submit'][] = 'media_wysiwyg_admin_config_browser_pre_submit';
 }
 
@@ -342,8 +356,12 @@ function media_wysiwyg_filter_info() {
 
   $filters['media_filter_paragraph_fix'] = array(
     'title' => t('Ensure that embedded Media tags are not contained in paragraphs'),
-    'description' => t('This filter will strip any paragraph tags surrounding embedded Media tags. This helps to avoid the chopped up markup that can result from unexpectedly closed paragraph tags. This filter should be positioned above (before) the "Convert Media tags to markup" filter.'),
+    'description' => t('This filter will fix any paragraph tags surrounding embedded Media tags. This helps to avoid the chopped up markup that can result from unexpectedly closed paragraph tags. This filter should be positioned above (before) the "Convert Media tags to markup" filter.'),
     'process callback' => 'media_wysiwyg_filter_paragraph_fix',
+    'settings callback' => '_media_filter_paragraph_fix_settings',
+    'default settings' => array(
+      'replace' => 0,
+    ),
     'weight' => 1,
   );
 
@@ -389,7 +407,7 @@ function media_wysiwyg_allowed_attributes() {
     'data-delta',
   ));
   drupal_alter('media_wysiwyg_allowed_attributes', $allowed_attributes);
-  return $allowed_attributes;  
+  return $allowed_attributes;
 }
 
 /**
@@ -603,7 +621,7 @@ function media_wysiwyg_form_file_entity_file_type_form_alter(&$form, &$form_stat
   if (empty($form_state['build_info']['args'][0])) {
     return;
   }
-  
+
   $options = array();
 
   // Add an option allowing users not to use a view mode.

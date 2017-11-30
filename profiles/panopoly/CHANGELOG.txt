@@ -1,3 +1,32 @@
+7.x-1.48, 2017-11-30
+-------------------
+- Drop support for updating from Panopoly version that were release more than a
+  year ago.
+- Update Panopoly Widgets for Issue #2923210 by cboyden: Edit file button
+  appears on Media style selector modal.
+- Fully support PHP 7.
+- Update Panopoly Magic for Issue #2925659 by dsnopek: Fieldable panels pane
+  entities added erroneously to pane configuration.
+- Update Panopoly Core and Magic for Issue #2177417 by dsnopek: Widget output
+  when editing with IPE can be different than when viewing the page normally
+  (easily reproducable with "Submenu" widget).
+- Update Panopoly Magic for Issue #2869560 by jamesrward, chrisgross, Jorrit:
+  PHP7 Error: Indirect access to variable (revert unintentional change).
+- Update Panopoly Magic for Issue #2869560 by jamesrward, chrisgross, Jorrit:
+  PHP7 Error: Indirect access to variable.
+- Update Panopoly Core for Issue #2916715 by Jorrit: Update token for PHP 7
+  compatibility.
+- Update Panopoly Widgets for Issue #2920387 by dsnopek, cboyden: Update to
+  Media 2.13 and File Entity 2.12.
+- Update Panopoly Test for Issue #2914229 by cboyden: Switch to headless Chrome
+  for Travis testing.
+- Update Panopoly Core for Issue #2916704 by Jorrit: Add field_group patch for
+  PHP 7 compatibility.
+- Composer can't find http_request2 library.
+- Set composer repository to https.
+- Start testing upgrades from the 1.47 release.
+- Restored drupal-org.make after the 1.47 release.
+
 7.x-1.47, 2017-08-17
 -------------------
 - Update Panopoly Core for Issue #2902677 by collinhaines, byronveale: Update

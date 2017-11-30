@@ -18,12 +18,12 @@ projects[menu_block][subdir] = contrib
 
 ; Panopoly - Contrib - Files & Media
 
-projects[file_entity][version] = 2.0-beta3
+projects[file_entity][version] = 2.12
 projects[file_entity][subdir] = contrib
 
-projects[media][version] = 2.1
+projects[media][version] = 2.13
 projects[media][subdir] = contrib
-projects[media][patch][2272567] = https://www.drupal.org/files/issues/media_dialog_appears_2272567-32.patch
+projects[media][patch][2372907] = https://www.drupal.org/files/issues/media-replace-fake-button-2372907-2.patch
 
 projects[media_youtube][version] = 3.0
 projects[media_youtube][subdir] = contrib
