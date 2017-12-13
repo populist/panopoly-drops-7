@@ -1,3 +1,8 @@
+7.x-1.49, 2017-12-13
+-------------------
+- Start testing upgrades from the 1.47 release.
+- Restored drupal-org.make after the 1.48 release.
+
 7.x-1.48, 2017-11-30
 -------------------
 - Drop support for updating from Panopoly version that were release more than a

@@ -10,8 +10,8 @@ function panopoly_core_init() {
   // Set the current page title in the breadcrumb
   if (variable_get('panopoly_core_breadcrumb_title', TRUE)) {
     $breadcrumb = drupal_get_breadcrumb();
-    if (count($breadcrumb) && panopoly_core_get_title()) {
-      $breadcrumb[] = panopoly_core_get_title();
+    if (count($breadcrumb) && drupal_get_title()) {
+      $breadcrumb[] = drupal_get_title();
 
       // If it is the homepage, remove the breadcrumb
       if (drupal_is_front_page()) {
@@ -23,17 +23,18 @@ function panopoly_core_init() {
 }
 
 /**
- * Just like drupal_get_title() but unescaped.
+ * Implements hook_menu_alter().
  */
-function panopoly_core_get_title() {
-  $title = drupal_static('drupal_set_title');
-
-  // During a bootstrap, menu.inc is not included and thus we cannot provide a title.
-  if (!isset($title) && function_exists('menu_get_active_title')) {
-    $title = menu_get_active_title();
+function panopoly_core_menu_alter(&$items) {
+  // Remove unnecessary 'title calback' => check_plain() that on node/add/%
+  // pages from node.module.
+  foreach (node_type_get_types() as $type) {
+    $type_url_str = str_replace('_', '-', $type->type);
+    $menu_item_key = 'node/add/' . $type_url_str;
+    if (isset($items[$menu_item_key]['title callback']) && $items[$menu_item_key]['title callback'] == 'check_plain') {
+      unset($items[$menu_item_key]['title callback']);
+    }
   }
-
-  return $title;
 }
 
 /**

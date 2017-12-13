@@ -1,3 +1,7 @@
+7.x-1.49, 2017-12-13
+-------------------
+- No changes since last release.
+
 7.x-1.48, 2017-11-30
 -------------------
 - Switch to headless Chrome for Travis testing.
