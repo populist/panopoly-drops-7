@@ -10,6 +10,7 @@ dependencies[] = image
 dependencies[] = page_manager
 dependencies[] = panelizer
 dependencies[] = pm_existing_pages
+dependencies[] = radix_layouts
 dependencies[] = strongarm
 dependencies[] = user_picture_field
 features[ctools][] = field_group:field_group:1
@@ -60,9 +61,9 @@ features_exclude[variable][panelizer_user:user_allowed_types] = panelizer_user:u
 features_exclude[variable][panelizer_user:user_default] = panelizer_user:user_default
 features_exclude[variable][panelizer_defaults_user_user] = panelizer_defaults_user_user
 
-; Information added by Drupal.org packaging script on 2017-12-13
-version = "7.x-1.49"
+; Information added by Drupal.org packaging script on 2018-02-15
+version = "7.x-1.50"
 core = "7.x"
 project = "panopoly_users"
-datestamp = "1513182209"
+datestamp = "1518716548"
 

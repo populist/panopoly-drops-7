@@ -37,9 +37,9 @@ features[page_manager_pages][] = panopoly_admin_layout_library
 features[page_manager_pages][] = panopoly_admin_page_library
 features[page_manager_pages][] = panopoly_admin_pane_library
 
-; Information added by Drupal.org packaging script on 2017-12-13
-version = "7.x-1.49"
+; Information added by Drupal.org packaging script on 2018-02-15
+version = "7.x-1.50"
 core = "7.x"
 project = "panopoly_admin"
-datestamp = "1513181893"
+datestamp = "1518716424"
 

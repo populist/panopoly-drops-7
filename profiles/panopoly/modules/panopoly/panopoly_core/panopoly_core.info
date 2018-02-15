@@ -82,9 +82,9 @@ features_exclude[variable][panelizer_taxonomy_term:panopoly_categories_allowed_t
 features_exclude[variable][panelizer_defaults_taxonomy_term_panopoly_categories] = panelizer_defaults_taxonomy_term_panopoly_categories
 features_exclude[variable][pathauto_taxonomy_term_panopoly_categories_pattern] = pathauto_taxonomy_term_panopoly_categories_pattern
 
-; Information added by Drupal.org packaging script on 2017-12-13
-version = "7.x-1.49"
+; Information added by Drupal.org packaging script on 2018-02-15
+version = "7.x-1.50"
 core = "7.x"
 project = "panopoly_core"
-datestamp = "1513181917"
+datestamp = "1518716438"
 

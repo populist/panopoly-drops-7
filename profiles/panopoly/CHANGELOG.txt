@@ -1,3 +1,16 @@
+7.x-1.50, 2018-02-15
+-------------------
+- Update Panopoly Core for Issue #2944886 by cboyden: Update to Entity API 1.9.
+- Update Panopoly Magic for Issue #2938996 by dsnopek: Validation for reusable
+  FPP's "Admin Title" doesn't fire except when uploading images.
+- Update Panopoly Users for Issue #2935666 by vitalie: Undeclared radix_layouts
+  dependency in panopoly_users.
+- Update Panopoly Magic for Issue #2484843 by dsnopek, cboyden: Allow widgets to
+  control how their "example" is rendered on the "Add content" dialog (including
+  using a static image rather than rendering).
+- Start testing upgrades from the 1.49 release.
+- Restored drupal-org.make after the 1.49 release.
+
 7.x-1.49, 2017-12-13
 -------------------
 - Start testing upgrades from the 1.47 release.

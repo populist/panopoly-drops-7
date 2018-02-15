@@ -57,7 +57,7 @@ projects[pathauto][subdir] = contrib
 projects[token][version] = 1.7
 projects[token][subdir] = contrib
 
-projects[entity][version] = 1.8
+projects[entity][version] = 1.9
 projects[entity][subdir] = contrib
 
 projects[libraries][version] = 2.2
