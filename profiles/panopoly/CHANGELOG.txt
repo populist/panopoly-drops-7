@@ -1,3 +1,7 @@
+7.x-1.51, 2018-02-22
+-------------------
+- Restored drupal-org.make after the 1.50 release.
+
 7.x-1.50, 2018-02-15
 -------------------
 - Update Panopoly Core for Issue #2944886 by cboyden: Update to Entity API 1.9.

@@ -99,9 +99,9 @@ features_exclude[dependencies][panopoly_pages] = panopoly_pages
 features_exclude[dependencies][panelizer] = panelizer
 hidden = 1
 
-; Information added by Drupal.org packaging script on 2018-02-15
-version = "7.x-1.50"
+; Information added by Drupal.org packaging script on 2018-02-22
+version = "7.x-1.51"
 core = "7.x"
 project = "panopoly_test"
-datestamp = "1518716516"
+datestamp = "1519310733"
 
