@@ -24,6 +24,7 @@ projects[file_entity][subdir] = contrib
 projects[media][version] = 2.13
 projects[media][subdir] = contrib
 projects[media][patch][2372907] = https://www.drupal.org/files/issues/media-replace-fake-button-2372907-2.patch
+projects[media][patch][2966109] = https://www.drupal.org/files/issues/2018-04-25/media--sa-contrib-2018-020.patch
 
 projects[media_youtube][version] = 3.0
 projects[media_youtube][subdir] = contrib

@@ -125,9 +125,8 @@ features[linkit_profiles][] = content_fields
 features[views_view][] = panopoly_widgets_general_content
 features_exclude[dependencies][linkit] = linkit
 
-; Information added by Drupal.org packaging script on 2018-02-22
-version = "7.x-1.51"
+; Information added by Drupal.org packaging script on 2018-04-25
+version = "7.x-1.53"
 core = "7.x"
 project = "panopoly_widgets"
-datestamp = "1519310799"
-
+datestamp = "1524692285"
