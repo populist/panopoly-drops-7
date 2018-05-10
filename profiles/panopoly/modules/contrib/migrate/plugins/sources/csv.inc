@@ -6,12 +6,188 @@
  */
 
 /**
+ * Implementation of MigrateList, for retrieving a list of IDs to be migrated
+ * from a CSV file.
+ */
+class MigrateListCSV extends MigrateList {
+
+  /**
+   * The path to the CSV file containing a list of IDs to be processed.
+   *
+   * @var string
+   */
+  protected $file;
+
+  /**
+   * The column which contains the ID.
+   *
+   * If numeric, this is the index of the column from 0; if non-numeric, this
+   * is the column name as given by the header row.
+   */
+  protected $idColumn;
+
+  /**
+   * The number of rows in the CSV file before the data starts.
+   *
+   * @var integer
+   */
+  protected $headerRows = 0;
+
+  /**
+   * The array keys taken from the first row.
+   *
+   * @var array
+   */
+  protected $headers = array();
+
+  /**
+   * Parameters for the fgetcsv() call.
+   *
+   * @var array
+   */
+  protected $fgetcsv = array();
+
+  /**
+   * Constructor for MigrateListCSV.
+   *
+   * @param $list_path
+   *  The path to the CSV file that holds the list of IDs.
+   * @param $id_column
+   *  The column in the file that holds the IDs. A numeric index for the column,
+   *  from 0.
+   * @param $options = array()
+   *  An array of further options for the CSV file.
+   */
+  public function __construct($list_path, $id_column, $options = array()) {
+    parent::__construct();
+    $this->file = $list_path;
+    $this->idColumn = $id_column;
+    $this->options = $options;
+
+    // fgetcsv specific options
+    foreach (array(
+               'length' => NULL,
+               'delimiter' => ',',
+               'enclosure' => '"',
+               'escape' => '\\',
+             ) as $key => $default) {
+      $this->fgetcsv[$key] = isset($options[$key]) ? $options[$key] : $default;
+    }
+
+    if (!empty($options['header_rows'])) {
+      $this->headerRows = $options['header_rows'];
+    }
+    else {
+      $this->headerRows = 0;
+    }
+
+    if (!is_numeric($id_column)) {
+      //we need to store the headers.
+      $this->csvHandle = fopen($this->file, 'r');
+      $this->headers = $this->getNextLine();
+      fclose($this->csvHandle);
+      $this->csvHandle = NULL;
+    }
+  }
+
+  /**
+   * Return a string representing the source file.
+   *
+   * @return string
+   */
+  public function __toString() {
+    return $this->file;
+  }
+
+  /**
+   * Return an array of IDs from the CSV file.
+   *
+   * @return array
+   */
+  public function getIdList() {
+    $ids = array();
+
+    $this->csvHandle = fopen($this->file, 'r');
+
+    // Skip the headers if any,
+    for ($i = 0; $i < $this->headerRows; $i++) {
+      $this->getNextLine();
+    }
+
+    while ($row = $this->getNextLine()) {
+      $ids[] = $row[$this->idColumn];
+    }
+
+    fclose($this->csvHandle);
+    $this->csvHandle = NULL;
+
+    return $ids;
+  }
+
+  /**
+   * Return a count of all available IDs from the source listing.
+   *
+   * @return integer
+   */
+  public function computeCount() {
+    // If the data may have embedded newlines, the file line count won't reflect
+    // the number of CSV records (one record will span multiple lines). We need
+    // to scan with fgetcsv to get the true count.
+    if (!empty($this->options['embedded_newlines'])) {
+      $this->csvHandle = fopen($this->file, 'r');
+      // Skip all but the last header
+      for ($i = 0; $i < $this->headerRows; $i++) {
+        fgets($this->csvHandle);
+      }
+      $count = 0;
+      while ($this->getNextLine()) {
+        $count++;
+      }
+      fclose($this->csvHandle);
+      $this->csvHandle = NULL;
+    }
+    else {
+      // TODO. If this takes too much time/memory, use exec('wc -l')
+      $count = count(file($this->file));
+      $count -= $this->headerRows;
+    }
+    return $count;
+  }
+
+  /**
+   * Get the next line of the CSV file.
+   * Returns an array of the next line, keyed by headers if required
+   *
+   * @return array
+   */
+  protected function getNextLine() {
+    // escape parameter was added in PHP 5.3.
+    if (version_compare(phpversion(), '5.3', '<')) {
+      $row = fgetcsv($this->csvHandle, $this->fgetcsv['length'],
+        $this->fgetcsv['delimiter'], $this->fgetcsv['enclosure']);
+    }
+    else {
+      $row = fgetcsv($this->csvHandle, $this->fgetcsv['length'],
+        $this->fgetcsv['delimiter'], $this->fgetcsv['enclosure'],
+        $this->fgetcsv['escape']);
+    }
+    // Key the array with the headers
+    if (!empty($this->headers) && $row) {
+      $row = array_combine($this->headers, $row);
+    }
+    return $row;
+  }
+
+}
+
+/**
  * Implementation of MigrateSource, to handle imports from CSV files.
  *
  * If the CSV file contains non-ASCII characters, make sure it includes a
  * UTF BOM (Byte Order Marker) so they are interpreted correctly.
  */
 class MigrateSourceCSV extends MigrateSource {
+
   /**
    * List of available source fields.
    *
@@ -73,7 +249,12 @@ class MigrateSourceCSV extends MigrateSource {
     $this->options = $options;
     $this->fields = $fields;
     // fgetcsv specific options
-    foreach (array('length' => NULL, 'delimiter' => ',', 'enclosure' => '"', 'escape' => '\\') as $key => $default) {
+    foreach (array(
+               'length' => NULL,
+               'delimiter' => ',',
+               'enclosure' => '"',
+               'escape' => '\\',
+             ) as $key => $default) {
       $this->fgetcsv[$key] = isset($options[$key]) ? $options[$key] : $default;
     }
     // One can either pass in an explicit list of column names to use, or if we have
@@ -196,7 +377,7 @@ class MigrateSourceCSV extends MigrateSource {
         unset($row[$int]);
       }
       $row['csvrownum'] = $this->rowNumber++;
-      return (object)$row;
+      return (object) $row;
     }
     else {
       fclose($this->csvHandle);

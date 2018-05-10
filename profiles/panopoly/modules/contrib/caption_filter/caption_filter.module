@@ -81,14 +81,17 @@ function _caption_filter_replace($matches) {
   // Legacy fallback - If there is no formal attribute, try to infer from the HTML
   // and then assign the caption to $caption and the $item to the remainder
   if (empty($caption)) {
-    if (preg_match('/<img.*>(.*)/i', $item, $legacy_img) && !empty($legacy_img[1])) {
-      $caption = $legacy_img[1];
-    } else if (preg_match('/<iframe.*>(.*)/i', $item, $legacy_iframe) && !empty($legacy_iframe[1])) {
-      $caption = $legacy_iframe[1];
-    } else if (preg_match('/<embed.*>(.*)/i', $item, $legacy_embed) && !empty($legacy_embed[1])) {
-      $caption = $legacy_embed[1];
-    } else if (preg_match('/<object.*>(.*)/i', $item, $legacy_obejct) && !empty($legacy_obejct[1])) {
-      $caption = $legacy_obejct[1];
+    if (preg_match('/<img.*>(.*)/i', $item)) {
+      $caption = preg_replace('/<img[^>]+\>/i', '', $item, 1);
+    }
+    elseif (preg_match('/<iframe.*>(.*)/i', $item)) {
+      $caption = preg_replace('/<iframe[^>]+\>/i', '', $item, 1);
+    }
+    elseif (preg_match('/<embed.*>(.*)/i', $item)) {
+      $caption = preg_replace('/<embed[^>]+\>/i', '', $item, 1);
+    }
+    elseif (preg_match('/<object.*>(.*)/i', $item)) {
+      $caption = preg_replace('/<object[^>]+\>/i', '', $item, 1);
     }
   }
 
@@ -115,11 +118,10 @@ function _caption_filter_replace($matches) {
  * Determine the width of the img/object that is being captioned.
  */
 function _caption_filter_get_width($item) {
-  // In case we cannot determine the width, just set it to the default css value
-  $width = 'auto';
+  $width = '';
 
   // Find an img or object tag within the [caption] to determine the width.
-  if (preg_match_all('/<(img|object)[^>]+>/i', $item, $internal_result)) {
+  if (preg_match_all('/<(img|object|iframe|embed)[^>]+>/i', $item, $internal_result)) {
     foreach($internal_result['0'] as $tag) {
       // If the width is defined, dump that into the $widths array.
       if (preg_match_all('/width="([0-9]*)"/i', $tag, $width_result)) {
@@ -174,6 +176,11 @@ function _caption_filter_get_width($item) {
   // Free up memory.
   unset($src_result, $width_result, $internal_result, $parts, $path_parts, $tag, $item);
 
+  // In case we cannot determine the width, just set it to the default css value
+  if ($width == '') {
+    $width = 'auto';
+  }
+
   // We need to append the 'px' to any numeric widths.
   if (is_numeric($width)) {
     $width = $width . 'px';
@@ -208,18 +215,23 @@ function _caption_filter_tag_attributes($text) {
   $text = preg_replace("/[\x{00a0}\x{200b}]+/u", " ", $text);
   if (preg_match_all($pattern, $text, $match, PREG_SET_ORDER)) {
     foreach ($match as $m) {
-      if (!empty($m[1]))
+      if (!empty($m[1])) {
         $atts[strtolower($m[1])] = stripcslashes($m[2]);
-      elseif (!empty($m[3]))
+      }
+      elseif (!empty($m[3])) {
         $atts[strtolower($m[3])] = stripcslashes($m[4]);
-      elseif (!empty($m[5]))
+      }
+      elseif (!empty($m[5])) {
         $atts[strtolower($m[5])] = stripcslashes($m[6]);
+      }
       // These two rules vary slightly from the WordPress source. Single word
       // attributes (e.g "checked") are set to have the value of TRUE.
-      elseif (isset($m[7]) and strlen($m[7]))
+      elseif (isset($m[7]) and strlen($m[7])) {
         $atts[strtolower($m[7])] = TRUE;
-      elseif (isset($m[8]))
+      }
+      elseif (isset($m[8])) {
         $atts[strtolower($m[8])] = TRUE;
+      }
     }
   }
   else {

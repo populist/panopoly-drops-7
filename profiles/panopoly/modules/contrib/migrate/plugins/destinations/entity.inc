@@ -10,12 +10,14 @@
  * Field API-related functions.
  */
 abstract class MigrateDestinationEntity extends MigrateDestination {
+
   /**
    * The entity type (node, user, taxonomy_term, etc.) of the destination.
    *
    * @var string
    */
   protected $entityType;
+
   public function getEntityType() {
     return $this->entityType;
   }
@@ -26,6 +28,7 @@ abstract class MigrateDestinationEntity extends MigrateDestination {
    * @var string
    */
   protected $bundle;
+
   public function getBundle() {
     return $this->bundle;
   }
@@ -36,6 +39,7 @@ abstract class MigrateDestinationEntity extends MigrateDestination {
    * @var string
    */
   protected $language;
+
   public function getLanguage() {
     return $this->language;
   }
@@ -46,6 +50,7 @@ abstract class MigrateDestinationEntity extends MigrateDestination {
    * @var int
    */
   protected $textFormat;
+
   public function getTextFormat() {
     return $this->textFormat;
   }
@@ -130,7 +135,7 @@ abstract class MigrateDestinationEntity extends MigrateDestination {
     */
     $migration = Migration::currentMigration();
     $entity->migrate = array(
-//      'source_keys' => $keys,
+      //      'source_keys' => $keys,
       'machineName' => $migration->getMachineName(),
     );
 
@@ -168,8 +173,7 @@ abstract class MigrateDestinationEntity extends MigrateDestination {
     if (method_exists($migration, 'complete')) {
       try {
         $migration->complete($entity, $source_row);
-      }
-      catch (Exception $e) {
+      } catch (Exception $e) {
         // If we catch any errors here, save the messages without letting
         // the exception prevent the saving of the entity being recorded.
         $migration->saveMessage($e->getMessage());
@@ -190,18 +194,13 @@ abstract class MigrateDestinationEntity extends MigrateDestination {
   static public function fieldAttachValidate($entity_type, $entity) {
     try {
       field_attach_validate($entity_type, $entity);
-    }
-    catch (FieldValidationException $e) {
+    } catch (FieldValidationException $e) {
       $migration = Migration::currentMigration();
-      foreach ($e->errors as $field_name => $field_errors) {
-        foreach ($field_errors as $langcode => $errors) {
-          foreach ($errors as $delta => $error_list) {
-            foreach ($error_list as $index => $error) {
-              $message = $error['message'];
-              $migration->saveMessage(t('Field validation error for !field_name: !message',
-                array('!field_name' => $field_name, '!message' => $message)));
-            }
-          }
+      foreach ($e->errors as $field_name => $error_list) {
+        foreach ($error_list as $index => $error) {
+          $message = $error['message'];
+          $migration->saveMessage(t('Field validation error for !field_name: !message',
+            array('!field_name' => $field_name, '!message' => $message)));
         }
       }
     }

@@ -701,6 +701,7 @@ function breakpoints_add_style_form_submit($form, &$form_state) {
     if ($style) {
       foreach ($base['effects'] as $effect) {
         $effect['isid'] = $style['isid'];
+        $effect['data']['style_name'] = $new_style['name'];
         unset($effect['ieid']);
         image_effect_save($effect);
       }

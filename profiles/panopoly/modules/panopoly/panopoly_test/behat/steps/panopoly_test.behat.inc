@@ -23,6 +23,13 @@ class TestSubContext extends RawDrupalContext implements DrupalSubContextInterfa
   private $drupal = NULL;
 
   /**
+   * Tracks if we're in a Javascript scenario or not.
+   *
+   * @var bool
+   */
+  private $javascript = FALSE;
+
+  /**
    * Contains the name of the currently selected iframe.
    *
    * @var string
@@ -133,10 +140,15 @@ class TestSubContext extends RawDrupalContext implements DrupalSubContextInterfa
    * @AfterStep
    */
   public function afterStepWaitForJavascript($event) {
-    if (isset($this->javascript) && $this->javascript && empty($this->iframe)) {
+    if (isset($this->javascript) && $this->javascript) {
       $text = $event->getStep()->getText();
       if (preg_match('/(follow|press|click|submit|viewing|visit|reload|attach)/i', $text)) {
         $this->iWaitForAjax();
+
+        // For whatever reason, the above isn't very accurate inside iframes.
+        if (!empty($this->iframe)) {
+          sleep(3);
+        }
       }
     }
   }
@@ -584,6 +596,7 @@ class TestSubContext extends RawDrupalContext implements DrupalSubContextInterfa
   public function iSwitchToTheFrame($frame) {
     $this->getSession()->switchToIFrame($frame);
     $this->iframe = $frame;
+    sleep(3);
   }
 
   /**

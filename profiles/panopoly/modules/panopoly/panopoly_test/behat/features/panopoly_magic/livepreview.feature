@@ -14,13 +14,14 @@ Feature: Live preview
     Then I should see "Configure new Add table"
     When I fill in "Title" with "Widget title"
       And I wait for live preview to finish
-    Then I should see "Widget title" in the "Live preview" region
-    When I fill in "field_basic_table_table[und][0][tablefield][cell_0_0]" with "c-1-r-1"
+    Then I should see "Table is a required field." in the "Live preview" region
+    When I fill in "field_basic_table_table[und][0][tablefield][tabledata][row_0][col_0]" with "c-1-r-1"
       And I wait for live preview to finish
+    Then I should see "Widget title" in the "Live preview" region
     # We need to check the table header case insensitively, because it's not
     # uncommon to make table headers capitalized.
-    Then I should see text matching "/c-1-r-1/i" in the "Live preview" region
-    When I fill in "field_basic_table_table[und][0][tablefield][cell_0_1]" with "c-2-r-1"
+      And I should see text matching "/c-1-r-1/i" in the "Live preview" region
+    When I fill in "field_basic_table_table[und][0][tablefield][tabledata][row_0][col_1]" with "c-2-r-1"
       And I wait for live preview to finish
     Then I should see text matching "/c-2-r-1/i" in the "Live preview" region
     # Test that we can make the title into a link
@@ -126,7 +127,12 @@ Feature: Live preview
     Then I should not see "Widget title" in the "Live preview" region
     When I press "Update Preview"
       And I wait for live preview to finish
+    Then I should see "Text field is required." in the "Live preview" region
+    When I fill in the "edit-field-basic-text-text-und-0-value" WYSIWYG editor with "Hello Text"
+      And I press "Update Preview"
+      And I wait for live preview to finish
     Then I should see "Widget title" in the "Live preview" region
+      And I should see "Hello Text" in the "Live preview" region
 
   @api @javascript @panopoly_magic @panopoly_widgets
   Scenario: Automatic live preview should validation errors immediately
@@ -444,6 +450,7 @@ Feature: Live preview
       Then I should see "Configure new Add text"
       When I fill in the following:
         | Title   | Here's a title & then some |
+        And I fill in the "edit-field-basic-text-text-und-0-value" WYSIWYG editor with "Hello Text"
         And I check the box "Make title a link"
         And I wait for AJAX to finish
       Then I should see "Here's a title & then some"

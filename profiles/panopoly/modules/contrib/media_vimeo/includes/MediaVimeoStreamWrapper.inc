@@ -10,7 +10,7 @@
  *  $vimeo = new MediaVimeoStreamWrapper('vimeo://v/[video-code]');
  */
 class MediaVimeoStreamWrapper extends MediaReadOnlyStreamWrapper {
-  protected $base_url = 'http://vimeo.com';
+  protected $base_url = 'https://vimeo.com';
 
   static function getMimeType($uri, $mapping = NULL) {
     return 'video/vimeo';
@@ -26,7 +26,7 @@ class MediaVimeoStreamWrapper extends MediaReadOnlyStreamWrapper {
     $parts = $this->get_parameters();
     $uri = file_stream_wrapper_uri_normalize('vimeo://v/' . check_plain($parts['v']));
     $external_url = file_create_url($uri);
-    $oembed_url = url('http://vimeo.com/api/oembed.json', array('query' => array('url' => $external_url)));
+    $oembed_url = url('https://vimeo.com/api/oembed.json', array('query' => array('url' => $external_url)));
     $response = drupal_http_request($oembed_url);
 
     if (!isset($response->error)) {

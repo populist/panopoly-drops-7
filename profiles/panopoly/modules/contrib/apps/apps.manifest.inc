@@ -22,7 +22,7 @@ function apps_server_local($server) {
     // is this server.
     if (isset($info->info['apps']) && (!isset($info->info['apps']['server']) || $info->info['apps']['server'] == $server['name'])) {
       $manifest = $info->info['apps'];
-      $app_path = drupal_get_path('module', $module);
+      $app_path = drupal_get_path('module', $module, FALSE);
 
       // Set some defaults, if needed.
       $manifest['machine_name'] = $module;
@@ -427,7 +427,7 @@ function apps_manifest($server) {
     $apps = array();
     foreach ($manifest['apps'] as $machine_name => $app) {
       $current_app_module = isset($modules[$machine_name]) ? $modules[$machine_name] : FALSE;
-      $app_info = isset($modules[$machine_name]) ? drupal_parse_info_file(drupal_get_path('module', $machine_name) . '/' . APPS_APP_INFO) : array();
+      $app_info = isset($modules[$machine_name]) ? drupal_parse_info_file(drupal_get_path('module', $machine_name, FALSE) . '/' . APPS_APP_INFO) : array();
       $app['enabled'] = $current_app_module && $current_app_module->status;
       $app['incompatible'] = FALSE;
       $app['installed'] = (bool) $current_app_module;

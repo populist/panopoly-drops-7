@@ -131,10 +131,6 @@
     attach: function (context, settings) {
       // Replaces click with mousedown for submit so both normal and ajax work.
       $('.ctools-auto-submit-click', context)
-      // Exclude the 'Style' type form because then you have to press the
-      // "Next" button multiple times.
-      // @todo: Should we include the places this works rather than excluding?
-      .filter(function () { return $(this).closest('form').attr('id').indexOf('panels-edit-style-type-form') !== 0; })
       .click(function(event) {
         if ($(this).hasClass('ajax-processed')) {
           event.stopImmediatePropagation();

@@ -17,11 +17,11 @@ function manualcrop_global_settings_form() {
     '#default_value' => variable_get('manualcrop_cache_control', TRUE),
   );
 
-  $form['manualcrop_skip_js_check'] = array(
+  $form['manualcrop_force_effect_order'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Skip javascript cookie check'),
-    '#description' => t('Enable Manual Crop even if the <em>has_js</em> cookie (which is set by Drupal when the brower supports javascript) is missing.'),
-    '#default_value' => variable_get('manualcrop_skip_js_check', FALSE),
+    '#title' => t('Force Manual Crop effects to run first'),
+    '#description' => t('Manual Crop effects must execute before the dimensions of the original image are changed. <strong>Disable at your own risk!</strong'),
+    '#default_value' => variable_get('manualcrop_force_effect_order', TRUE),
   );
 
   $form['#submit'] = array('manualcrop_global_settings_form_submit');
@@ -359,7 +359,7 @@ function manualcrop_auto_reuse_form($data) {
   $form['fallback_style'] = array(
     '#type' => 'select',
     '#title' => t('Fallback image style'),
-    '#description' => t('Image style to use if no cropping selections is found for an image.'),
+    '#description' => t('Image style to use if no cropping selection is found for an image.'),
     '#options' => $styles,
     '#default_value' => (isset($data['fallback_style']) ? $data['fallback_style'] : ''),
   );
@@ -415,7 +415,7 @@ function manualcrop_form_image_effect_form_alter(&$form, &$form_state) {
     // Add the effect info on submit.
     array_unshift($form['#submit'], 'manualcrop_add_effect_info');
   }
-  elseif (!empty($style['effects'])) {
+  elseif (!empty($style['effects']) && variable_get('manualcrop_force_effect_order', TRUE)) {
     // Force the effect order for none-Manual Crop effects.
     $form['#submit'][] = 'manualcrop_force_effect_order';
   }
@@ -477,8 +477,10 @@ function manualcrop_form_image_style_form_alter(&$form, &$form_state) {
       $form['#submit'] = array('image_style_form_submit');
     }
 
-    // Reorder effects on submit.
-    $form['#submit'][] = 'manualcrop_force_effect_order';
+    if (variable_get('manualcrop_force_effect_order', TRUE)) {
+      // Reorder effects on submit.
+      $form['#submit'][] = 'manualcrop_force_effect_order';
+    }
 
     // Update style name in effect data.
     $form['#submit'][] = 'manualcrop_update_style_name';
@@ -660,7 +662,7 @@ function manualcrop_field_widget_settings_form($widget_type, $settings) {
     $form['manualcrop']['manualcrop_thumblist'] = array(
       '#type' => 'checkbox',
       '#title' => t('List thumbs'),
-      '#description' => t('Instead showing a button or selection list, show all thumbails (this will disable the preview thumbnail).'),
+      '#description' => t('Instead of showing a button or selection list, show all thumbnails (this will disable the preview thumbnail).'),
       '#default_value' => $settings['manualcrop_thumblist'],
     );
   }
@@ -692,7 +694,7 @@ function manualcrop_field_widget_settings_form($widget_type, $settings) {
     $form['manualcrop']['manualcrop_instant_crop'] = array(
       '#type' => 'checkbox',
       '#title' => t('Crop after upload'),
-      '#description' => t('Open the cropping tool immediatly after a file upload. Please note that this feature requires a single image style to be enabled. Also it will only be applied for screens of at least 768px width.'),
+      '#description' => t('Open the cropping tool immediately after a file upload. Please note that this feature requires a single image style to be enabled. Also it will only be applied for screens of at least 768px width.'),
       '#default_value' => $settings['manualcrop_instant_crop'],
     );
   }
@@ -700,7 +702,7 @@ function manualcrop_field_widget_settings_form($widget_type, $settings) {
   $form['manualcrop']['manualcrop_default_crop_area'] = array(
     '#type' => 'checkbox',
     '#title' => t('Default crop area'),
-    '#description' => t('Create a default crop area when opening the croptool for uncropped images.'),
+    '#description' => t('Create a default crop area when opening the cropping tool for uncropped images.'),
     '#default_value' => $settings['manualcrop_default_crop_area'],
   );
 

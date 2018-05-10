@@ -1,3 +1,12 @@
+7.x-1.54, 2018-05-10
+-------------------
+- Update caption_filter to version 1.3.
+- Update caption_filter to version 1.3.
+- Update WYSIWYG to 2.5.
+- Update WYSIWYG Filter to 7.x-1.6-rc9.
+- Update to image_resize_filter 1.16.
+- "Full screen" button in WYSIWYG blanks out content.
+
 7.x-1.51, 2018-02-22
 -------------------
 - No changes since last release.

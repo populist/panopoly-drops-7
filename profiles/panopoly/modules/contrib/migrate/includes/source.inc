@@ -13,6 +13,7 @@
  * MigrateSourceSQL for an example.
  */
 abstract class MigrateSource implements Iterator {
+
   /**
    * The current row from the quey
    *
@@ -26,6 +27,7 @@ abstract class MigrateSource implements Iterator {
    * @var array
    */
   protected $currentKey;
+
   public function getCurrentKey() {
     return $this->currentKey;
   }
@@ -50,6 +52,7 @@ abstract class MigrateSource implements Iterator {
    * @var int
    */
   protected $numIgnored = 0;
+
   public function getIgnored() {
     return $this->numIgnored;
   }
@@ -60,6 +63,7 @@ abstract class MigrateSource implements Iterator {
    * @var int
    */
   protected $numProcessed = 0;
+
   public function getProcessed() {
     return $this->numProcessed;
   }
@@ -160,7 +164,7 @@ abstract class MigrateSource implements Iterator {
     }
 
     if (!isset($this->cacheKey)) {
-      $this->cacheKey = md5((string)$this);
+      $this->cacheKey = md5((string) $this);
     }
 
     // If a refresh is requested, or we're not caching counts, ask the derived
@@ -227,17 +231,18 @@ abstract class MigrateSource implements Iterator {
   }
 
   /**
-   * Implementation of Iterator::key - called when entering a loop iteration, returning
-   * the key of the current row. It must be a scalar - we will serialize
-   * to fulfill the requirement, but using getCurrentKey() is preferable.
+   * Implementation of Iterator::key - called when entering a loop iteration,
+   * returning the key of the current row. It must be a scalar - we will
+   * serialize to fulfill the requirement, but using getCurrentKey() is
+   * preferable.
    */
   public function key() {
     return serialize($this->currentKey);
   }
 
   /**
-   * Implementation of Iterator::valid() - called at the top of the loop, returning
-   * TRUE to process the loop and FALSE to terminate it
+   * Implementation of Iterator::valid() - called at the top of the loop,
+   * returning TRUE to process the loop and FALSE to terminate it
    */
   public function valid() {
     return !is_null($this->currentRow);

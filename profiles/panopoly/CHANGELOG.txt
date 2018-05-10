@@ -1,3 +1,76 @@
+7.x-1.54, 2018-05-10
+-------------------
+- Update Panopoly Test for Issue #2971200 by dsnopek, cboyden: Fix issues with
+  waiting for AJAX in an iframe (Behat).
+- Update Panopoly Core for Issue #2541570 by dsnopek, gdaw, humansky,
+  byronveale, bkosborne: Date popup hover issue.
+- Update Panopoly Admin for Issue #2936050 by byronveale, dsnopek, bkosborne:
+  Update Breakpoints module to 7.x-1.6.
+- Update Panopoly WYSIWYG for Issue #2933585 by dsnopek, cboyden: Update
+  caption_filter to version 1.3.
+- Update Panopoly Core for Issue #2971194 by dsnopek, byronveale: Update Views
+  to version 3.20.
+- Update Panopoly WYSIWYG for Issue #2933585 by dsnopek: Update caption_filter
+  to version 1.3.
+- Update Panopoly Admin for Issue #2936050 by byronveale, bkosborne: Update
+  Breakpoints module to 7.x-1.4.
+- Drop support for updating from Panopoly version that were release more than a
+  year ago.
+- Update Panopoly Core for Issue #2971189 by dsnopek: Update to migrate 2.9.
+- Update Panopoly Admin for Issue #2937146 by byronveale, bkosborne: Update
+  Module Filter to 7.x-2.1.
+- Update Panopoly Admin for Issue #2936259 by byronveale, bkosborne: Update Date
+  Popup Authored module to 7.x-1.2.
+- Update Panopoly Core for Issue #2936030 by byronveale, bkosborne: Update Apps
+  module to 7.x-1.1.
+- Update Panopoly WYSIWYG for Issue #2971198 by dsnopek: Update WYSIWYG to 2.5.
+- Update Panopoly Core for Issue #2971188 by dsnopek: Update devel to version
+  1.6.
+- Update Panopoly Search for Issue #2933584 by dsnopek, bkosborne: Update
+  search_api to version 1.24.
+- Update Panopoly Core for Issue #2933580 by dsnopek, bkosborne: Update
+  field_group to version 1.6.
+- Update Panopoly WYSIWYG for Issue #2882771 by cboyden, byronveale, dsnopek,
+  bkosborne: Update WYSIWYG Filter to 7.x-1.6-rc9.
+- Update Panopoly Widgets for Issue #2931757 by byronveale, joseph.olstad,
+  dsnopek, bkosborne: upgrade media and media_youtube in panopoly_widgets.
+- Update Panopoly WYSIWYG for Issue #2561731 by dsnopek, wylbur, bkosborne:
+  Update to image_resize_filter 1.16.
+- Update Panopoly Images for Issue #2933583 by dsnopek, byronveale: Update
+  manualcrop to version 1.7.
+- Update Panopoly Core for Issue #2933581 by dsnopek, bkosborne: Update
+  libraries to version 2.3.
+- Update Panopoly Core for Issue #2933578 by dsnopek, bkosborne: Update date to
+  version 2.10.
+- Update Panopoly Core for Issue #2933577 by dsnopek: Update
+  views_bulk_operations to version 3.4.
+- Update Panopoly Magic and Test for Issue #2954647 by dsnopek: Linkit and live
+  preview with panes style tests failing on Travis.
+- Update Panopoly Test for Issue #2969375 by dsnopek: Declare $javascript
+  property in panopoly_test.behat.inc.
+- Update to Drupal core 7.59 and Media for SA-CORE-2018-004.
+- Update Panopoly Widgets for Issue #2952671 by dsnopek, cboyden: File and Image
+  widgets show PHP notices when underlying file has been deleted.
+- Update Panopoly Widgets and Test for Issue #2505357 by cboyden, dsnopek:
+  Widgets can be saved without any content.
+- Merge tag '7.x-1.52' into 7.x-1.x.
+- Update to Drupal 7.58 for SA-CORE-2018-002.
+- Update Panopoly WYSIWYG for Issue #2955645 by dsnopek: "Full screen" button in
+  WYSIWYG blanks out content.
+- Update Panopoly Widgets for Issue #2903251 by dsnopek, byronveale, cboyden,
+  bkosborne: Update and patch Simple GMAP.
+- Update Panopoly Widgets and Test for Issue #2919401 by cboyden, byronveale,
+  dsnopek, bkosborne: Update TableField to 7.x-3.1.
+- Try only verifying .make files when not doing an upgrade test.
+- Update Panopoly Core for Issue #2945430 by byronveale, cboyden, bkosborne:
+  Update to ctools 7.x-1.14.
+- Update Panopoly Core for Issue #2933582 by dsnopek, bkosborne, cboyden: Update
+  views to version 3.18 (add Views patch).
+- Update Panopoly Core for Issue #2933582 by dsnopek, bkosborne: Update views to
+  version 3.18.
+- Start testing upgrades from the 1.51 release.
+- Restored drupal-org.make after the 1.51 release.
+
 7.x-1.51, 2018-02-22
 -------------------
 - Restored drupal-org.make after the 1.50 release.

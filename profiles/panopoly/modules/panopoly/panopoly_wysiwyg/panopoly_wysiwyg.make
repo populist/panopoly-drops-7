@@ -6,16 +6,16 @@ core = 7.x
 ; The WYSIWYG Module Family
 
 projects[wysiwyg][subdir] = contrib
-projects[wysiwyg][version] = 2.4
+projects[wysiwyg][version] = 2.5
 projects[wysiwyg][patch][1489096] = http://drupal.org/files/wysiwyg-table-format.patch
 projects[wysiwyg][patch][1786732] = http://drupal.org/files/wysiwyg-arbitrary_image_paths_markitup-1786732-3.patch
 projects[wysiwyg][patch][2884691] = https://www.drupal.org/files/issues/wysiwyg-theme-css-v24-2884691-8.patch
 projects[wysiwyg][patch][2884761] = https://www.drupal.org/files/issues/wysiwyg-tinymce-css-array-2884761-5.patch
 projects[wysiwyg][patch][2890066] = https://www.drupal.org/files/issues/wysiwyg-isnode-2890066-2.patch
+projects[wysiwyg][patch][2903753] = https://www.drupal.org/files/issues/wysiwyg.tinymce_fullscreen.2903753.6.patch
 
-projects[wysiwyg_filter][version] = 1.6-rc2
+projects[wysiwyg_filter][version] = 1.6-rc9
 projects[wysiwyg_filter][subdir] = contrib
-projects[wysiwyg_filter][patch][1687794] = https://www.drupal.org/files/wysiwyg_filter-1687794-1-skip-validation-if-filter-disabled.patch
 
 ; The WYSIWYG Helpers
 
@@ -23,16 +23,11 @@ projects[linkit][version] = 3.5
 projects[linkit][subdir] = contrib
 projects[linkit][patch][2651404] = https://www.drupal.org/files/issues/linkit-add-to-any-element-2651404-3.patch
 
-projects[image_resize_filter][version] = 1.15
+projects[image_resize_filter][version] = 1.16
 projects[image_resize_filter][subdir] = contrib
-projects[image_resize_filter[patch][1929710] = https://www.drupal.org/files/issues/image_resize_filter-query_string-1929710-14-D7.patch
 
-projects[caption_filter][version] = 1.x-dev
+projects[caption_filter][version] = 1.3
 projects[caption_filter][subdir] = contrib
-projects[caption_filter][download][type] = git
-projects[caption_filter][download][revision] = b8097ee
-projects[caption_filter][download][branch] = 7.x-1.x
-projects[caption_filter][patch][2455253] = https://www.drupal.org/files/issues/caption_filter-single-quotes-to-entities.patch
 
 ; Include our Editors
 

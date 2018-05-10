@@ -504,6 +504,11 @@ ManualCrop.updateSelection = function(image, selection) {
     var instantPreview = $('.manualcrop-instantpreview', ManualCrop.croptool);
 
     if (selection && selection.width && selection.height && selection.x1 >= 0 && selection.y1 >= 0) {
+      // Round the width and height.
+      selection.width = Math.ceil(selection.width);
+      selection.height = Math.ceil(selection.height);
+
+      // Save to the hidden field.
       ManualCrop.output.val(selection.x1 + '|' + selection.y1 + '|' + selection.width + '|' + selection.height);
 
       // Update and show the selection info.

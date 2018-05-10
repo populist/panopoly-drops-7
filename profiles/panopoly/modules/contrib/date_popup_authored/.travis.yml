@@ -1,0 +1,57 @@
+language: php
+
+php:
+  - 5.3
+  - 5.4
+  - 5.5
+  - 5.6
+  - hhvm
+
+matrix:
+  fast_finish: true
+  allow_failures:
+    - php: hhvm
+
+mysql:
+  database: date_popup_authored_test
+  username: root
+  encoding: utf8
+
+before_install:
+  - sudo apt-get update > /dev/null
+
+install:
+  # install php packages required for running a web server from drush on php 5.3
+  - sudo apt-get install -y --force-yes php5-cgi php5-mysql
+
+  # add composer's global bin directory to the path
+  # see: https://github.com/drush-ops/drush#install---composer
+  - export PATH="$HOME/.composer/vendor/bin:$PATH"
+
+  # install drush globally
+  - composer global require drush/drush:6.*
+
+before_script:
+
+  # Sendmail support.
+  - if [[ "$TRAVIS_PHP_VERSION" != hhvm* ]]; then echo 'sendmail_path = /bin/true' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini; fi
+  # hhvm ignores sendmail_path and hhvm.mail.sendmail_path settings presently...
+  - if [[ "$TRAVIS_PHP_VERSION" == hhvm* ]]; then sudo ln -s /bin/true /usr/local/bin/sendmail; fi
+
+   # navigate out of module directory to prevent blown stack by recursive module lookup
+  - cd ../..
+
+  # create new site, stubbing sendmail path with true to prevent delivery errors and manually resolving drush path
+  - mysql -e 'create database date_popup_authored_test'
+  - php ~/.composer/vendor/bin/drush.php --yes core-quick-drupal --profile=testing --no-server --db-url=mysql://root:@127.0.0.1/date_popup_authored_test --enable=simpletest date_popup_authored_test
+
+  # reference and enable travis_ci_drupal_module_example in build site
+  - ln -s $(readlink -e $(cd -)) date_popup_authored_test/drupal/sites/all/modules/date_popup_authored
+  - cd date_popup_authored_test/drupal
+  - drush --yes pm-enable date date_popup date_popup_authored
+
+  # start a web server on port 8080, run in the background; wait for initialization
+  - drush runserver 127.0.0.1:8080 &
+  - until netstat -an 2>/dev/null | grep '8080.*LISTEN'; do true; done
+
+script: drush test-run 'Date Popup Authored' --uri=http://127.0.0.1:8080

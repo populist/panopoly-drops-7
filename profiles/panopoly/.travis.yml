@@ -104,15 +104,13 @@ env:
     #- DRUPAL_TI_RUNNERS="phpunit simpletest behat"
   matrix:
     - UPGRADE=none     INSTALL_PANOPOLY_DEMO_FROM_APPS=1
+    - UPGRADE=7.x-1.51
     - UPGRADE=7.x-1.50
     - UPGRADE=7.x-1.49
     - UPGRADE=7.x-1.48
     - UPGRADE=7.x-1.47
     - UPGRADE=7.x-1.46
     - UPGRADE=7.x-1.45
-    - UPGRADE=7.x-1.44
-    - UPGRADE=7.x-1.43
-    - UPGRADE=7.x-1.42
 
 # Cache Composer & Drush directories.
 cache:

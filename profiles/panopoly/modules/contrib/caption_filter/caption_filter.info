@@ -3,7 +3,9 @@ description = Filter to parse [caption] tags and allow image alignment.
 core = 7.x
 package = Input filters
 
-; Information added by drush on 2013-08-22
-version = "7.x-1.2+9-dev"
+; Information added by Drupal.org packaging script on 2017-02-23
+version = "7.x-1.3"
+core = "7.x"
 project = "caption_filter"
-datestamp = "1377214596"
+datestamp = "1487888585"
+

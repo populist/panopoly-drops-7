@@ -8,17 +8,14 @@ core = 7.x
 projects[backports][version] = 1.0-alpha1
 projects[backports][subdir] = contrib
 
-projects[module_filter][version] = 2.0
+projects[module_filter][version] = 2.1
 projects[module_filter][subdir] = contrib
 
 projects[simplified_menu_admin][version] = 1.0
 projects[simplified_menu_admin][subdir] = contrib
 
-projects[date_popup_authored][version] = 1.x-dev
+projects[date_popup_authored][version] = 1.2
 projects[date_popup_authored][subdir] = contrib
-projects[date_popup_authored][download][type] = git
-projects[date_popup_authored][download][revision] = baf315c
-projects[date_popup_authored][download][branch] = 7.x-1.x
 
 projects[admin_views][version] = 1.6
 projects[admin_views][subdir] = contrib
@@ -40,9 +37,8 @@ projects[navbar][download][branch] = 7.x-1.x
 projects[navbar][patch][1757466] = http://drupal.org/files/navbar-conflict-1757466-14.patch
 projects[navbar][patch][2050559] = http://drupal.org/files/z-index-heart-cools-2050559-1.patch
 
-projects[breakpoints][version] = 1.3
+projects[breakpoints][version] = 1.6
 projects[breakpoints][subdir] = contrib
-projects[breakpoints][patch][2415363] = https://www.drupal.org/files/issues/2415363-breakpoints-menu_rebuild-13.patch
 
 projects[admin_menu][version] = 3.0-rc5
 projects[admin_menu][subdir] = contrib

@@ -154,7 +154,8 @@ Drupal.wysiwyg.editor.instance.tinymce = {
           var editorId = (ed.id == 'mce_fullscreen' ? ed.getParam('fullscreen_editor_id') : ed.id);
           if (typeof Drupal.wysiwyg.plugins[plugin].attach == 'function') {
             data.content = Drupal.wysiwyg.plugins[plugin].attach(data.content, pluginSettings, editorId);
-            data.content = ed._drupalWysiwygInstance.prepareContent(data.content);
+            // Get the instance from the id to work around fullscreen mode.
+            data.content = tinymce.get(editorId)._drupalWysiwygInstance.prepareContent(data.content);
           }
         });
 

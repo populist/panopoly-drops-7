@@ -1026,6 +1026,28 @@ function search_api_search_api_item_type_info() {
 }
 
 /**
+ * Implements hook_module_implements_alter().
+ *
+ * Ensures the item type and service class static caches are invalidated at the
+ * right time.
+ */
+function search_api_module_implements_alter(array &$implementations, $hook) {
+  switch ($hook) {
+    case 'modules_enabled':
+      $group = $implementations['search_api'];
+      unset($implementations['search_api']);
+      $implementations = array('search_api' => $group) + $implementations;
+      break;
+
+    case 'modules_disabled':
+      $group = $implementations['search_api'];
+      unset($implementations['search_api']);
+      $implementations['search_api'] = $group;
+      break;
+  }
+}
+
+/**
  * Implements hook_modules_enabled().
  */
 function search_api_modules_enabled() {
@@ -1102,6 +1124,11 @@ function search_api_search_api_alter_callback_info() {
     'name' => t('Exclude unpublished nodes'),
     'description' => t('Exclude unpublished nodes from the index. <strong>Caution:</strong> This only affects the indexed nodes themselves. If an enabled node has references to disabled nodes, those will still be indexed (or displayed) normally.'),
     'class' => 'SearchApiAlterNodeStatus',
+  );
+  $callbacks['search_api_alter_user_content'] = array(
+    'name' => t('Add user content'),
+    'description' => t('Allows indexing of nodes (and their fields) created by the indexed user. (Caution: This might lead to performance problems, or even errors during indexing, on larger sites.)'),
+    'class' => 'SearchApiAlterAddUserContent',
   );
   $callbacks['search_api_alter_user_status'] = array(
     'name' => t('Exclude blocked users'),

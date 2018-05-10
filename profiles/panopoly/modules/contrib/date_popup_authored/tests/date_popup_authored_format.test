@@ -87,7 +87,7 @@ class DatePopupAuthoredTestCase extends PageEditTestCase {
     debug($node_date->format($time_format), 'Node time');
 
     // Extract the date and time parts as seen on the node submission form
-    $default_format = variable_get('date_popup_authored_format_page', 'm/d/Y - H:i');
+    $default_format = variable_get('date_popup_authored_format_page', variable_get('date_format_short', 'm/d/Y - H:i'));
     variable_set('date_popup_authored_format_page', $format);
 
     $this->drupalGet('node/' . $node->nid . '/edit');
@@ -107,5 +107,81 @@ class DatePopupAuthoredTestCase extends PageEditTestCase {
 
     // Reset format back to default
     variable_set('date_popup_authored_format_page', $format);
+  }
+
+  /**
+   * Tests form field validation.
+   */
+  function testFieldValidation() {
+    // Define some test cases.
+    $test_cases = array(
+      array(
+        'description' => 'a valid date field and a missing time field',
+        'date' => '02/07/2014',
+        'time' => '',
+        'valid' => FALSE,
+      ),
+      array(
+        'description' => 'a valid date field and a valid time field',
+        'date' => '02/07/2014',
+        'time' => '12:00',
+        'valid' => TRUE,
+      ),
+    );
+
+    // Log in as administrator.
+    $this->drupalLogin($this->admin_user);
+
+    // Test the test cases.
+    foreach ($test_cases as $test_case) {
+      $edit = array(
+        'title' => $this->randomString(),
+        'date[date]' => $test_case['date'],
+        'date[time]' => $test_case['time'],
+      );
+      $this->drupalPost('node/add/page', $edit, t('Save'));
+
+      $error_messages = $this->xpath('//div[contains(@class, "error")]');
+
+      $message = format_string('When submitting a node with @description the form validation correctly @result.', array(
+        '@description' => $test_case['description'],
+        '@result' => $test_case['valid'] ? 'succeeds' : 'fails',
+      ));
+      $this->assertEqual(empty($error_messages), $test_case['valid'], $message);
+    }
+  }
+
+  /**
+   * Tests variable cleanup after a content type is removed.
+   */
+  function testVariableCleanupAfterNodeTypeRemoval() {
+    $node_type_name = strtolower($this->randomName(8) . '_test');
+    $node_type = $this->drupalCreateContentType(array('name' => $node_type_name, 'type' => $node_type_name));
+
+    variable_set('date_popup_authored_enabled_' . $node_type_name, 'foo');
+    variable_set('date_popup_authored_format_' . $node_type_name, 'foo');
+    variable_set('date_popup_authored_year_range_' . $node_type_name, 'foo');
+
+    node_type_delete($node_type_name);
+
+    $this->assertNull(variable_get('date_popup_authored_enabled_' . $node_type_name));
+    $this->assertNull(variable_get('date_popup_authored_format_' . $node_type_name));
+    $this->assertNull(variable_get('date_popup_authored_year_range_' . $node_type_name));
+  }
+
+  /**
+   * Tests variable cleanup after Date Popup Authored is uninstalled.
+   */
+  function testVariableCleanupAfterUninstall() {
+    variable_set('date_popup_authored_enabled_page', 'foo');
+    variable_set('date_popup_authored_format_page', 'foo');
+    variable_set('date_popup_authored_year_range_page', 'foo');
+
+    module_disable(array('date_popup_authored'));
+    drupal_uninstall_modules(array('date_popup_authored'));
+
+    $this->assertNull(variable_get('date_popup_authored_enabled_page'));
+    $this->assertNull(variable_get('date_popup_authored_format_page'));
+    $this->assertNull(variable_get('date_popup_authored_year_range_page'));
   }
 }

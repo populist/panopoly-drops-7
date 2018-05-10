@@ -1,3 +1,10 @@
+7.x-1.54, 2018-05-10
+-------------------
+- Update Breakpoints module to 7.x-1.6.
+- Update Breakpoints module to 7.x-1.4.
+- Update Module Filter to 7.x-2.1.
+- Update Date Popup Authored module to 7.x-1.2.
+
 7.x-1.51, 2018-02-22
 -------------------
 - No changes since last release.

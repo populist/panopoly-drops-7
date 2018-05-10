@@ -1,3 +1,11 @@
+7.x-1.54, 2018-05-10
+-------------------
+- Fix issues with waiting for AJAX in an iframe (Behat).
+- Linkit and live preview with panes style tests failing on Travis.
+- Declare $javascript property in panopoly_test.behat.inc.
+- Widgets can be saved without any content.
+- Update TableField to 7.x-3.1.
+
 7.x-1.51, 2018-02-22
 -------------------
 - No changes since last release.

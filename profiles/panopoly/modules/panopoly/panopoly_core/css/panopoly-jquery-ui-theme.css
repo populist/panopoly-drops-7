@@ -489,7 +489,7 @@ button.ui-button::-moz-focus-inner {
 .ui-state-default,
 .ui-widget-content .ui-state-default,
 .ui-widget-header .ui-state-default {
-  border: none;
+  border: 1px solid transparent;
   background: #cccccc;
   font-weight: normal;
   color: #333333;

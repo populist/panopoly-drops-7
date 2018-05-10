@@ -12,9 +12,9 @@ files[] = apps.updater.inc
 files[] = apps.installer.inc
 files[] = apps.test
 
-; Information added by Drupal.org packaging script on 2015-06-23
-version = "7.x-1.0"
+; Information added by Drupal.org packaging script on 2017-04-19
+version = "7.x-1.1"
 core = "7.x"
 project = "apps"
-datestamp = "1435090990"
+datestamp = "1492626646"
 

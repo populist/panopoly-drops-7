@@ -4,7 +4,7 @@
  * Implements hook_uninstall().
  */
 function image_resize_filter_uninstall() {
-  image_resize_filter_delete_all();
+  _image_resize_filter_delete_all();
 }
 
 /**
@@ -33,7 +33,7 @@ function image_resize_filter_update_6100() {
   $ret = array();
 
   drupal_load('module', 'image_resize_filter');
-  image_resize_filter_delete_all();
+  _image_resize_filter_delete_all();
   $ret[] = array('success' => TRUE, 'query' => t('The location of resized images has changed. The currently resized images have been flushed.'));
 
   return $ret;
@@ -61,7 +61,7 @@ function image_resize_filter_update_6102() {
   $ret = array();
 
   drupal_load('module', 'image_resize_filter');
-  image_resize_filter_delete_all();
+  _image_resize_filter_delete_all();
   $ret[] = array('success' => TRUE, 'query' => t('Previously resized images may have been missing file names. The currently resized images have been flushed.'));
 
   return $ret;
@@ -94,4 +94,16 @@ function image_resize_filter_update_7000() {
   db_delete('variable')
     ->condition('name', 'image_resize_filter_%', 'LIKE')
     ->execute();
+}
+
+
+/**
+ * Delete the entire set of cached images.
+ */
+function _image_resize_filter_delete_all() {
+  foreach (file_get_stream_wrappers() as $scheme => $stream_wrapper) {
+    $directory = $scheme . '://resize';
+    file_unmanaged_delete_recursive($directory);
+  }
+  cache_clear_all('*', 'cache_filter');
 }

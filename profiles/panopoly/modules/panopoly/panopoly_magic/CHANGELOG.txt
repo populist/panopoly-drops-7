@@ -1,3 +1,7 @@
+7.x-1.54, 2018-05-10
+-------------------
+- Linkit and live preview with panes style tests failing on Travis.
+
 7.x-1.51, 2018-02-22
 -------------------
 - No changes since last release.

@@ -64,7 +64,7 @@ function apps_download_apps_list($app) {
       foreach ($app[$download_key] as $dep) {
         if (!$dep['installed'] || $update) {
           if ($dep['installed'] && $update && !empty($dep['version']['version'])) {
-            $info_file_location = $download_type == 'module' ? drupal_get_path('module', $dep['version']['name']) : 'sites/all/libraries/' . $dep['version']['name'];
+            $info_file_location = $download_type == 'module' ? drupal_get_path('module', $dep['version']['name'], FALSE) : 'sites/all/libraries/' . $dep['version']['name'];
             if ($info = drupal_parse_info_file($info_file_location . '/' . APPS_APP_INFO)) {
               // if don't have current version of version the same, skip this download.
               if (empty($info['version']) || $dep['version']['version'] == $info['version']) {

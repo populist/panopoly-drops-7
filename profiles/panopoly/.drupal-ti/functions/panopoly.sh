@@ -69,9 +69,12 @@ function panopoly_build_distribution() {
 	mkdir -p sites/default/private/temp
 
 	# Verify that all the .make files will work on Drupal.org.
-	panopoly_header Verifying .make file
-	drush verify-makefile profiles/panopoly/drupal-org.make
-	find profiles/panopoly/modules -name \*.make -print0 | xargs -0 -n1 drush verify-makefile
+	if [[ "$UPGRADE" == none ]]
+	then
+		panopoly_header Verifying .make file
+		drush verify-makefile profiles/panopoly/drupal-org.make
+		find profiles/panopoly/modules -name \*.make -print0 | xargs -0 -n1 drush verify-makefile
+	fi
 
 	# Download an old version to test upgrading from.
 	if [[ "$UPGRADE" != none ]]

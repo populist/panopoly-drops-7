@@ -168,6 +168,9 @@ function media_menu_local_tasks_alter(&$data, $router_item, $root_path) {
 function media_admin_paths() {
   $paths['media/*/edit/*'] = TRUE;
   $paths['media/*/format-form'] = TRUE;
+  if (module_exists('admin_language')) {
+    $paths['media/ajax/*'] = TRUE; // For admin_language module compatibility.
+  }
 
   // If the media browser theme is set to the admin theme, ensure it gets set
   // as an admin path as well.

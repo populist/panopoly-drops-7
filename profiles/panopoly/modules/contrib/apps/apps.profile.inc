@@ -146,7 +146,7 @@ function apps_profile_apps_select_form($form, $form_state, &$install_state) {
         '#parents' => array('apps', $name),
         '#return_value' => $name,
         '#description' =>
-          (!empty($app['logo']['path']) ? 
+          (!empty($app['logo']['path']) ?
             theme('image', array('path' => $app['logo']['path'], 'height' => '32', 'width' => '32', 'attributes' => array('class' => array('apps-image')))) : '') .
           (!empty($app['description']) ? $app['description'] : '') . '<span class="clearfix"></span>',
         '#default_value' => in_array($name,  $_SESSION['apps_server']['default apps']),

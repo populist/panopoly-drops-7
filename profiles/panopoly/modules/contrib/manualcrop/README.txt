@@ -49,3 +49,8 @@ and configure Manual Crop (open the "Manual Crop" fieldset) for the current fiel
 
 After saving the settings you should return to the content type overview and click
 on "manage display" so you can set the (cropped) image style that should be used.
+
+Manual Crop adds a "?c=md5_hash" query string parameter to the image url so the
+at client-side cached image gets refreshed whenever the crop selection changes.
+To prevent an SEO impact, this can be disabled by unchecking the
+"Reload cache-control" setting at admin/config/media/manualcrop.

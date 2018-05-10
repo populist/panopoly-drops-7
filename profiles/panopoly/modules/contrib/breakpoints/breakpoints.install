@@ -88,6 +88,7 @@ function breakpoints_schema() {
         'minimum_version' => 1,
         'current_version' => 1,
       ),
+      'load all callback' => '_breakpoints_breakpoint_load_all_callback',
     ),
   );
   $schema['breakpoint_group'] = array(
@@ -152,6 +153,7 @@ function breakpoints_schema() {
         'minimum_version' => 1,
         'current_version' => 1,
       ),
+      'load all callback' => 'breakpoints_breakpoint_group_load_all',
     ),
   );
   return $schema;

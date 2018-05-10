@@ -1,10 +1,13 @@
 name = "Date Popup Authored"
 description = "Provides a datepicker for the 'Authored on' field on node forms."
 core = 7.x
-files[] = date_popup_authored.test
+files[] = tests/date_popup_authored_format.test
 package = Date/Time
 dependencies[] = date_popup
-; Information added by drush on 2012-06-16
-version = "7.x-1.1+2-dev"
+
+; Information added by Drupal.org packaging script on 2014-12-22
+version = "7.x-1.2"
+core = "7.x"
 project = "date_popup_authored"
-datestamp = "1339821417"
+datestamp = "1419241381"
+

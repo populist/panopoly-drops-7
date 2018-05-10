@@ -1,3 +1,18 @@
+7.x-1.54, 2018-05-10
+-------------------
+- Date popup hover issue.
+- Update Views to version 3.20.
+- Update to migrate 2.9.
+- Update Apps module to 7.x-1.1.
+- Update devel to version 1.6.
+- Update field_group to version 1.6.
+- Update libraries to version 2.3.
+- Update date to version 2.10.
+- Update views_bulk_operations to version 3.4.
+- Update to ctools 7.x-1.14.
+- Update views to version 3.18 (add Views patch).
+- Update views to version 3.18.
+
 7.x-1.51, 2018-02-22
 -------------------
 - No changes since last release.

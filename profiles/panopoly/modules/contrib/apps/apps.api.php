@@ -21,7 +21,7 @@ function hook_apps_app_info() {
     // The preferred way for an app to provide demo content is to have a module
     // that when enabled will add demo content, and when disabled will removed
     // demo content.
-    // This module should be a submodule or part of the manifest dependent
+    // This module should be a sub-module or part of the manifest dependent
     // modules.
     'demo content module' => 'appname_demo_content',
 
@@ -40,7 +40,7 @@ function hook_apps_app_info() {
     // This will be called after the app is enabled initially or when the app
     // has been uninstalled.
     'status callback' => 'appname_app_status',
-    // This will provide permission configuration on the configre form.
+    // This will provide permission configuration on the configure form.
     // This will also set the permissions on install of the app.
     'permissions' => array(
       'access my app' => array('role 1', 'role 2'),
