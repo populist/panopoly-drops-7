@@ -1,16 +1,21 @@
 <?php
 
 /**
- * Implementation of hook_menu().
+ * @file
+ * UUID Services module functions.
+ */
+
+/**
+ * Implements hook_menu().
  */
 function uuid_services_menu() {
   $items['admin/config/services/uuid-services'] = array(
     'title' => 'UUID Services',
-    'description' => 'Configure settings for Module Filter.',
+    'description' => 'Configure settings for UUID Services.',
     'access arguments' => array('administer services'),
     'page callback' => 'drupal_get_form',
     'page arguments' => array('uuid_services_settings'),
-    'file' => 'uuid_services.admin.inc'
+    'file' => 'uuid_services.admin.inc',
   );
   return $items;
 }
@@ -142,6 +147,14 @@ function _uuid_services_entity_update($entity_type, $uuid, $entity) {
       $entity = (object) $entity;
     }
     $entity->uuid_services = TRUE;
+    // Sanitize file user input.
+    if ($entity_type == 'file') {
+      $entity->filename = _services_file_check_name_extension($entity->filename);
+      $entity->uri = _services_file_check_destination_uri($entity->uri);
+      if (!empty($entity->filepath)) {
+        $entity->filepath = _services_file_check_destination($entity->filepath);
+      }
+    }
     entity_uuid_save($entity_type, $entity);
     return $entity;
   }
@@ -158,7 +171,15 @@ function _uuid_services_entity_update($entity_type, $uuid, $entity) {
  */
 function _uuid_services_entity_delete($entity_type, $uuid) {
   try {
-    $return = entity_uuid_delete($entity_type, array($uuid));
+    $uuid_exist = (bool) entity_get_id_by_uuid($entity_type, array($uuid));
+    if (!$uuid_exist) {
+      /* UUID not found. Don't try to delete something that doesn't exist. */
+      $args = array('@uuid' => $uuid, '@type' => $entity_type);
+      watchdog('uuid_services', 'UUID @uuid not found for entity type @type', $args, WATCHDOG_WARNING);
+      return TRUE;
+    }
+
+    $return = entity_uuid_delete($entity_type, array($uuid)) !== FALSE;
     return $return;
   }
   catch (Exception $exception) {
@@ -170,14 +191,14 @@ function _uuid_services_entity_delete($entity_type, $uuid) {
 /**
  * Access callback.
  *
- * @param $op
+ * @param string $op
  *   The operation we are trying to do on the entity. Can only be:
  *   - "view"
  *   - "update"
  *   - "delete"
  *   See 'uuid_services_services_resources_alter()' for an explanation why
  *   'create' is missing.
- * @param $args
+ * @param array $args
  *   The arguments passed to the method. The keys are holding the following:
  *   0. <entity_type>
  *   1. <uuid>
@@ -208,10 +229,9 @@ function _uuid_services_entity_access($op, $args) {
     if ($op == 'update' && empty($entity_ids)) {
       $op = 'create';
     }
-    // Taxonomy and Comment module uses 'edit' instead of 'update'.
-    // Oh, how I love Drupal consistency.
-    if (($entity_type == 'taxonomy_term' || $entity_type == 'comment') && $op == 'update') {
-      $op = 'edit';
+    // If the user doesn't exist return 406 like services does.
+    if (($entity_type == 'user' && empty($entity) && $op == 'view')) {
+      return services_error(t('There is no user with UUID @uuid.', array('@uuid' => $args[1])), 406);;
     }
     // The following code is taken from entity_access() with some extra logic
     // to handle the case where an entity type is not defining an access
@@ -226,19 +246,4 @@ function _uuid_services_entity_access($op, $args) {
     watchdog_exception('uuid_services', $exception);
     return services_error($exception, 406, $entity_type);
   }
-}
-
-/**
- * Implements hook_services_resources().
- */
-function uuid_services_services_resources() {
-  module_load_include('inc', 'uuid_services', 'resources/field_collection.resource');
-
-  $resources = array(
-    '#api_version' => 3002,
-  );
-
-  $resources += _field_collection_resource_definition();
-
-  return $resources;
 }

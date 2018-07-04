@@ -11,8 +11,7 @@
 class UuidEntityException extends Exception {}
 
 /**
- * Helper function that returns entity info for all supported core modules,
- * relevant for UUID functionality.
+ * Returns entity info for all supported core entities.
  *
  * @see uuid_entity_info()
  * @see uuid_schema_alter()
@@ -98,7 +97,7 @@ function uuid_entity_info_alter(&$info) {
  */
 function uuid_entity_property_info_alter(&$info) {
   foreach (entity_get_info() as $entity_type => $entity_info) {
-    if (isset($entity_info['uuid']) && $entity_info['uuid'] == TRUE 
+    if (isset($entity_info['uuid']) && $entity_info['uuid'] == TRUE
       && !empty($entity_info['entity keys']['uuid'])
       && empty($info[$entity_type]['properties'][$entity_info['entity keys']['uuid']])) {
       $info[$entity_type]['properties'][$entity_info['entity keys']['uuid']] = array(
@@ -107,7 +106,7 @@ function uuid_entity_property_info_alter(&$info) {
         'description' => t('The universally unique ID.'),
         'schema field' => $entity_info['entity keys']['uuid'],
       );
-      if (!empty($entity_info['entity keys']['revision uuid']) 
+      if (!empty($entity_info['entity keys']['revision uuid'])
         && empty($info[$entity_type]['properties'][$entity_info['entity keys']['revision uuid']])) {
         $info[$entity_type]['properties'][$entity_info['entity keys']['revision uuid']] = array(
           'label' => t('Revision UUID'),
@@ -258,7 +257,7 @@ function entity_uuid_save($entity_type, $entity) {
   entity_make_entity_local($entity_type, $entity);
 
   // Save the entity.
-  entity_save($entity_type, $entity);
+  $result = entity_save($entity_type, $entity);
 
   $hook = 'entity_uuid_save';
   foreach (module_implements($hook) as $module) {
@@ -267,6 +266,7 @@ function entity_uuid_save($entity_type, $entity) {
       $function($entity, $entity_type);
     }
   }
+  return $result;
 }
 
 /**
@@ -340,7 +340,7 @@ function entity_make_entity_local($entity_type, $entity) {
     }
   }
   else {
-    throw new UuidEntityException(t('Trying to operate on a @type entity, which doesn\'t support UUIDs.', array('@type' => $info['label'])));
+    throw new UuidEntityException(t("Trying to operate on a @type entity, which doesn\'t support UUIDs.", array('@type' => $info['label'])));
   }
 }
 
@@ -381,7 +381,7 @@ function entity_uuid_delete($entity_type, $uuid) {
     return entity_delete($entity_type, $id);
   }
   else {
-    throw new UuidEntityException(t('Trying to delete a @type entity, which doesn\'t support UUIDs.', array('@type' => $info['label'])));
+    throw new UuidEntityException(t("Trying to delete a @type entity, which doesn\'t support UUIDs.", array('@type' => $info['label'])));
   }
 }
 
@@ -389,24 +389,34 @@ function entity_uuid_delete($entity_type, $uuid) {
  * Helper function that retrieves entity IDs by their UUIDs.
  *
  * @todo
- *   Statically cache as many IDs as possible and limit the query.
+ *   Limit the query.
  *
- * @param $entity_type
+ * @param string $entity_type
  *   The entity type we should be dealing with.
- * @param $uuids
- *   An array of UUIDs for which we should find their entity IDs. If $revision
+ * @param array $uuids
+ *   List of UUIDs for which we should find their entity IDs. If $revision
  *   is TRUE this should be revision UUIDs instead.
- * @param $revision
+ * @param bool $revision
  *   If TRUE the revision IDs is returned instead.
- * @return
- *   Array of entity IDs keyed by their UUIDs. If $revision is TRUE revision
+ *
+ * @return array
+ *   List of entity IDs keyed by their UUIDs. If $revision is TRUE revision
  *   IDs and UUIDs are returned instead.
  */
 function entity_get_id_by_uuid($entity_type, $uuids, $revision = FALSE) {
   if (empty($uuids)) {
     return array();
   }
+  $cached_ids = entity_uuid_id_cache($entity_type, $uuids, $revision);
+  if (count($cached_ids) == count($uuids)) {
+    return $cached_ids;
+  }
+  $uuids = array_diff($uuids, $cached_ids);
   $info = entity_get_info($entity_type);
+  // Some contrib entities has no support for UUID, let's skip them.
+  if (empty($info['uuid'])) {
+    return array();
+  }
   // Find out what entity keys to use.
   if (!$revision) {
     $table = $info['base table'];
@@ -424,35 +434,61 @@ function entity_get_id_by_uuid($entity_type, $uuids, $revision = FALSE) {
   }
 
   // Get all UUIDs in one query.
-  return db_select($table, 't')
+  $result = db_select($table, 't')
     ->fields('t', array($uuid_key, $id_key))
     ->condition($uuid_key, array_values($uuids), 'IN')
     ->execute()
     ->fetchAllKeyed();
+  $cache = &drupal_static('entity_uuid_id_cache', array());
+  $cache[$entity_type][(int) $revision] += $result;
+  return $result + $cached_ids;
+}
+
+/**
+ * Helper caching function.
+ */
+function entity_uuid_id_cache($entity_type, $ids, $revision) {
+  $cache = &drupal_static(__FUNCTION__, array());
+  if (empty($cache[$entity_type][(int) $revision])) {
+    $cache[$entity_type][(int) $revision] = array();
+  }
+  $cached_ids = $cache[$entity_type][(int) $revision];
+  return array_intersect_key($cached_ids, array_flip($ids));
 }
 
 /**
  * Helper function that retrieves UUIDs by their entity IDs.
  *
  * @todo
- *   Statically cache as many IDs as possible and limit the query.
+ *   Limit the query.
  *
- * @param $entity_type
+ * @param string $entity_type
  *   The entity type we should be dealing with.
- * @param $ids
- *   An array of entity IDs for which we should find their UUIDs. If $revision
+ * @param array $ids
+ *   List of entity IDs for which we should find their UUIDs. If $revision
  *   is TRUE this should be revision IDs instead.
- * @param $revision
+ * @param bool $revision
  *   If TRUE the revision UUIDs is returned instead.
- * @return
- *   Array of entity UUIDs keyed by their IDs. If $revision is TRUE revision
+ *
+ * @return array
+ *   List of entity UUIDs keyed by their IDs. If $revision is TRUE revision
  *   IDs and UUIDs are returned instead.
  */
 function entity_get_uuid_by_id($entity_type, $ids, $revision = FALSE) {
   if (empty($ids)) {
     return array();
   }
+  $cached_ids = array_flip(entity_uuid_id_cache($entity_type, $ids, $revision));
+  if (count($cached_ids) == count($ids)) {
+    return $cached_ids;
+  }
+  $ids = array_diff($ids, $cached_ids);
+
   $info = entity_get_info($entity_type);
+  // Some contrib entities has no support for UUID, let's skip them.
+  if (empty($info['uuid'])) {
+    return array();
+  }
   // Find out what entity keys to use.
   if (!$revision) {
     $table = $info['base table'];
@@ -470,11 +506,14 @@ function entity_get_uuid_by_id($entity_type, $ids, $revision = FALSE) {
   }
 
   // Get all UUIDs in one query.
-  return db_select($table, 't')
+  $result = db_select($table, 't')
     ->fields('t', array($id_key, $uuid_key))
     ->condition($id_key, array_values($ids), 'IN')
     ->execute()
     ->fetchAllKeyed();
+  $cache = &drupal_static('entity_uuid_id_cache', array());
+  $cache[$entity_type][(int) $revision] += array_flip($result);
+  return $result + $cached_ids;
 }
 
 /**
@@ -487,12 +526,12 @@ function entity_get_uuid_by_id($entity_type, $ids, $revision = FALSE) {
  * @todo
  *   Add tests for this function.
  *
- * @param $objects
- *   An array of objects that should get $properties changed. Can be either an
+ * @param array $objects
+ *   List of objects that should get $properties changed. Can be either an
  *   entity object or a field items array.
- * @param $entity_type
+ * @param string $entity_type
  *   The type of entity that all $properties refers to.
- * @param $properties
+ * @param array $properties
  *   An array of properties that should be changed. All properties must refer to
  *   the same type of entity (the one referenced in $entity_type).
  */
@@ -543,12 +582,12 @@ function entity_property_id_to_uuid(&$objects, $entity_type, $properties) {
  * @todo
  *   Add tests for this function.
  *
- * @param $objects
- *   An array of objects that should get $properties changed. Can be either an
+ * @param array $objects
+ *   List of objects that should get $properties changed. Can be either an
  *   entity object or a field items array.
- * @param $entity_type
+ * @param string $entity_type
  *   The type of entity that all $properties refers to.
- * @param $properties
+ * @param array $properties
  *   An array of properties that should be changed. All properties must refer to
  *   the same type of entity (the one referenced in $entity_type).
  */

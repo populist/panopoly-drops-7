@@ -1,3 +1,14 @@
+7.x-1.55, 2018-07-04
+-------------------
+- Update Panopoly Core for Issue #2597275 by dsnopek, humansky, skwashd,
+  mpotter, bkosborne, byronveale, Jorrit: Update UUID to version 1.1.
+- Update Panopoly Magic for Issue #2975454 by dsnopek, cboyden: Improve
+  accessibility of the 'Single' and 'Manual' preview modes.
+- Update Panopoly Magic for Issue #2981684 by cboyden: Add alt text for custom
+  preview images.
+- Start testing upgrades from the 1.54 release.
+- Restored drupal-org.make after the 1.54 release.
+
 7.x-1.54, 2018-05-10
 -------------------
 - Update Panopoly Test for Issue #2971200 by dsnopek, cboyden: Fix issues with

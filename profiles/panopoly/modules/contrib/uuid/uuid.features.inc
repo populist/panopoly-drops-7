@@ -84,7 +84,15 @@ function uuid_entities_features_export_render($module_name, $components, $export
       }
       // We unset some common timestamp properties, since those will change and
       // constantly leave the feature overidden.
-      $keys = array('created', 'updated', 'changed', 'revision_timestamp', 'timestamp', 'stamp', 'current');
+      $keys = array(
+        'created',
+        'updated',
+        'changed',
+        'revision_timestamp',
+        'timestamp',
+        'stamp',
+        'current',
+      );
       foreach ($keys as $key) {
         if (isset($entity->{$key})) {
           unset($entity->{$key});
@@ -121,7 +129,10 @@ function uuid_entities_features_export_render($module_name, $components, $export
       }
       uuid_entities_features_clean($entity);
 
-      // Convert entities to array to avoid having them in JSON, returned from standard implementation of $entity->export().
+      /*
+       * Convert entities to array to avoid having them in JSON, returned
+       * from standard implementation of $entity->export().
+       */
       if (is_object($entity) && method_exists($entity, 'export')) {
         $entity = get_object_vars($entity);
       }
@@ -134,14 +145,14 @@ function uuid_entities_features_export_render($module_name, $components, $export
 }
 
 /**
- * Implements [component]_features_export_rebuild().
+ * Implements [component]_features_rebuild().
  */
 function uuid_entities_features_rebuild($module_name) {
   uuid_entities_rebuild($module_name, 'rebuild');
 }
 
 /**
- * Implements [component]_features_export_revert().
+ * Implements [component]_features_revert().
  */
 function uuid_entities_features_revert($module_name) {
   uuid_entities_rebuild($module_name, 'revert');

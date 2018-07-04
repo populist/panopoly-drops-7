@@ -42,22 +42,8 @@ function panopoly_magic_init() {
   drupal_add_js($modal_style, 'setting');
 
   // Tell Javascript which 'Add content' preview mode we're using.
-  switch (variable_get('panopoly_magic_pane_add_preview', PANOPOLY_ADD_PREVIEW_DEFAULT)) {
-    case PANOPOLY_ADD_PREVIEW_SINGLE:
-      $pane_add_preview = 'single';
-      break;
-    case PANOPOLY_ADD_PREVIEW_DISABLED:
-      $pane_add_preview = 'disabled';
-      break;
-    case PANOPOLY_ADD_PREVIEW_AUTOMATIC:
-      $pane_add_preview = 'automatic';
-      break;
-    case PANOPOLY_ADD_PREVIEW_MANUAL:
-      $pane_add_preview = 'manual';
-      break;
-  }
   drupal_add_js(array('panopoly_magic' => array(
-    'pane_add_preview_mode' => $pane_add_preview,
+    'pane_add_preview_mode' => _panopoly_magic_add_content_preview_mode_name(),
   )), 'setting');
 }
 
@@ -1548,7 +1534,7 @@ function panopoly_magic_preview_callback_fpp($type, $subtype, $plugin, $renderer
     return NULL;
   }
 
-  // Set a property to it's possible to tell that the FPP is being rendered
+  // Set a property so it's possible to tell that the FPP is being rendered
   // in a preview, for example, in the template.
   $fpp->panopoly_magic_preview = TRUE;
 
@@ -1567,7 +1553,10 @@ function panopoly_magic_preview_callback_fpp($type, $subtype, $plugin, $renderer
  * Default 'preview callback' for when a 'preview image' is used.
  */
 function panopoly_magic_preview_callback_image($type, $subtype, $plugin, $renderer) {
-  return theme('image', array('path' => $plugin['preview image']));
+  if (empty($plugin['preview image alt'])) {
+    $plugin['preview image alt'] = NULL;
+  }
+  return theme('image', array('path' => $plugin['preview image'], 'alt' => $plugin['preview image alt']));
 }
 
 /**
@@ -1662,13 +1651,14 @@ function panopoly_magic_preprocess_panels_add_content_modal(&$vars) {
         // Convert the link to generate a preview of itself.
         $options = array(
           'query' => array(
+            'panopoly_magic_preview' => _panopoly_magic_add_content_preview_mode_name($use_preview),
             'type_name' => $widget_vars['type_name'],
             'subtype_name' => $widget_vars['subtype_name'],
           ),
           'attributes' => array('class' => array('use-ajax button')),
           'html' => TRUE,
         );
-        $widget_vars['title'] = l(filter_xss_admin($widget_vars['title']), current_path(), $options);
+        $widget_vars['title'] = l(t('<span class="element-invisible">Preview</span> !widget <span class="element-invisible">widget</span>', array('!widget' => filter_xss_admin($widget_vars['title']))), current_path(), $options);
       }
       elseif ($use_preview == PANOPOLY_ADD_PREVIEW_AUTOMATIC || in_array($widget_vars['subtype_name'], $preview_panes)) {
         _panopoly_magic_render_preview_pane($widget_vars, $vars['renderer']);
@@ -1678,13 +1668,17 @@ function panopoly_magic_preprocess_panels_add_content_modal(&$vars) {
         // If we can't preview then generate a preview link.
         $preview = empty($query['preview_panes']) ? $widget_vars['subtype_name'] : $query['preview_panes'] . ',' . $widget_vars['subtype_name'];
         $options = array(
-          'query' => array('preview_panes' => $preview),
+          'query' => array(
+            'panopoly_magic_preview' => _panopoly_magic_add_content_preview_mode_name($use_preview),
+            'preview_panes' => $preview
+          ),
           'attributes' => array(
             'class' => array('use-ajax button'),
             'title' => t('Preview @widget widget', array('@widget' => $key)),
           ),
+          'html' => TRUE,
         );
-        $widget_vars['preview'] = '<div class="modal-content-preview-button">' . l(t('Preview'), current_path(), $options) . '</div>';
+        $widget_vars['preview'] = '<div class="modal-content-preview-button">' . l(t('Preview <span class="element-invisible">!widget widget</span>', array('!widget' => filter_xss_admin($key))), current_path(), $options) . '</div>';
       }
     }
   }
@@ -1723,6 +1717,11 @@ function template_preprocess_panopoly_magic_preview(&$vars) {
   $vars['classes_array'][] = 'widget-preview';
   if (!empty($vars['single'])) {
     $vars['classes_array'][] = 'widget-preview-single';
+  }
+
+  // A class identifying the widget.
+  if (isset($vars['preview_subtype_name'])) {
+    $vars['classes_array'][] = 'panopoly-magic-preview-' . str_replace(':', '-', $vars['preview_subtype_name']);
   }
 
   // For backcompat with themes that depend on the fieldset markup.
@@ -1816,6 +1815,7 @@ function panopoly_magic_process_panels_add_content_modal(&$vars) {
           'title' => $legend_title,
           'add_link' => $add_content_link,
           'preview' => $preview,
+          'preview_subtype_name' => $content[$title]['subtype_name'],
         ));
       }
     }
@@ -1876,6 +1876,29 @@ function panopoly_magic_view_mode_options($entity_type = 'node') {
     }
   }
   return $options;
+}
+
+/**
+ * Helper function to get name of the 'Add content' preview mode.
+ */
+function _panopoly_magic_add_content_preview_mode_name($value = NULL) {
+  if (is_null($value)) {
+    $value = variable_get('panopoly_magic_pane_add_preview', PANOPOLY_ADD_PREVIEW_DEFAULT);
+  }
+
+  switch ($value) {
+    case PANOPOLY_ADD_PREVIEW_SINGLE:
+      return 'single';
+
+    case PANOPOLY_ADD_PREVIEW_DISABLED:
+      return 'disabled';
+
+    case PANOPOLY_ADD_PREVIEW_AUTOMATIC:
+      return 'automatic';
+
+    case PANOPOLY_ADD_PREVIEW_MANUAL:
+      return 'manual';
+  }
 }
 
 /**

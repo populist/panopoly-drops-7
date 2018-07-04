@@ -1,3 +1,8 @@
+7.x-1.55, 2018-07-04
+-------------------
+- Improve accessibility of the 'Single' and 'Manual' preview modes.
+- Add alt text for custom preview images.
+
 7.x-1.54, 2018-05-10
 -------------------
 - Linkit and live preview with panes style tests failing on Travis.

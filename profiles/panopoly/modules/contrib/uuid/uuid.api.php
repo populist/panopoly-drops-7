@@ -6,26 +6,6 @@
  */
 
 /**
- * Defines one or more UUID generators exposed by a module.
- *
- * @return
- *   An associative array with the key being the machine name for the
- *   implementation and the values being an array with the following keys:
- *     - title: The human readable name for the generator.
- *     - callback: The function to be called for generating the UUID.
- *
- * @see uuid_get_info()
- */
-function hook_uuid_info() {
-  $generators = array();
-  $generators['my_module'] = array(
-    'title' => t('My module UUID generator'),
-    'callback' => 'my_module_generate_uuid',
-  );
-  return $generators;
-}
-
-/**
  * Ensures all records have a UUID assigned to them.
  *
  * When called this hook should ensure all records it is responsible for
@@ -38,39 +18,35 @@ function hook_uuid_sync() {
 }
 
 /**
- * Let modules transform their properties with local IDs to UUIDs when an
- * entity is loaded.
+ * Transform entity properties from local IDs to UUIDs when they are loaded.
  */
 function hook_entity_uuid_load(&$entities, $entity_type) {
 
 }
 
 /**
- * Let modules transform their fields with local IDs to UUIDs when an entity
- * is loaded.
+ * Transform field values from local IDs to UUIDs when an entity is loaded.
  */
 function hook_field_uuid_load($entity_type, $entity, $field, $instance, $langcode, &$items) {
 
 }
 
 /**
- * Let modules transform their properties with UUIDs to local IDs when an
- * entity is saved.
+ * Transform entity properties from UUIDs to local IDs before entity is saved.
  */
 function hook_entity_uuid_presave(&$entity, $entity_type) {
 
 }
 
 /**
- * Let modules transform their fields with UUIDs to local IDs when an entity
- * is saved.
+ * Transform field values from UUIDs to local IDs before an entity is saved.
  */
 function hook_field_uuid_presave($entity_type, $entity, $field, $instance, $langcode, &$items) {
 
 }
 
 /**
- * Let modules transform their properties when an entity is saved.
+ * Transform entity properties after an entity is saved.
  */
 function hook_entity_uuid_save($entity, $entity_type) {
 
@@ -78,20 +54,24 @@ function hook_entity_uuid_save($entity, $entity_type) {
 
 /**
  * Let modules act when an entity is deleted.
+ *
+ * Generally hook_entity_delete() should be used instead of this hook.
+ *
+ * @see hook_entity_delete()
  */
 function hook_entity_uuid_delete($entity, $entity_type) {
 
 }
 
 /**
- * Let modules modify paths when they are being converted to UUID ones.
+ * Modifies paths when they are being converted to UUID ones.
  */
 function hook_uuid_menu_path_to_uri_alter($path, &$uri) {
 
 }
 
 /**
- * Let modules modify paths when they are being converted from UUID ones.
+ * Modifies paths when they are being converted from UUID ones.
  */
 function hook_uuid_menu_uri_to_path(&$path, $uri) {
 
