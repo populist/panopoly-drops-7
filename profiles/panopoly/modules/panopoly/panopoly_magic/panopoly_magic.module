@@ -1527,6 +1527,7 @@ function panopoly_magic_preview_callback_fpp($type, $subtype, $plugin, $renderer
     $values = $plugin['preview settings'];
     $values['bundle'] = $plugin['bundle'];
     $fpp = fieldable_panels_panes_create($values);
+    $fpp->fpid = NULL;
   }
   else {
     // For a new (non-existant) FPP with no 'preview settings', don't show
@@ -1543,6 +1544,8 @@ function panopoly_magic_preview_callback_fpp($type, $subtype, $plugin, $renderer
     $block = (object)array(
       'title' => check_plain($fpp->title),
       'content' => $content,
+      'type' => $type,
+      'subtype' => $subtype,
     );
     $pane = panels_new_pane($type, $subtype, TRUE);
     return theme('panels_pane', array('content' => $block, 'pane' => $pane, 'display' => $renderer->display));

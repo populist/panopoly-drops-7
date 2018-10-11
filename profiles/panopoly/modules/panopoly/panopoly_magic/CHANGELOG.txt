@@ -1,3 +1,7 @@
+7.x-1.56, 2018-10-10
+-------------------
+- PHP notices when previewing widgets.
+
 7.x-1.55, 2018-07-04
 -------------------
 - Improve accessibility of the 'Single' and 'Manual' preview modes.

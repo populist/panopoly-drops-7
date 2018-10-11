@@ -20,7 +20,7 @@
      For more details about configurations options that may appear in
      this file, see http://wiki.apache.org/solr/SolrConfigXml.
 -->
-<config name="drupal-4.3-solr-5.x">
+<config name="drupal-4.4-solr-7.x" >
   <!-- In all configuration below, a prefix of "solr." for class names
        is an alias that causes solr to search appropriate packages,
        including org.apache.solr.(search|update|request|core|analysis)
@@ -47,7 +47,7 @@
        that you fully re-index after changing this setting as it can
        affect both how text is indexed and queried.
     -->
-  <luceneMatchVersion>${solr.luceneMatchVersion:5.0.0}</luceneMatchVersion>
+  <luceneMatchVersion>${solr.luceneMatchVersion:LUCENE_60}</luceneMatchVersion>
 
   <!-- <lib/> directives can be used to instruct Solr to load any Jars
        identified and use them to resolve any "plugins" specified in
@@ -218,7 +218,17 @@
          Other implementations of MergePolicy must have a no-argument
          constructor
       -->
-    <mergePolicy class="org.apache.lucene.index.LogByteSizeMergePolicy"/>
+
+    <mergePolicyFactory class="org.apache.solr.index.LogByteSizeMergePolicyFactory">
+      <!-- Merge Factor
+           The merge factor controls how many segments will get merged at a time.
+           For TieredMergePolicy, mergeFactor is a convenience parameter which
+           will set both MaxMergeAtOnce and SegmentsPerTier at once.
+           For LogByteSizeMergePolicy, mergeFactor decides how many new segments
+           will be allowed before they are merged into one.
+        -->
+      <int name="mergeFactor">4</int>
+    </mergePolicyFactory>
 
     <!-- Expert: Merge Scheduler
 
@@ -230,15 +240,6 @@
     <!--
        <mergeScheduler class="org.apache.lucene.index.ConcurrentMergeScheduler"/>
        -->
-
-    <!-- Merge Factor
-         The merge factor controls how many segments will get merged at a time.
-         For TieredMergePolicy, mergeFactor is a convenience parameter which
-         will set both MaxMergeAtOnce and SegmentsPerTier at once.
-         For LogByteSizeMergePolicy, mergeFactor decides how many new segments
-         will be allowed before they are merged into one.
-      -->
-    <mergeFactor>4</mergeFactor>
 
     <!-- LockFactory
 
@@ -265,17 +266,6 @@
          Default is 128 and is likely good for most everyone.
       -->
     <!-- <termIndexInterval>256</termIndexInterval> -->
-
-    <!-- Unlock On Startup
-
-         If true, unlock any held write or commit locks on startup.
-         This defeats the locking mechanism that allows multiple
-         processes to safely access a lucene index, and should be used
-         with care. Default is "false".
-
-         This is not needed if lock type is 'single'
-     -->
-    <unlockOnStartup>false</unlockOnStartup>
 
     <!-- If true, IndexReaders will be reopened (often more efficient)
          instead of closed and then opened.
@@ -866,7 +856,6 @@
        <str name="wt">json</str>
        <str name="indent">true</str>
        <str name="df">text</str>
-       <str name="q.op">AND</str>
      </lst>
   </requestHandler>
 
@@ -976,7 +965,6 @@
       <!-- Don't abort searches for the pinkPony request handler (set in solrcore.properties) -->
       <int name="timeAllowed">${solr.pinkPony.timeAllowed:-1}</int>
       <str name="q.alt">*:*</str>
-      <str name="q.op">AND</str>
 
       <!-- By default, don't spell check -->
       <str name="spellcheck">false</str>
@@ -997,7 +985,6 @@
   <requestHandler name="mlt" class="solr.MoreLikeThisHandler">
     <lst name="defaults">
       <str name="df">content</str>
-      <str name="q.op">AND</str>
       <str name="mlt.mintf">1</str>
       <str name="mlt.mindf">1</str>
       <str name="mlt.minwl">3</str>
@@ -1015,7 +1002,6 @@
        <str name="df">content</str>
        <str name="echoParams">explicit</str>
        <bool name="omitHeader">true</bool>
-       <str name="q.op">AND</str>
      </lst>
   </requestHandler>
 
@@ -1251,7 +1237,6 @@
       <str name="omitHeader">true</str>
       <str name="wt">json</str>
       <str name="indent">true</str>
-      <str name="q.op">AND</str>
     </lst>
   </requestHandler>
 

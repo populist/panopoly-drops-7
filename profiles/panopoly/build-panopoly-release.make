@@ -6,4 +6,4 @@ includes[] = drupal-org-core.make
 
 ; Panopoly
 projects[panopoly][type] = profile
-projects[panopoly][version] = 1.55
+projects[panopoly][version] = 1.56

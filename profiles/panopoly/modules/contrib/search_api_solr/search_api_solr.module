@@ -31,7 +31,7 @@ function search_api_solr_menu() {
 function search_api_solr_search_api_service_info() {
   $variables = array(
     '@solr_wiki_url' => url('http://wiki.apache.org/solr/SolrQuerySyntax'),
-    '@readme_url' => url(drupal_get_path('module', 'search_api_solr') . '/README.txt'),
+    '@readme_url' => file_create_url(drupal_get_path('module', 'search_api_solr') . '/README.txt'),
   );
   $services['search_api_solr_service'] = array(
     'name' => t('Solr service'),

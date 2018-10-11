@@ -97,6 +97,20 @@ class SearchApiSolrDocument implements IteratorAggregate {
   protected $fieldBoosts = array();
 
   /**
+   * Document field update values, indexed by name.
+   *
+   * @var array
+   */
+  protected $fieldUpdates = array();
+
+  /**
+   * Document nested objects.
+   *
+   * @var SearchApiSolrDocument[]
+   */
+  protected $nestedObjects = array();
+
+  /**
    * Clears all boosts and fields from this document.
    */
   public function clear() {
@@ -104,6 +118,8 @@ class SearchApiSolrDocument implements IteratorAggregate {
 
     $this->fields = array();
     $this->fieldBoosts = array();
+    $this->fieldUpdates = array();
+    $this->nestedObjects = array();
   }
 
   /**
@@ -263,6 +279,42 @@ class SearchApiSolrDocument implements IteratorAggregate {
   }
 
   /**
+   * Gets the currently set field's 'update' attribute for a document field.
+   *
+   * @param string $key
+   *   The name of the field.
+   *
+   * @return string|false
+   *   The currently set field's update attribute, or FALSE if none was set.
+   */
+  public function getFieldUpdate($key) {
+    return isset($this->fieldUpdates[$key]) ? $this->fieldUpdates[$key] : FALSE;
+  }
+
+  /**
+   * Sets the field's 'update' attribute for a document field.
+   *
+   * @param string $key
+   *   The name of the field.
+   * @param string|false $update
+   *   One of the allowed update values ('add', 'set', 'inc').
+   */
+  public function setFieldUpdate($key, $update) {
+    $this->fieldUpdates[$key] = $update;
+  }
+
+  /**
+   * Retrieves all currently set field updates.
+   *
+   * @return string[]
+   *   Associative array of field's "update" attributes that were set, keyed by
+   *   field name.
+   */
+  public function getFieldUpdates() {
+    return $this->fieldUpdates;
+  }
+
+  /**
    * Gets the names of all fields in this document.
    *
    * @return array
@@ -280,6 +332,29 @@ class SearchApiSolrDocument implements IteratorAggregate {
    */
   public function getFieldValues() {
     return array_values($this->fields);
+  }
+
+  /**
+   * Retrieves the nested documents set on this document.
+   *
+   * @return \SearchApiSolrDocument[]
+   *   The nested documents.
+   */
+  public function getNestedObjects() {
+    return $this->nestedObjects;
+  }
+
+  /**
+   * Sets an array of nested documents.
+   *
+   * Populate nested documents for use with block join queries. Note that this
+   * will lead to errors when used with Solr versions older than 4.5.
+   *
+   * @param SearchApiSolrDocument[] $nested_documents
+   *   An array of SearchApiSolrDocument objects.
+   */
+  public function setNestedDocuments(array $nested_documents) {
+    $this->nestedObjects = $nested_documents;
   }
 
   /**
@@ -380,33 +455,43 @@ class SearchApiSolrDocument implements IteratorAggregate {
 
     $xml .= '>';
 
-    foreach ($this->fields as $key => $value) {
+    foreach ($this->fields as $key => $values) {
       $fieldBoost = $this->getFieldBoost($key);
+      $fieldUpdate = $this->getFieldUpdate($key);
       $key = htmlspecialchars($key, ENT_COMPAT, 'UTF-8');
 
-      if (is_array($value)) {
-        foreach ($value as $multivalue) {
-          $xml .= '<field name="' . $key . '"';
-
-          if ($fieldBoost !== FALSE) {
-            $xml .= ' boost="' . $fieldBoost . '"';
-
-            // Only set the boost for the first field in the set.
-            $fieldBoost = FALSE;
-          }
-
-          $xml .= '>' . htmlspecialchars($multivalue, ENT_NOQUOTES, 'UTF-8') . '</field>';
-        }
+      if (!is_array($values)) {
+        $values = array($values);
       }
-      else {
+
+      foreach ($values as $value) {
         $xml .= '<field name="' . $key . '"';
 
         if ($fieldBoost !== FALSE) {
           $xml .= ' boost="' . $fieldBoost . '"';
+
+          // Only set the boost for the first field in the set.
+          $fieldBoost = FALSE;
+        }
+
+        if ($fieldUpdate !== FALSE) {
+          $xml .= ' update="' . $fieldUpdate . '"';
         }
 
         $xml .= '>' . htmlspecialchars($value, ENT_NOQUOTES, 'UTF-8') . '</field>';
       }
+    }
+
+    // If nested objects have been added, include them in the XML to be indexed.
+    foreach ($this->nestedObjects as $object) {
+      // Skip any documents that aren't of the correct type.
+      if (!($object instanceof SearchApiSolrDocument)) {
+        $vars['@type'] = is_object($object) ? get_class($object) : gettype($object);
+        watchdog('search_api_solr', 'Attempt to add an invalid nested Solr document of type @type.', $vars, WATCHDOG_ERROR);
+        continue;
+      }
+      // Generate the markup for each nested document.
+      $xml .= $object->toXml();
     }
 
     $xml .= '</doc>';
@@ -432,4 +517,5 @@ class SearchApiSolrDocument implements IteratorAggregate {
     // Printable utf-8 does not include any of these chars below x7F
     return preg_replace('@[\x00-\x08\x0B\x0C\x0E-\x1F]@', ' ', $string);
   }
+
 }

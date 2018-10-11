@@ -1,3 +1,11 @@
+7.x-1.56, 2018-10-10
+-------------------
+- Update Panopoly Search for Issue #3005752 by dsnopek: Update to
+  search_api_solr 1.14 for SA-CONTRIB-2018-065.
+- Update Panopoly Magic for Issue #2995697 by cboyden, dsnopek: PHP notices when
+  previewing widgets.
+- Restored drupal-org.make after the 1.55 release.
+
 7.x-1.55, 2018-07-04
 -------------------
 - Update Panopoly Core for Issue #2597275 by dsnopek, humansky, skwashd,
