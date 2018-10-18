@@ -1,3 +1,9 @@
+7.x-1.57, 2018-10-18
+-------------------
+- Update to Drupal 7.60 for SA-CORE-2018-006.
+- Start testing upgrades from the 1.55 and 1.56 releases.
+- Restored drupal-org.make after the 1.56 release.
+
 7.x-1.56, 2018-10-10
 -------------------
 - Update Panopoly Search for Issue #3005752 by dsnopek: Update to
