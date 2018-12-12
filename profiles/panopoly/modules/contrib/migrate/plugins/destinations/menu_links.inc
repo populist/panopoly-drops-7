@@ -101,8 +101,8 @@ class MigrateDestinationMenuLinks extends MigrateDestination {
       }
       $menu_link_to_update = (object) $old_menu_link;
       foreach ($old_menu_link as $key => $value) {
-        if (!isset($menu_link->$key)) {
-          $menu_link->$key = $old_menu_link[$key];
+        if (!isset($menu_link->{$key})) {
+          $menu_link->{$key} = $old_menu_link[$key];
         }
       }
     }

@@ -362,7 +362,7 @@ class MigrateDestinationRole extends MigrateDestinationTable {
       $old_entity = user_role_load($entity->rid);
 
       foreach ($entity as $field => $value) {
-        $old_entity->$field = $entity->$field;
+        $old_entity->{$field} = $entity->{$field};
       }
       $entity = $old_entity;
     }

@@ -117,9 +117,9 @@ class GameBaseball extends Migration {
     // Collect all the batters into one multi-value field.
     for ($i = 1; $i <= 9; $i++) {
       $key = "visiting_batter_$i";
-      $visiting_batters[] = $row->$key;
+      $visiting_batters[] = $row->{$key};
       $key = "home_batter_$i";
-      $home_batters[] = $row->$key;
+      $home_batters[] = $row->{$key};
     }
     $row->visiting_batters = implode(',', $visiting_batters);
     $row->home_batters = implode(',', $home_batters);

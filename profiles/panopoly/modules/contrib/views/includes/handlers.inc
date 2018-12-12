@@ -1087,7 +1087,7 @@ class views_many_to_one_helper {
       $add_condition = FALSE;
     }
     elseif ($operator == 'or' && empty($options['reduce_duplicates'])) {
-      if (count($value) > 1) {
+      if (is_array($value) && count($value) > 1) {
         $operator = 'IN';
       }
       else {

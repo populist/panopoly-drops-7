@@ -428,7 +428,10 @@ function defaultcontent_get_alter_plugins($use = FALSE) {
   }
 
   if ($use) {
-    usort($plugins, create_function('$a, $b', "return \$a['$use weight'] - \$b['$use weight'];"));
+    usort($plugins, function ($a, $b) use ($use) {
+      $weight_key = $use . ' weight';
+      return $a[$weight_key] - $b[$weight_key];
+    });
   }
 
   return $plugins;

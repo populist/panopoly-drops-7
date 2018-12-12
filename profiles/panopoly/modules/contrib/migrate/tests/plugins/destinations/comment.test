@@ -137,18 +137,18 @@ class MigrateCommentUnitTest extends DrupalWebTestCase {
     foreach ($original_comments as $cid => $original_comment) {
       foreach ($original_comment as $field => $value) {
         if ($field == 'subject') {
-          if ($value == $final_comments[$cid]->$field) {
+          if ($value == $final_comments[$cid]->{$field}) {
             $this->error(t('Field !field should have changed but did not, value=!value',
               array('!field' => $field, '!value' => print_r($value, TRUE))));
           }
         }
         else {
-          if ($value != $final_comments[$cid]->$field) {
+          if ($value != $final_comments[$cid]->{$field}) {
             $this->error(t('Field !field mismatch: original !value1, result !value2',
               array(
                 '!field' => $field,
                 '!value1' => print_r($value, TRUE),
-                '!value2' => print_r($final_comments[$cid]->$field, TRUE),
+                '!value2' => print_r($final_comments[$cid]->{$field}, TRUE),
               )));
           }
         }

@@ -835,34 +835,27 @@ function file_entity_edit_submit($form, &$form_state) {
   if (!empty($form_state['values']['replace_upload'])) {
     $replacement = $form_state['values']['replace_upload'];
     // Move file from temp to permanent home.
-    if (pathinfo($replacement->uri, PATHINFO_EXTENSION) == pathinfo($file->uri, PATHINFO_EXTENSION)) {
-      if ($new_file_uri = file_unmanaged_copy($replacement->uri, $file->uri, FILE_EXISTS_REPLACE)) {
-        // Remove temporary file.
-        file_delete($replacement);
-      }
-    } else {
-      if (!empty($form_state['values']['replace_keep_original_filename'])
-      && $form_state['values']['replace_keep_original_filename']) {
-        $destination_uri = rtrim($file->uri, drupal_basename($file->uri)) . drupal_basename($file->uri);
-      }
-      else {
-        $destination_uri = rtrim($file->uri, drupal_basename($file->uri)) . drupal_basename($replacement->uri);
-      }
-      $replace_mode = $destination_uri == $file->uri ? FILE_EXISTS_REPLACE : FILE_EXISTS_RENAME;
-      if ($new_file_uri = file_unmanaged_copy($replacement->uri, $destination_uri, $replace_mode)) {
-        // @todo Add watchdog() about replaced file here?
+    if (!empty($form_state['values']['replace_keep_original_filename'])
+    && $form_state['values']['replace_keep_original_filename']) {
+      $destination_uri = rtrim($file->uri, drupal_basename($file->uri)) . drupal_basename($file->uri);
+    }
+    else {
+      $destination_uri = rtrim($file->uri, drupal_basename($file->uri)) . drupal_basename($replacement->uri);
+    }
+    $replace_mode = $destination_uri == $file->uri ? FILE_EXISTS_REPLACE : FILE_EXISTS_RENAME;
+    if ($new_file_uri = file_unmanaged_copy($replacement->uri, $destination_uri, $replace_mode)) {
+      // @todo Add watchdog() about replaced file here?
 
-        // Remove temporary file.
-        file_delete($replacement);
+      // Remove temporary file.
+      file_delete($replacement);
 
-        // Update if the uri target has changed.
-        if ($new_file_uri != $file->uri) {
-          // Store the original file uri to delete if save is successful.
-          $orphaned_uri = $file->uri;
+      // Update if the uri target has changed.
+      if ($new_file_uri != $file->uri) {
+        // Store the original file uri to delete if save is successful.
+        $orphaned_uri = $file->uri;
 
-          // Update file entity uri.
-          $file->uri = $new_file_uri;
-        }
+        // Update file entity uri.
+        $file->uri = $new_file_uri;
       }
     }
   }

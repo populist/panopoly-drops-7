@@ -492,6 +492,7 @@ function panopoly_magic_form_alter(&$form, &$form_state, $form_id) {
         '#type' => 'button',
         '#value' => t('Update Preview'),
         '#attributes' => $preview_attributes,
+        '#weight' => -100,
         '#ajax' => array(
           'callback' => 'panopoly_magic_ajax_update_preview',
           'wrapper' => 'panopoly-form-widget-preview',
@@ -904,8 +905,19 @@ function panopoly_magic_form_views_content_views_panes_content_type_edit_form_al
     $form['exposed']['more_link']['#parents'] = array('more_link');
     unset($form['more_link']);
   }
-  
-    
+
+  // Add an option to the more link text if views allows this to happen
+  if (!empty($form['more_text'])) {
+    $form['exposed']['more_text'] = $form['more_text'];
+    $form['exposed']['more_text']['#parents'] = array('more_text');
+    unset($form['more_text']);
+    $form['exposed']['more_text']['#states'] = array(
+      'visible' => array(
+        ':input[name="more_link"]' => array('checked' => TRUE),
+      ),
+    );
+  }
+
   // Update the field settings for pagers
   if (!empty($form['use_pager']) && !empty($form['pager_id'])) {
     $form['use_pager']['#prefix'] = '<div class="form-item container-inline">';

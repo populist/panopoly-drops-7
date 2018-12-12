@@ -133,7 +133,7 @@ class MigrateDestinationTable extends MigrateDestination {
         throw new MigrateException(t('System-of-record is DESTINATION, but the destination entity does not exist'));
       }
       foreach ($entity as $field => $value) {
-        $old_entity->$field = $entity->$field;
+        $old_entity->{$field} = $entity->{$field};
       }
       $entity = $old_entity;
     }

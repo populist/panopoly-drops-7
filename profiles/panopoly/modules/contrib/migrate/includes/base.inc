@@ -1272,7 +1272,7 @@ abstract class MigrationBase {
 
   /**
    * Encrypt an incoming value. Detects for existence of the Drupal 'Encrypt'
-   *  module or the mcrypt PHP extension.
+   *  module.
    *
    * @param string $value
    *
@@ -1283,31 +1283,14 @@ abstract class MigrationBase {
       $value = encrypt($value);
     }
     else {
-      if (extension_loaded('mcrypt')) {
-        // Mimic encrypt module to ensure compatibility
-        $key = drupal_substr(variable_get('drupal_private_key', 'no_key'), 0, 32);
-        $iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB);
-        $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
-        $value = mcrypt_encrypt(MCRYPT_RIJNDAEL_256, $key, $value,
-          MCRYPT_MODE_ECB, $iv);
-
-        $encryption_array['text'] = $value;
-        // For forward compatibility with the encrypt module.
-        $encryption_array['method'] = 'mcrypt_rij_256';
-        $encryption_array['key_name'] = 'drupal_private_key';
-        $value = serialize($encryption_array);
-      }
-      else {
-        if (self::$showEncryptionWarning) {
-          MigrationBase::displayMessage(t('Encryption of secure migration information is not supported. Ensure the <a href="@encrypt">Encrypt module</a> or <a href="mcrypt">mcrypt PHP extension</a> is installed for this functionality.',
-            array(
-              '@encrypt' => 'http://drupal.org/project/encrypt',
-              '@mcrypt' => 'http://php.net/manual/en/book.mcrypt.php',
-            )
-          ),
-            'warning');
-          self::$showEncryptionWarning = FALSE;
-        }
+      if (self::$showEncryptionWarning) {
+        MigrationBase::displayMessage(t('Encryption of secure migration information is not supported. Ensure the <a href="@encrypt">Encrypt module</a> is installed for this functionality.',
+          array(
+            '@encrypt' => 'http://drupal.org/project/encrypt',
+          )
+        ),
+          'warning');
+        self::$showEncryptionWarning = FALSE;
       }
     }
     return $value;
@@ -1325,30 +1308,14 @@ abstract class MigrationBase {
       $value = decrypt($value);
     }
     else {
-      if (extension_loaded('mcrypt')) {
-        // Mimic encrypt module to ensure compatibility
-        $encryption_array = unserialize($value);
-        $method = $encryption_array['method']; // Not used right now
-        $text = $encryption_array['text'];
-        $key_name = $encryption_array['key_name']; // Not used right now
-
-        $iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB);
-        $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
-        $key = drupal_substr(variable_get('drupal_private_key', 'no_key'), 0, 32);
-        $value = mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $key, $text,
-          MCRYPT_MODE_ECB, $iv);
-      }
-      else {
-        if (self::$showEncryptionWarning) {
-          MigrationBase::displayMessage(t('Encryption of secure migration information is not supported. Ensure the <a href="@encrypt">Encrypt module</a> or <a href="mcrypt">mcrypt PHP extension</a> is installed for this functionality.',
-            array(
-              '@encrypt' => 'http://drupal.org/project/encrypt',
-              '@mcrypt' => 'http://php.net/manual/en/book.mcrypt.php',
-            )
-          ),
-            'warning');
-          self::$showEncryptionWarning = FALSE;
-        }
+      if (self::$showEncryptionWarning) {
+        MigrationBase::displayMessage(t('Encryption of secure migration information is not supported. Ensure the <a href="@encrypt">Encrypt module</a> is installed for this functionality.',
+          array(
+            '@encrypt' => 'http://drupal.org/project/encrypt',
+          )
+        ),
+          'warning');
+        self::$showEncryptionWarning = FALSE;
       }
     }
     return $value;

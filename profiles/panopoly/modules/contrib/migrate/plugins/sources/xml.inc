@@ -375,7 +375,7 @@ abstract class XMLMigration extends Migration {
           // Derived class may override applyXpath().
           $source_value = $this->applyXpath($this->sourceValues, $xpath);
           if (!is_null($source_value)) {
-            $this->sourceValues->$source = $source_value;
+            $this->sourceValues->{$source} = $source_value;
           }
         }
       }
@@ -1333,7 +1333,7 @@ class MigrateSourceXML extends MigrateSource {
     // Test the reader for a valid row.
     if (isset($this->reader) && $this->reader->valid()) {
       $row = new stdClass();
-      $row->$key_name = $this->reader->key();
+      $row->{$key_name} = $this->reader->key();
       $row->xml = $this->reader->current();
       $this->registerNamespaces($row->xml);
     }
@@ -1341,7 +1341,7 @@ class MigrateSourceXML extends MigrateSource {
       // The current source is at the end, try to load the next source.
       if ($this->getNextSource()) {
         $row = new stdClass();
-        $row->$key_name = $this->reader->key();
+        $row->{$key_name} = $this->reader->key();
         $row->xml = $this->reader->current();
         $this->registerNamespaces($row->xml);
       }

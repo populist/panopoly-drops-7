@@ -385,7 +385,7 @@ abstract class MigrateUIWizard {
       '#suffix' => '</h2>',
     );
 
-    $form += call_user_func($form_method, $form_state);
+    $form += call_user_func_array($form_method, array(&$form_state));
 
     $form['actions'] = array('#type' => 'actions');
 
@@ -447,7 +447,7 @@ abstract class MigrateUIWizard {
     }
 
     if (is_callable($validate_method)) {
-      call_user_func($validate_method, $form_state);
+      call_user_func_array($validate_method, array(&$form_state));
     }
   }
 

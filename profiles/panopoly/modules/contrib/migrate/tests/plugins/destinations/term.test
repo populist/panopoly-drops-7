@@ -86,18 +86,18 @@ class MigrateTaxonomyUnitTest extends DrupalWebTestCase {
     foreach ($original_terms as $tid => $original_term) {
       foreach ($original_term as $field => $value) {
         if ($field == 'description') {
-          if ($value == $final_terms[$tid]->$field) {
+          if ($value == $final_terms[$tid]->{$field}) {
             $this->error(t('Field !field should have changed but did not, value=!value',
               array('!field' => $field, '!value' => print_r($value, TRUE))));
           }
         }
         else {
-          if ($value != $final_terms[$tid]->$field) {
+          if ($value != $final_terms[$tid]->{$field}) {
             $this->error(t('Field !field mismatch: original !value1, result !value2',
               array(
                 '!field' => $field,
                 '!value1' => print_r($value, TRUE),
-                '!value2' => print_r($final_terms[$tid]->$field, TRUE),
+                '!value2' => print_r($final_terms[$tid]->{$field}, TRUE),
               )));
           }
         }

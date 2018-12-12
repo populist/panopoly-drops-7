@@ -1090,10 +1090,10 @@ function _features_is_assoc($array) {
 function features_remove_recursion($o) {
   static $replace;
   if (!isset($replace)) {
-    $replace = create_function(
-      '$m',
-      '$r="\x00{$m[1]}ecursion_features";return \'s:\'.strlen($r.$m[2]).\':"\'.$r.$m[2].\'";\';'
-    );
+    $replace = function($m) {
+      $r="\x00{$m[1]}ecursion_features";
+      return 's:'.strlen($r.$m[2]).':"'.$r.$m[2].'";';
+    };
   }
   if (is_array($o) || is_object($o)) {
     $re = '#(r|R):([0-9]+);#';

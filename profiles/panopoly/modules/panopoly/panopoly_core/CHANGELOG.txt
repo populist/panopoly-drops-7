@@ -1,3 +1,17 @@
+7.x-1.58, 2018-12-11
+-------------------
+- Patch defaultcontent module to remove PHP7 deprecation warning.
+- Allow overriding "more" text on Views-based widgets.
+- Update uuid module to 1.2.
+- Patch panels breadcrumb module to remove deprecation notice in PHP 7.2.
+- Patch/update views bulk operations to remove deprecation warnings in PHP 7.2.
+- Patch features to remove deprecation warning in PHP 7.2.
+- Upgrade & patch migrate module to make it compatible with PHP 7.
+- Patch Views for PHP 7.1 issue.
+- Patch apps to remove PHP 7 deprecation warning.
+- Update libraries module to resolve deprecation warning for PHP 7.
+- Out-of-date dependency processing in panopoly_core.
+
 7.x-1.57, 2018-10-18
 -------------------
 - No changes since last release.

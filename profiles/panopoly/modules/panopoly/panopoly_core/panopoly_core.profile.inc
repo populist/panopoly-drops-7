@@ -26,8 +26,8 @@ function panopoly_core_install_load_profile(&$install_state) {
     $module_info = drupal_parse_info_file(drupal_get_path('module', $module) . '/' . $module . '.info');
     if (!empty($module_info['dependencies'])) {
       foreach ($module_info['dependencies'] as $dependency) {
-        $parts = explode(' (', $dependency, 2);
-        $dependencies[] = array_shift($parts);
+        $parts = drupal_parse_dependency($dependency);
+        $dependencies[] = $parts['name'];
       }
     }
   }

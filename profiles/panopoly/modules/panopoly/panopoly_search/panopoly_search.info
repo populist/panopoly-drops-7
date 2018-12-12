@@ -54,8 +54,8 @@ features[variable][] = search_cron_limit
 features[views_view][] = panopoly_database_search
 features[views_view][] = panopoly_search
 
-; Information added by Drupal.org packaging script on 2018-10-18
-version = "7.x-1.57"
+; Information added by Drupal.org packaging script on 2018-12-12
+version = "7.x-1.58"
 core = "7.x"
 project = "panopoly_search"
-datestamp = "1539898093"
+datestamp = "1544590768"

@@ -209,8 +209,9 @@ class MigrateSourceList extends MigrateSource {
         foreach (array_keys($this->activeMap->getSourceKey()) as $key_name) {
           // Grab the first id and advance the array cursor. Then save the ID
           // using the map source key - it will be used for mapping.
-          list(, $id) = each($ids);
-          $row->$key_name = $id;
+          $id = current($ids);
+          next($ids);
+          $row->{$key_name} = $id;
         }
         break;
       }

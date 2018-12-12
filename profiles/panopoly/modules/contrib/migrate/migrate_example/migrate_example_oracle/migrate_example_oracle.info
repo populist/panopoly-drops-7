@@ -11,9 +11,8 @@ name = "Migrate example - Oracle"
 package = "Migration"
 project = "migrate_example_oracle"
 
-; Information added by Drupal.org packaging script on 2018-02-21
-version = "7.x-2.9"
+; Information added by Drupal.org packaging script on 2018-06-10
+version = "7.x-2.11"
 core = "7.x"
 project = "migrate"
-datestamp = "1519220311"
-
+datestamp = "1528674486"

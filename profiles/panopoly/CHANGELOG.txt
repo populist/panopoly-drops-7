@@ -1,3 +1,46 @@
+7.x-1.58, 2018-12-11
+-------------------
+- Update Panopoly Core for Issue #2948466 by bkosborne: Patch defaultcontent
+  module to remove PHP7 deprecation warning.
+- Update Panopoly Core and Magic for Issue #2968560 by dsnopek, cboyden: Allow
+  overriding "more" text on Views-based widgets.
+- Update Panopoly Widgets for Issue #2995003 by dsnopek, cboyden: File entity
+  overwriting slide title on spotlight widgets.
+- Update Panopoly Magic for Issue #2982707 by dsnopek, cboyden: Swap order of
+  "Save" and "Update Preview" buttons when in manual preview mode.
+- Update Panopoly Widgets for Issue #2973185 by dsnopek, cboyden: Normalize
+  "Slide duration" for Spotlight widgets.
+- Update Drupal to 7.61.
+- Update Panopoly Search for Issue #3011888 by dsnopek: Update search_api to
+  1.25 and search_api_db to 1.7.
+- Update Panopoly Widgets for Issue #3011887 by dsnopek: Update Media to 2.21.
+- Update Panopoly Widgets for Issue #3011886 by dsnopek: Update file_entity to
+  2.22.
+- Update Panopoly Core for Issue #3011889 by dsnopek: Update uuid module to 1.2.
+- Update Panopoly Core for Issue #2948753 by bkosborne, cboyden: Patch panels
+  breadcrumb module to remove deprecation notice in PHP 7.2.
+- Update Panopoly Core for Issue #2948768 by bkosborne, Jorrit, RobLoach:
+  Patch/update views bulk operations to remove deprecation warnings in PHP 7.2.
+- Update Panopoly Core for Issue #2948717 by bkosborne, berliner: Patch features
+  to remove deprecation warning in PHP 7.2.
+- Update Panopoly Core for Issue #2948744 by bkosborne, cboyden, byronveale:
+  Upgrade & patch migrate module to make it compatible with PHP 7.
+- Update Panopoly Core for Issue #3002885 by cboyden: Patch Views for PHP 7.1
+  issue.
+- Update Panopoly Admin for Issue #2948454 by bkosborne: Patch admin_menu to
+  remove PHP 7 deprecation warning.
+- Update Panopoly Core for Issue #2948456 by bkosborne, cboyden: Patch apps to
+  remove PHP 7 deprecation warning.
+- Update Panopoly Core for Issue #2948452 by bkosborne, cboyden: Update
+  libraries module to resolve deprecation warning for PHP 7.
+- Update Panopoly Core for Issue #2853699 by DamienMcKenna, torotil, jelo,
+  Asacolips, z.stolar: Out-of-date dependency processing in panopoly_core.
+- Add test job for PHP 7.2, which is (currently) allowed to fail.
+- Drop support for updating from Panopoly version that were release more than a
+  year ago.
+- Start testing upgrades from the 1.57 release.
+- Restored drupal-org.make after the 1.57 release.
+
 7.x-1.57, 2018-10-18
 -------------------
 - Update to Drupal 7.60 for SA-CORE-2018-006.

@@ -1,3 +1,8 @@
+7.x-1.58, 2018-12-11
+-------------------
+- Allow overriding "more" text on Views-based widgets.
+- Swap order of "Save" and "Update Preview" buttons when in manual preview mode.
+
 7.x-1.57, 2018-10-18
 -------------------
 - No changes since last release.

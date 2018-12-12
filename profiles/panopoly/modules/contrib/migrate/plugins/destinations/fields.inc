@@ -72,12 +72,12 @@ class MigrateFieldsEntityHandler extends MigrateDestinationHandler {
     foreach ($instances as $machine_name => $instance) {
       if (property_exists($entity, $machine_name)) {
         // Normalize to an array
-        if (!is_array($entity->$machine_name)) {
-          $entity->$machine_name = array($entity->$machine_name);
+        if (!is_array($entity->{$machine_name})) {
+          $entity->{$machine_name} = array($entity->{$machine_name});
         }
         $field_info = field_info_field($machine_name);
-        $entity->$machine_name = migrate_field_handler_invoke_all($entity, $field_info,
-          $instance, $entity->$machine_name);
+        $entity->{$machine_name} = migrate_field_handler_invoke_all($entity, $field_info,
+          $instance, $entity->{$machine_name});
       }
     }
     migrate_instrument_stop('MigrateDestinationEntity->prepareFields');
@@ -94,12 +94,12 @@ class MigrateFieldsEntityHandler extends MigrateDestinationHandler {
     foreach ($instances as $machine_name => $instance) {
       if (property_exists($entity, $machine_name)) {
         // Normalize to an array
-        if (!is_array($entity->$machine_name)) {
-          $entity->$machine_name = array($entity->$machine_name);
+        if (!is_array($entity->{$machine_name})) {
+          $entity->{$machine_name} = array($entity->{$machine_name});
         }
         $field_info = field_info_field($machine_name);
         migrate_field_handler_invoke_all($entity, $field_info,
-          $instance, $entity->$machine_name, 'complete');
+          $instance, $entity->{$machine_name}, 'complete');
       }
     }
     migrate_instrument_stop('MigrateDestinationEntity->completeFields');

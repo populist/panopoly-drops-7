@@ -190,7 +190,7 @@ class MigrateSourceMultiItems extends MigrateSource {
         // Save the ID using the map source key - it will be used for mapping
         $sourceKey = $this->activeMap->getSourceKey();
         $key_name = key($sourceKey);
-        $row->$key_name = $id;
+        $row->{$key_name} = $id;
         break;
       }
     }

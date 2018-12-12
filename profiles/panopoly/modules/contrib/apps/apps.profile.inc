@@ -509,7 +509,7 @@ function apps_profile_check_dependencies($module_list) {
   // Create an associative array with weights as values.
   $module_list = array_flip(array_values($module_list));
 
-  while (list($module) = each($module_list)) {
+  foreach ($module_list as $module => $info) {
     if (!isset($module_data[$module])) {
       // This module is not found in the filesystem, abort.
       return FALSE;

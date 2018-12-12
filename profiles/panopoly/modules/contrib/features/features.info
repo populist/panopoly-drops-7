@@ -2,6 +2,7 @@ name = "Features"
 description = "Provides feature management for Drupal."
 core = 7.x
 package = "Features"
+php = 5.3
 files[] = tests/features.test
 test_dependencies[] = image
 test_dependencies[] = strongarm

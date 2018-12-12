@@ -174,7 +174,7 @@ class MigrateDestinationTerm extends MigrateDestinationEntity {
           array('!tid' => $term->tid)));
       }
       foreach ($rawterm as $field => $value) {
-        $old_term->$field = $term->$field;
+        $old_term->{$field} = $term->{$field};
       }
       $term = $old_term;
     }
@@ -237,8 +237,8 @@ class MigrateDestinationTerm extends MigrateDestinationEntity {
 
       if (!$this->allowDuplicateTerms && $existing_term = $this->findMatchingTerm($term)) {
         foreach ($existing_term as $field => $value) {
-          if (!isset($term->$field)) {
-            $term->$field = $existing_term->$field;
+          if (!isset($term->{$field})) {
+            $term->{$field} = $existing_term->{$field};
           }
         }
       }
@@ -250,8 +250,8 @@ class MigrateDestinationTerm extends MigrateDestinationEntity {
       if ($existing_term) {
         // Incoming data overrides existing data, so only copy non-existent fields
         foreach ($existing_term as $field => $value) {
-          if (!isset($term->$field)) {
-            $term->$field = $existing_term->$field;
+          if (!isset($term->{$field})) {
+            $term->{$field} = $existing_term->{$field};
           }
         }
       }

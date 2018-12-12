@@ -55,13 +55,13 @@ class MigrateDestinationTableCopy extends MigrateDestination {
     // table.
     foreach ($fields as $field => $data) {
       if (strpos($field, 'migrate_map_') === 0) {
-        unset($fields->$field);
+        unset($fields->{$field});
       }
     }
     $keys = array_keys($this->keySchema);
     $values = array();
     foreach ($keys as $key) {
-      $values[] = $row->$key;
+      $values[] = $row->{$key};
     }
     $query = db_merge($this->tableName)
       ->key($keys, $values)

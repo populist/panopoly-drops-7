@@ -151,7 +151,7 @@ class MigrateUserUnitTest extends DrupalWebTestCase {
     foreach ($original_users as $uid => $original_user) {
       foreach ($original_user as $field => $value) {
         if ($field == 'field_migrate_example_gender') {
-          if ($value == $final_users[$uid]->$field) {
+          if ($value == $final_users[$uid]->{$field}) {
             $this->error(t('For user !name, field !field should have changed but did not, value=!value',
               array(
                 '!name' => $final_users[$uid]->name,
@@ -161,7 +161,7 @@ class MigrateUserUnitTest extends DrupalWebTestCase {
           }
         }
         else {
-          if ($value != $final_users[$uid]->$field) {
+          if ($value != $final_users[$uid]->{$field}) {
             // Core bug http://drupal.org/node/935592 causes picture mismatches, ignore until it's fixed
             if ($field != 'picture') {
               $this->error(t('For user !name, field !field mismatch: original !value1, result !value2',
@@ -169,7 +169,7 @@ class MigrateUserUnitTest extends DrupalWebTestCase {
                   '!name' => $final_users[$uid]->name,
                   '!field' => $field,
                   '!value1' => print_r($value, TRUE),
-                  '!value2' => print_r($final_users[$uid]->$field, TRUE),
+                  '!value2' => print_r($final_users[$uid]->{$field}, TRUE),
                 )));
             }
           }

@@ -182,7 +182,7 @@ class MigrateDestinationComment extends MigrateDestinationEntity {
       }
       $this->prepare($comment, $row);
       foreach ($rawcomment as $field => $value) {
-        $old_comment->$field = $comment->$field;
+        $old_comment->{$field} = $comment->{$field};
       }
       $comment = $old_comment;
     }
@@ -198,8 +198,8 @@ class MigrateDestinationComment extends MigrateDestinationEntity {
         'pid' => 0,
       );
       foreach ($defaults as $field => $value) {
-        if (!isset($comment->$field)) {
-          $comment->$field = $value;
+        if (!isset($comment->{$field})) {
+          $comment->{$field} = $value;
         }
       }
 

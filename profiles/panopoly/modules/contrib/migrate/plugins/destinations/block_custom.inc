@@ -80,8 +80,8 @@ class MigrateDestinationCustomBlock extends MigrateDestination {
       }
       $block_to_update = (object) $old_block;
       foreach ($old_block as $key => $value) {
-        if (!isset($block->$key)) {
-          $block->$key = $old_block[$key];
+        if (!isset($block->{$key})) {
+          $block->{$key} = $old_block[$key];
         }
       }
     }

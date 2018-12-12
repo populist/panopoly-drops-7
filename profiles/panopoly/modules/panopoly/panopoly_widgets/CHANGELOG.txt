@@ -1,3 +1,10 @@
+7.x-1.58, 2018-12-11
+-------------------
+- File entity overwriting slide title on spotlight widgets.
+- Normalize "Slide duration" for Spotlight widgets.
+- Update Media to 2.21.
+- Update file_entity to 2.22.
+
 7.x-1.57, 2018-10-18
 -------------------
 - No changes since last release.
