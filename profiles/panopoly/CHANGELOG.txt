@@ -1,3 +1,9 @@
+7.x-1.59, 2019-01-17
+-------------------
+- Update to Drupal 7.63.
+- Start testing upgrades from the 1.58 release.
+- Restored drupal-org.make after the 1.58 release.
+
 7.x-1.58, 2018-12-11
 -------------------
 - Update Panopoly Core for Issue #2948466 by bkosborne: Patch defaultcontent

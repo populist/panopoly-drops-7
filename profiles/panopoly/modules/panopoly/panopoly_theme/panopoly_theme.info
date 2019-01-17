@@ -11,8 +11,8 @@ stylesheets[all][] = css/panopoly-accordian.css
 stylesheets[all][] = css/panopoly-layouts.css
 features[features_api][] = api:2
 
-; Information added by Drupal.org packaging script on 2018-12-12
-version = "7.x-1.58"
+; Information added by Drupal.org packaging script on 2019-01-17
+version = "7.x-1.59"
 core = "7.x"
 project = "panopoly_theme"
-datestamp = "1544590793"
+datestamp = "1547744004"
