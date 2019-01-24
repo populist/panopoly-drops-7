@@ -14,7 +14,7 @@ projects[panels][subdir] = contrib
 projects[panels][patch][1570120] = https://www.drupal.org/files/issues/move-image-1570120-31.patch
 projects[panels][patch][2897658] = https://www.drupal.org/files/issues/panels-menu-block-ipe-2897658-3.patch
 
-projects[panels_breadcrumbs][version] = 2.3
+projects[panels_breadcrumbs][version] = 2.4
 projects[panels_breadcrumbs][subdir] = contrib
 
 projects[panelizer][version] = 3.4
