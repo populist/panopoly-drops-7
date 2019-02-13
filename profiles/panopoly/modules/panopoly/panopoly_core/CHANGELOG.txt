@@ -1,3 +1,9 @@
+7.x-1.61, 2019-02-13
+-------------------
+- Update Administration Menu to admin_menu-7.x-3.0-rc6.
+- Upgrade Link module to 1.5.
+- Update Features to features-7.x-2.11.
+
 7.x-1.60, 2019-01-23
 -------------------
 - Update panels_breadcrumbs for SA-CONTRIB-2019-004.

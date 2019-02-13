@@ -613,7 +613,7 @@
 #modal-content .panopoly-magic-preview-link > a {
   background: transparent;
   border: none;
-  color: #666;
+  color: inherit;
   text-shadow: none;
   margin: 0;
   padding: 0px 10px 0px 10px;
@@ -621,13 +621,13 @@
   cursor: pointer;
 }
 
-#modal-content .panopoly-magic-preview-link > a:hover,
-#modal-content .panopoly-magic-preview-link > a:focus {
-  color: #000;
-}
-
 #modal-content .panopoly-magic-preview-link:hover {
   background-color: #f1f1f1;
+}
+
+#modal-content .panopoly-magic-preview-link > .help-block {
+  color: #666;
+  padding: 0px 10px 0px 10px;
 }
 
 #modal-content .panopoly-magic-preview-link:hover .content-type-button a,

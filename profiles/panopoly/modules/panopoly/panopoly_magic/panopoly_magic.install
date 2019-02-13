@@ -82,3 +82,12 @@ function panopoly_magic_update_7105() {
     }
   }
 }
+
+/**
+ * Preserve the old behavior for showing descriptions in single preview mode.
+ */
+function panopoly_magic_update_7106() {
+  if (variable_get('panopoly_magic_pane_show_description', 'not set') === 'not set') {
+    variable_set('panopoly_magic_pane_show_description', 0);
+  }
+}

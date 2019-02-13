@@ -1,3 +1,7 @@
+7.x-1.61, 2019-02-13
+-------------------
+- Add descriptions to Single Preview mode in Panopoly Magic.
+
 7.x-1.60, 2019-01-23
 -------------------
 - No changes since last release.

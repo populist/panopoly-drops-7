@@ -630,10 +630,10 @@ function fieldable_panels_pane_type_load($type) {
     if ($type == 'manage' && (arg(5) == 'fields' || arg(5) == 'display')) {
       drupal_goto('admin/structure/fieldable-panels-panes/' . arg(4) . '/' . arg(5));
     }
-
-    // If nothing else was found, redirect to the main FPP admin page.
-    drupal_set_message(t('Unable to load the "@type" Fieldable Panels Pane type.', array('@type' => $type)));
-    drupal_goto('admin/structure/fieldable-panels-panes');
+    else {
+      // If nothing else, return false.
+      return FALSE;
+    }
   }
 }
 

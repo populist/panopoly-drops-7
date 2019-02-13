@@ -25,6 +25,7 @@ projects[panelizer][patch][2788851] = https://www.drupal.org/files/issues/paneli
 projects[fieldable_panels_panes][version] = 1.11
 projects[fieldable_panels_panes][subdir] = contrib
 projects[fieldable_panels_panes][patch][2826205] = https://www.drupal.org/files/issues/fieldable_panels_panes-n2826205-39.patch
+projects[fieldable_panels_panes][patch][3019270] = https://www.drupal.org/files/issues/2018-12-10/2848997-cant-access-admin-too-many-redirects.patch
 
 projects[pm_existing_pages][version] = 1.4
 projects[pm_existing_pages][subdir] = contrib
@@ -77,9 +78,9 @@ projects[entityreference][subdir] = contrib
 projects[field_group][version] = 1.6
 projects[field_group][subdir] = contrib
 
-projects[link][version] = 1.4
+projects[link][version] = 1.5
 projects[link][subdir] = contrib
-projects[link][patch][2666912] = https://www.drupal.org/files/issues/revert-url-validation-2666912.patch
+projects[link][patch][2666912] = https://www.drupal.org/files/issues/2019-01-24/link-revert_url_validation-2666912-7.x-1.5.patch
 
 ; Harness the Power of Features and Apps with Default Content
 
@@ -87,9 +88,8 @@ projects[apps][version] = 1.1
 projects[apps][subdir] = contrib
 projects[apps][patch][2945929] = https://www.drupal.org/files/issues/apps-php7-compat-2945929.patch
 
-projects[features][version] = 2.10
+projects[features][version] = 2.11
 projects[features][subdir] = contrib
-projects[features][patch][2931464] = "https://www.drupal.org/files/issues/features-create_function-is-deprecated-2931464-5.patch"
 
 projects[strongarm][version] = 2.0
 projects[strongarm][subdir] = contrib

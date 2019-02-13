@@ -1,3 +1,25 @@
+7.x-1.61, 2019-02-13
+-------------------
+- Start testing upgrades from latest versions, and drop those over a year old.
+- Update to Drupal 7.64.
+- Update Panopoly Admin and Core for Issue #3021508 by byronveale, dsnopek:
+  Update Administration Menu to admin_menu-7.x-3.0-rc6.
+- Update Panopoly Magic for Issue #2611876 by cboyden, dsnopek, mpotter: Add
+  descriptions to Single Preview mode in Panopoly Magic.
+- Update Panopoly Widgets for Issue #3027578 by wylbur, dsnopek: PHP Errors are
+  generated when deleted FPP objects do not exist.
+- Update Panopoly Core for Issue #2984994 by byronveale, dsnopek: Upgrade Link
+  module to 1.5.
+- Update Panopoly Widgets for Issue #3021518 by byronveale: Update TableField to
+  tablefield-7.x-3.2.
+- Update Panopoly Widgets for Issue #3021497 by byronveale: Update Menu Block to
+  menu_block-7.x-2.8.
+- Update Panopoly Widgets for Issue #2984990 by byronveale: Upgrade File Entity
+  (file_entity) to 7.x-2.25.
+- Update Panopoly Core for Issue #3021551 by byronveale: Update Features to
+  features-7.x-2.11.
+- Restored drupal-org.make after the 1.60 release.
+
 7.x-1.60, 2019-01-23
 -------------------
 - Update Panopoly Core for Issue #3027936: Update panels_breadcrumbs for SA-

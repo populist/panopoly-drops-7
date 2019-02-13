@@ -1,3 +1,10 @@
+7.x-1.61, 2019-02-13
+-------------------
+- PHP Errors are generated when deleted FPP objects do not exist.
+- Update TableField to tablefield-7.x-3.2.
+- Update Menu Block to menu_block-7.x-2.8.
+- Upgrade File Entity (file_entity) to 7.x-2.25.
+
 7.x-1.60, 2019-01-23
 -------------------
 - No changes since last release.

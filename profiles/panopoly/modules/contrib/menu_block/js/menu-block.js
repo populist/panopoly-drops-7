@@ -22,7 +22,7 @@ Drupal.behaviors.menu_block = {
       }
     });
 
-    // Syncronize the display of menu and parent item selects.
+    // Synchronize the display of menu and parent item selects.
     $('.menu-block-parent-mlid', context).change( function() {
       var menuItem = $(this).val().split(':');
       $('.menu-block-menu-name').val(menuItem[0]);

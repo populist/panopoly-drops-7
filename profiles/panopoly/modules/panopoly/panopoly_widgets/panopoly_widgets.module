@@ -190,32 +190,38 @@ function panopoly_widgets_get_required_file_fields($bundle) {
  * Render callback for fieldable panels panes.
  */
 function panopoly_widgets_fieldable_panels_pane_render($subtype, $conf, $panels_args = array(), $context = array()) {
-  $entity = fieldable_panels_panes_load_from_subtype($subtype);
+  ctools_include('content');
+  $plugin = ctools_get_content_type('fieldable_panels_pane');
 
-  // If the entity has some required file fields, check them.
-  $required_file_fields = panopoly_widgets_get_required_file_fields($entity->bundle);
-  $missing_required = FALSE;
-  if (!empty($required_file_fields)) {
-    foreach ($required_file_fields as $required_file_field) {
-      $items = field_get_items('fieldable_panels_pane', $entity, $required_file_field);
+  // Need to first ensure that this is a valid subtype.
+  $subtype_info = ctools_content_get_subtype($plugin, $subtype);
+  if (!empty($subtype_info)) {
+    $entity = fieldable_panels_panes_load_from_subtype($subtype);
 
-      // Check if the required file field is empty or the file doesn't exist.
-      if (empty($items[0]) || empty($items[0]['fid']) || !file_load($items[0]['fid'])) {
-        $missing_required = TRUE;
-        break;
+    // If the entity has some required file fields, check them.
+    $required_file_fields = panopoly_widgets_get_required_file_fields($entity->bundle);
+    $missing_required = FALSE;
+    if (!empty($required_file_fields)) {
+      foreach ($required_file_fields as $required_file_field) {
+        $items = field_get_items('fieldable_panels_pane', $entity, $required_file_field);
+
+        // Check if the required file field is empty or the file doesn't exist.
+        if (empty($items[0]) || empty($items[0]['fid']) || !file_load($items[0]['fid'])) {
+          $missing_required = TRUE;
+          break;
+        }
       }
     }
-  }
 
-  // If a required file field is missing, then we return nothing.
-  if ($missing_required) {
-    return NULL;
-  }
+    // If a required file field is missing, then we return nothing.
+    if ($missing_required) {
+      return NULL;
+    }
 
-  // Otherwise, hand off to the original render callback.
-  $plugin = ctools_get_content_type('fieldable_panels_pane');
-  $original_render_callback = $plugin['original render callback'];
-  return $original_render_callback($subtype, $conf, $panels_args, $context);
+    // Otherwise, hand off to the original render callback.
+    $original_render_callback = $plugin['original render callback'];
+    return $original_render_callback($subtype, $conf, $panels_args, $context);
+  }
 }
 
 /**
