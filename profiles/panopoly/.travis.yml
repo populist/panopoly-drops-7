@@ -106,6 +106,7 @@ env:
     #- DRUPAL_TI_RUNNERS="phpunit simpletest behat"
   matrix:
     - UPGRADE=none     INSTALL_PANOPOLY_DEMO_FROM_APPS=1
+    - UPGRADE=7.x-1.61
     - UPGRADE=7.x-1.60
     - UPGRADE=7.x-1.59
     - UPGRADE=7.x-1.58

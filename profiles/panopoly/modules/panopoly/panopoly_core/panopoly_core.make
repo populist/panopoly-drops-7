@@ -78,7 +78,7 @@ projects[entityreference][subdir] = contrib
 projects[field_group][version] = 1.6
 projects[field_group][subdir] = contrib
 
-projects[link][version] = 1.5
+projects[link][version] = 1.6
 projects[link][subdir] = contrib
 projects[link][patch][2666912] = https://www.drupal.org/files/issues/2019-01-24/link-revert_url_validation-2666912-7.x-1.5.patch
 

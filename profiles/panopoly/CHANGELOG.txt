@@ -1,3 +1,9 @@
+7.x-1.62, 2019-02-21
+-------------------
+- Update Panopoly Core for Issue #3034517 by byronveale: Update to link-7.x-1.6.
+- Start testing upgrades from the 1.61 release.
+- Restored drupal-org.make after the 1.61 release.
+
 7.x-1.61, 2019-02-13
 -------------------
 - Start testing upgrades from latest versions, and drop those over a year old.
