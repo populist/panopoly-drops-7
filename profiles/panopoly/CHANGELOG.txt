@@ -1,3 +1,10 @@
+7.x-1.63, 2019-03-14
+-------------------
+- Update Panopoly Core for Issue #3039961 by cboyden, bkosborne: Update to Views
+  3.21.
+- Start testing upgrades from the 1.62 release.
+- Restored drupal-org.make after the 1.62 release.
+
 7.x-1.62, 2019-02-21
 -------------------
 - Update Panopoly Core for Issue #3034517 by byronveale: Update to link-7.x-1.6.
