@@ -1,3 +1,9 @@
+7.x-1.64, 2019-03-20
+-------------------
+- Update to Drupal 7.65 for SA-CORE-2019-004.
+- Start testing upgrades from the 1.63 release.
+- Restored drupal-org.make after the 1.63 release.
+
 7.x-1.63, 2019-03-14
 -------------------
 - Update Panopoly Core for Issue #3039961 by cboyden, bkosborne: Update to Views
