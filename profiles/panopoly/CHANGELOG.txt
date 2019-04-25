@@ -1,3 +1,11 @@
+7.x-1.66, 2019-04-18
+-------------------
+- Update to Drupal 7.66 for SA-CORE-2019-006.
+- Update Panopoly Widgets for Issue #3048952: Security update for TableField
+  module (tablefield-7.x-3.4).
+- Start testing upgrades from the 1.65 release.
+- Restored drupal-org.make after the 1.65 release.
+
 7.x-1.65, 2019-03-27
 -------------------
 - Update Panopoly Admin for Issue #3043878 by byronveale: Security update,

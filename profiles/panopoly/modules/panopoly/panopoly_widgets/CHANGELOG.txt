@@ -1,3 +1,7 @@
+7.x-1.66, 2019-04-18
+-------------------
+- Security update for TableField module (tablefield-7.x-3.4).
+
 7.x-1.65, 2019-03-27
 -------------------
 - No changes since last release.
