@@ -51,8 +51,8 @@ dependencies[] = distro_update
 dependencies[] = uuid
 dependencies[] = apps
 
-; Information added by Drupal.org packaging script on 2019-04-18
-version = "7.x-1.66"
+; Information added by Drupal.org packaging script on 2019-05-09
+version = "7.x-1.67"
 core = "7.x"
 project = "panopoly"
-datestamp = "1555618854"
+datestamp = "1557418127"

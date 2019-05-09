@@ -1,3 +1,14 @@
+7.x-1.67, 2019-05-09
+-------------------
+- Update to Drupal 7.67 for SA-CORE-2019-007.
+- Update Panopoly Widgets for Issue #3052950 by dsnopek: Allow Spotlight links
+  to be up to 255 characters.
+- Update Panopoly Core for Issue #2975931 by dsnopek, aubjr_drupal: Update
+  default jQuery version to 1.10 on new sites.
+- Move disruptive composer.json/lock out of the top-level directory.
+- Start testing upgrades from the 1.66 release.
+- Restored drupal-org.make after the 1.66 release.
+
 7.x-1.66, 2019-04-18
 -------------------
 - Update to Drupal 7.66 for SA-CORE-2019-006.
