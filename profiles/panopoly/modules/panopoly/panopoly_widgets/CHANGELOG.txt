@@ -1,3 +1,7 @@
+7.x-1.68, 2019-05-29
+-------------------
+- Update tablefield to 7.x-3.5 for SA-CONTRIB-2019-051.
+
 7.x-1.67, 2019-05-09
 -------------------
 - Allow Spotlight links to be up to 255 characters.

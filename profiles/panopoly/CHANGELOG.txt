@@ -1,3 +1,12 @@
+7.x-1.68, 2019-05-29
+-------------------
+- Update Panopoly Core for Issue #3057972: Update UUID to 7.x-1.3 for SA-
+  CONTRIB-2019-052.
+- Update Panopoly Widgets for Issue #3057971: Update tablefield to 7.x-3.5 for
+  SA-CONTRIB-2019-051.
+- Start testing upgrades from the 1.67 release.
+- Restored drupal-org.make after the 1.67 release.
+
 7.x-1.67, 2019-05-09
 -------------------
 - Update to Drupal 7.67 for SA-CORE-2019-007.

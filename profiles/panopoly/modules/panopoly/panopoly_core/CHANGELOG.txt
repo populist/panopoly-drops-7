@@ -1,3 +1,7 @@
+7.x-1.68, 2019-05-29
+-------------------
+- Update UUID to 7.x-1.3 for SA-CONTRIB-2019-052.
+
 7.x-1.67, 2019-05-09
 -------------------
 - Update default jQuery version to 1.10 on new sites.
