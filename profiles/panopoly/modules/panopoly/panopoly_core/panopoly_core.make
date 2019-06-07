@@ -5,7 +5,7 @@ core = 7.x
 
 ; Panels and Chaos Tools Magic
 
-projects[ctools][version] = 1.14
+projects[ctools][version] = 1.15
 projects[ctools][subdir] = contrib
 projects[ctools][patch][1000146] = https://www.drupal.org/files/issues/2018-03-26/views_panes-more_link_text-1000146-28.patch
 
@@ -22,10 +22,8 @@ projects[panelizer][subdir] = contrib
 projects[panelizer][patch][1549608] = https://www.drupal.org/files/issues/panelizer-n1549608-26.patch
 projects[panelizer][patch][2788851] = https://www.drupal.org/files/issues/panelizer-administer-panelizer-2788851-2.patch
 
-projects[fieldable_panels_panes][version] = 1.11
+projects[fieldable_panels_panes][version] = 1.13
 projects[fieldable_panels_panes][subdir] = contrib
-projects[fieldable_panels_panes][patch][2826205] = https://www.drupal.org/files/issues/fieldable_panels_panes-n2826205-39.patch
-projects[fieldable_panels_panes][patch][3019270] = https://www.drupal.org/files/issues/2018-12-10/2848997-cant-access-admin-too-many-redirects.patch
 
 projects[pm_existing_pages][version] = 1.4
 projects[pm_existing_pages][subdir] = contrib
@@ -35,7 +33,7 @@ projects[fape][subdir] = contrib
 
 ; Views Magic
 
-projects[views][version] = 3.21
+projects[views][version] = 3.22
 projects[views][subdir] = contrib
 projects[views][patch][2037469] = https://www.drupal.org/files/issues/views-exposed-sorts-2037469-26.patch
 projects[views][patch][2885660] = https://www.drupal.org/files/issues/2018-06-28/2885660-13.patch
@@ -119,7 +117,7 @@ projects[jquery_update][version] = 2.7
 projects[jquery_update][subdir] = contrib
 
 ; Recommended Modules
-projects[devel][version] = 1.6
+projects[devel][version] = 1.7
 projects[devel][subdir] = contrib
 
 projects[distro_update][version] = 1.0-beta4

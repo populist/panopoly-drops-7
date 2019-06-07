@@ -1,3 +1,25 @@
+7.x-1.69, 2019-06-07
+-------------------
+- Issue #2851122 by dsnopek: Update scripts/create_test_branch.py for monorepo.
+- Fix .make file generation.
+- Issue #2851122: Move Panopoly from 'manyrepos' to 'monorepo' with a subtree
+  split.
+- Update Panopoly Search for Issue #3053321 by byronveale, dsnopek: Update
+  Panopoly Search to search_api-7.x-1.26.
+- Panopoly Widgets for Issue #3053322 by byronveale: Update Panopoly Widgets to
+  media_youtube-7.x-3.8.
+- Update Panopoly Core for Issue #3053320 by byronveale: Update Panopoly Core to
+  use views-7.x-3.22.
+- Update Panopoly Core for Issue #3053318 by byronveale: Update Panopoly Core to
+  fieldable_panels_panes-7.x-1.13.
+- Update Panopoly Core for Issue #3053316 by byronveale: Update Panopoly Core to
+  use devel-7.x-1.7.
+- Update Panopoly Core for Issue #3053315 by byronveale: Update to
+  ctools-7.x-1.15.
+- Update Panopoly Widgets for Issue #3039431 by junaidpv: Taking "Manage Fields"
+  paths of content type like "admin/structure/types/manage/article/fields"
+  redirects to wrong non-existing path.
+
 7.x-1.68, 2019-05-29
 -------------------
 - Update Panopoly Core for Issue #3057972: Update UUID to 7.x-1.3 for SA-

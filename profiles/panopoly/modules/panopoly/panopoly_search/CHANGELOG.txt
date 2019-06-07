@@ -1,3 +1,7 @@
+7.x-1.69, 2019-06-07
+-------------------
+- Update Panopoly Search to search_api-7.x-1.26.
+
 7.x-1.68, 2019-05-29
 -------------------
 - No changes since last release.

@@ -1,3 +1,10 @@
+7.x-1.69, 2019-06-07
+-------------------
+- Update Panopoly Core to use views-7.x-3.22.
+- Update Panopoly Core to fieldable_panels_panes-7.x-1.13.
+- Update Panopoly Core to use devel-7.x-1.7.
+- Update to ctools-7.x-1.15.
+
 7.x-1.68, 2019-05-29
 -------------------
 - Update UUID to 7.x-1.3 for SA-CONTRIB-2019-052.

@@ -25,7 +25,7 @@ projects[file_entity][subdir] = contrib
 projects[media][version] = 2.21
 projects[media][subdir] = contrib
 
-projects[media_youtube][version] = 3.7
+projects[media_youtube][version] = 3.8
 projects[media_youtube][subdir] = contrib
 
 projects[media_vimeo][version] = 2.1

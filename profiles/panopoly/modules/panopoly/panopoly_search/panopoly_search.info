@@ -3,6 +3,7 @@ description = Indexes and searches site content, Solr or otherwise.
 core = 7.x
 package = Panopoly
 project = panopoly_search
+dependencies[] = entity
 dependencies[] = facetapi
 dependencies[] = page_manager
 dependencies[] = search
@@ -54,8 +55,8 @@ features[variable][] = search_cron_limit
 features[views_view][] = panopoly_database_search
 features[views_view][] = panopoly_search
 
-; Information added by Drupal.org packaging script on 2019-05-29
-version = "7.x-1.68"
+; Information added by Drupal.org packaging script on 2019-06-07
+version = "7.x-1.69"
 core = "7.x"
-project = "panopoly_search"
-datestamp = "1559158468"
+project = "panopoly"
+datestamp = "1559940490"

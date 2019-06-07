@@ -9,6 +9,8 @@ import os
 import re
 import pprint
 import yaml
+import StringIO
+import urllib2
 
 DRUPAL_ORG_API_NODE_URL = 'https://www.drupal.org/api-d7/node/%s.json'
 
@@ -36,7 +38,7 @@ def capture_output(args):
     stdout, stderr = proc.communicate()
     return stdout + stderr
 
-def get_issue_patch_files(issue_number):
+def get_issue_patch_files(issue_number, profile_patch=False):
     """Gets the patches against each Panopoly project from the givin issue number."""
 
     node = requests.get(DRUPAL_ORG_API_NODE_URL % issue_number).json()
@@ -48,38 +50,34 @@ def get_issue_patch_files(issue_number):
             if not file['name'].endswith('.patch'):
                 continue
 
-            m = re.match(r'^panopoly[_-]([^_-]+)[_-]', file['name'])
-            if m and ('panopoly_' + m.group(1)) in PANOPOLY_COMPONENT_MAP.values():
-                component = 'panopoly_' + m.group(1)
+            if profile_patch:
+                component = 'profile'
             else:
-                try:
-                    component = PANOPOLY_COMPONENT_MAP[node['field_issue_component']]
-                except KeyError:
-                    raise Exception("Unable to identify project for patch based on name '%s' or issue component '%s'" % (file['name'], node['field_issue_component']))
+                m = re.match(r'^panopoly[_-]([^_-]+)[_-]', file['name'])
+                if m and ('panopoly_' + m.group(1)) in PANOPOLY_COMPONENT_MAP.values():
+                    component = 'panopoly_' + m.group(1)
+                else:
+                    try:
+                        component = PANOPOLY_COMPONENT_MAP[node['field_issue_component']]
+                    except KeyError:
+                        raise Exception("Unable to identify project for patch based on name '%s' or issue component '%s'" % (file['name'], node['field_issue_component']))
 
             files[component] = file['url']
 
     return files
 
-def makefile_replace_patches(filename, patch_files):
-    lines = []
+def patch_panopoly_components(patch_files):
+    for component, filename in patch_files.items():
+        if component == 'profile':
+            path = '.'
+        else:
+            path = 'modules/panopoly/' + component
 
-    # First, filter out all the patches.
-    with open(filename, 'rt') as fd:
-        for line in fd.readlines():
-            if not re.match(r'^projects\[[^\]]+\]\[patch\]', line):
-                lines.append(line)
+        patch_content = urllib2.urlopen(filename).read()
 
-    # Add our new patches.
-    lines.append("\n")
-    lines.append("; Adding patches:\n")
-    for project, patch in patch_files.items():
-        lines.append("projects[%s][patch][] = %s\n" % (project, patch))
-
-    # Write out the file.
-    with open(filename, 'wt') as fd:
-        for line in lines:
-            fd.write(line)
+        patch_process = subprocess.Popen(['patch', '-p1', '-d', path], stdin=subprocess.PIPE)
+        patch_process.stdin.write(patch_content)
+        patch_process.stdin.close()
 
 def travisyml_skip_upgrade_tests(filename, skip_all=True):
     with open(filename, 'rt') as fd:
@@ -121,7 +119,10 @@ def git_patch_branch(git_repo, old_branch, new_branch, patch_files, issue_number
             subprocess.check_call(['git', 'merge', old_branch, '--strategy', 'recursive', '-X', 'theirs'])
 
         # Replace all patch files with the given patch files.
-        makefile_replace_patches('drupal-org.make', patch_files)
+        patch_panopoly_components(patch_files)
+
+        # Regenerate the .make files (in case a patch changed them)
+        subprocess.check_call(['scripts/create-drush-make-files.sh', 'drupal-org.make'])
 
         # Remove the upgrade tests if requested.
         travisyml_skip_upgrade_tests('.travis.yml', skip_all=skip_upgrade_tests)
@@ -135,7 +136,8 @@ def git_patch_branch(git_repo, old_branch, new_branch, patch_files, issue_number
             commit_message += ' - %s\n' % patch
 
         # Commit and push!
-        subprocess.check_call(['git', 'commit', '-a', '-m', commit_message])
+        subprocess.check_call(['git', 'add', '-A', '.'])
+        subprocess.check_call(['git', 'commit', '-m', commit_message])
         subprocess.check_call(['git', 'push', 'origin', new_branch])
     finally:
         shutil.rmtree(temp_directory)
@@ -148,9 +150,10 @@ def main():
     parser.add_argument('--git-new-branch', help='The branch in the git repo to create')
     parser.add_argument('--skip-upgrade-tests', dest='skip_upgrade_tests', action='store_true', default=False, help='If passed, this will only run tests on the current -dev, skipping the tests against upgraded versions')
     #parser.add_argument('--run-upgrade-tests', dest='skip_upgrade_tests', action='store_false', default=True, help='If passed, this will run not only the tests on the current -dev, but also against upgraded versions')
+    parser.add_argument('--profile-patch', dest='profile_patch', action='store_true', default=False, help='If passed, the discovered patch will be used against the profile, rather than individual components')
     args = parser.parse_args()
 
-    patch_files = get_issue_patch_files(args.issue_number)
+    patch_files = get_issue_patch_files(args.issue_number, args.profile_patch)
 
     if not args.git_new_branch:
         args.git_new_branch = 'issue-%s' % args.issue_number

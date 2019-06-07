@@ -1,3 +1,10 @@
+7.x-1.69, 2019-06-07
+-------------------
+- Update Panopoly Widgets to media_youtube-7.x-3.8.
+- Taking "Manage Fields" paths of content type like
+  "admin/structure/types/manage/article/fields" redirects to wrong non-existing
+  path.
+
 7.x-1.68, 2019-05-29
 -------------------
 - Update tablefield to 7.x-3.5 for SA-CONTRIB-2019-051.
