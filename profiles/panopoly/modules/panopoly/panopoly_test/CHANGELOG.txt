@@ -1,3 +1,8 @@
+Panopoly Test 7.x-1.70, 2019-06-28
+-------------------
+- Replace all scripts and Phing build process with Robo.
+- Getting ready for the 1.69 release.
+
 7.x-1.69, 2019-06-07
 -------------------
 - No changes since last release.

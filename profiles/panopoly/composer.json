@@ -1,0 +1,43 @@
+{
+    "name": "panopoly/panopoly",
+    "description": "Panopoly is a powerful Drupal base-distribution with a powerful editorial experience",
+    "type": "drupal-profile",
+    "license": "GPL-2.0-or-later",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packages.drupal.org/7"
+        }
+    ],
+    "require": {
+    },
+    "require-dev": {
+        "consolidation/robo": "^1.4",
+        "spomky-labs/otphp": "^8.0",
+        "drupal/drupal-extension": "^3.2.2"
+    },
+    "replace": {
+        "drupal/panopoly_core": "self.version",
+        "drupal/panopoly_images": "self.version",
+        "drupal/panopoly_pages": "self.version",
+        "drupal/panopoly_theme": "self.version",
+        "drupal/panopoly_widgets": "self.version",
+        "drupal/panopoly_demo": "self.version",
+        "drupal/panopoly_media": "self.version",
+        "drupal/panopoly_test": "self.version",
+        "drupal/panopoly_users": "self.version",
+        "drupal/panopoly_wysiwyg": "self.version"
+    },
+    "config": {
+        "platform": {
+            "php": "5.6"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-7.x-1.x": "1.x-dev"
+        }
+    }
+}

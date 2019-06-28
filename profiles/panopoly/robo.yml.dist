@@ -1,0 +1,9 @@
+command:
+  release:
+    options:
+      username: 'username'
+      password: 'password'
+      # If your D.o account has TFA enabled, put your TOTP secret here.
+      #totp-secret: 'secret'
+      # If you are want to run Selenium/Chromedriver locally.
+      #wd-host: 'http://localhost:4444'

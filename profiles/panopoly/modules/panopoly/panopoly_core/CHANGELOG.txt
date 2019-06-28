@@ -1,3 +1,7 @@
+Panopoly Core 7.x-1.70, 2019-06-28
+-------------------
+- Getting ready for the 1.69 release.
+
 7.x-1.69, 2019-06-07
 -------------------
 - Update Panopoly Core to use views-7.x-3.22.

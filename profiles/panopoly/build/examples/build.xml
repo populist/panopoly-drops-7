@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<project name="my-profile-name" default="usage">
-  <import file="build/build.import.xml" />
-</project>

@@ -1,3 +1,17 @@
+Panopoly 7.x-1.70, 2019-06-28
+-------------------
+- Issue #2971163 by dsnopek: Attempt to fix extra 'drush rn' output mixing
+  into CHANGELOG.txt.
+- Issue #2971163 by dsnopek: Replace all scripts and Phing build process
+  with Robo.
+- Issue #3033212 by dsnopek, cboyden: Hide "Always display title" option on
+  Submenu widget.
+- Issue #2905972 by dsnopek, cboyden: Use empty alt="" on images without
+  alt, rather than omitting alt attribute.
+- Issue #2477303 by dsnopek: Drop support for updating from Panopoly
+  version that were release more than a year ago.
+- Start testing upgrades from the 1.68 and 1.69 releases.
+
 7.x-1.69, 2019-06-07
 -------------------
 - Issue #2851122 by dsnopek: Update scripts/create_test_branch.py for monorepo.

@@ -1,3 +1,9 @@
+Panopoly Images 7.x-1.70, 2019-06-28
+-------------------
+- Use empty alt="" on images without alt, rather than omitting alt
+  attribute.
+- Getting ready for the 1.69 release.
+
 7.x-1.69, 2019-06-07
 -------------------
 - No changes since last release.

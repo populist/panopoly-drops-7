@@ -356,4 +356,3 @@ libraries[markitup][download][url] = https://github.com/markitup/1.x.git
 libraries[markitup][download][revision] = 2c88c42
 libraries[markitup][download][branch] = master
 libraries[markitup][patch][1715642] = http://drupal.org/files/1715642-adding-html-set-markitup-editor.patch
-

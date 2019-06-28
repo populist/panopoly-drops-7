@@ -1,9 +1,0 @@
-{
-  "require": {
-    "phing/phing": "2.*",
-    "pear/versioncontrol_git": "@dev"
-  },
-  "config": {
-    "bin-dir": "bin/"
-  }
-}

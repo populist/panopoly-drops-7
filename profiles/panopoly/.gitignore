@@ -4,3 +4,7 @@ vendor
 composer.phar
 build-temp
 build.properties
+/composer.lock
+/vendor/
+/release/
+/robo.yml

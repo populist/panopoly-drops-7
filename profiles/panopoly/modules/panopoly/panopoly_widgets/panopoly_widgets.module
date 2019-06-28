@@ -270,6 +270,12 @@ function panopoly_widgets_form_alter(&$form, &$form_state, $form_id) {
     // and makes sense with that option.
     $form['expanded']['#weight'] = 8;
     $form['expanded']['#title'] = t('<strong>Expand children</strong> of this tree.');
+
+    // Hide the 'Always display title' option that only useful in rare edge
+    // cases.
+    if (!empty($form['display_empty'])) {
+      $form['display_empty']['#access'] = FALSE;
+    }
   }
 
   if ($form_id == 'fieldable_panels_panes_fieldable_panels_pane_content_type_edit_form') {
