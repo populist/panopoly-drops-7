@@ -22,6 +22,7 @@ class RoboFile extends RoboTasks {
     'panopoly_core' => 'Panopoly Core',
     'panopoly_demo' => 'Panopoly Demo',
     'panopoly_images' => 'Panopoly Images',
+    'panopoly_magic' => 'Panopoly Magic',
     'panopoly_pages' => 'Panopoly Pages',
     'panopoly_search' => 'Panopoly Search',
     'panopoly_test' => 'Panopoly Test',
@@ -415,7 +416,7 @@ EOF;
         else {
           if (preg_match('/^panopoly[_-]([^_-]+)[_-]/', $file['name'], $matches)) {
             $component = 'panopoly_' . $matches[1];
-            if (!in_array($component, $this->PANOPOLY_COMPONENT_MAP[$component])) {
+            if (!in_array($component, $this->PANOPOLY_COMPONENT_MAP)) {
               $component = NULL;
             }
           }
@@ -505,7 +506,7 @@ EOF;
     }
 
     // Regenerate the .make files (in case a patch changed them)
-    $collection->addCode([$this, 'createDrushMakeFiles']);
+    $collection->addCode([$this, 'buildDrupalOrgMake']);
 
     // Modify the .travis.yml file.
     $collection->addCode(function () use ($opts) {
@@ -912,6 +913,7 @@ EOF;
     }
 
     $collection->addCode(function () use ($session, $opts) {
+      $session->start();
       $session->visit('https://drupal.org/user/login');
 
       $this->submitForm($session->getPage(), 'user-login', [

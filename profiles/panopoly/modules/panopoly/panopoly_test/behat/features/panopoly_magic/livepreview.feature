@@ -114,6 +114,33 @@ Feature: Live preview
       And I wait for live preview to finish
     Then I should not see "Posted by" in the "Live preview" region
 
+@api @javascript @panopoly_magic
+  Scenario: Live preview should work with cached views
+    Given I am logged in as a user with the "administrator" role
+      And "panopoly_test_page" content:
+      | title       | body      | created            | status |
+      | Test Page 3 | Test body | 01/01/2001 11:00am |      1 |
+      | Test Page 1 | Test body | 01/02/2001 11:00am |      1 |
+      | Test Page 2 | Test body | 01/03/2001 11:00am |      1 |
+      And Panopoly magic live previews are automatic
+      And I am viewing a landing page
+    When I customize this page with the Panels IPE
+      And I click "Add new pane"
+      And I click "Panopoly Test" in the "CTools modal" region
+      And I click "View: Magic Views Cache: Cached Content" in the "CTools modal" region
+      And I fill in "widget_title" with "Test Cached Content"
+      And I wait for live preview to finish
+    Then I should see "Test Cached Content" in the "Live preview" region
+    When I select "Test Page" from "exposed[type]"
+      And I wait for live preview to finish
+    Then I should see the link "Test Page 1" in the "Live preview" region
+      And I should see the link "Test Page 2" in the "Live preview" region
+      And I should see the link "Test Page 3" in the "Live preview" region
+    When I uncheck the box "fields_override[name]"
+      And I wait for live preview to finish
+    Then I should not see "Posted by" in the "Live preview" region
+
+
   @api @javascript @panopoly_magic @panopoly_widgets
   Scenario: Manual live preview should show changes when requested
     Given I am logged in as a user with the "administrator" role

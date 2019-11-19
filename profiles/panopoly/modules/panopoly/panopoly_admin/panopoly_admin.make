@@ -17,7 +17,7 @@ projects[simplified_menu_admin][subdir] = contrib
 projects[date_popup_authored][version] = 1.2
 projects[date_popup_authored][subdir] = contrib
 
-projects[admin_views][version] = 1.6
+projects[admin_views][version] = 1.7
 projects[admin_views][subdir] = contrib
 
 projects[save_draft][version] = 1.4

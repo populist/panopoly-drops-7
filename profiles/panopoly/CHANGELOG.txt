@@ -1,3 +1,27 @@
+Panopoly 7.x-1.71, 2019-11-19
+-------------------
+- Issue #3094252:  Update admin_views to 7.x-1.7 for SA-CONTRIB-2019-076.
+- Issue #3069824 by dsnopek, cboyden: Display type setting doesn't work for
+  overridden views displays.
+- Backport support for PANOPOLY_BEHAT_WINDOW_SIZE from 8.x-2.x.
+- Issue #2454947 by dsnopek, cboyden: Preview doesn't update when editing
+  the value of a field via FAPE.
+- Issue #3076935 by dsnopek, cboyden: Live preview doesn't update when
+  Views pane uses Views caching.
+- Fix tests on Travis.
+- Issue #3030479 by collinhaines, cboyden: Notice: Undefined index:
+  triggering_element in
+  panopoly_magic_form_ctools_entity_field_content_type_formatter_options_alter().
+- Issue #3070684 by dsnopek, cboyden: Add option to disallow view mode
+  selection for Views content panes in IPE.
+- Fix minor issues with 'robo create-test-branch'.
+- Change Behat version to hopefully fix the tests.
+- Start testing upgrades from the 1.70 release.
+- Updated panopoly_magic's CHANGELOG.txt for 7.x-1.70 release.
+- Issue #2971163 by dsnopek: Aaaah! Forgot panopoly_magic.
+- Issue #2971163 by dsnopek: 'robo release' wouldn't work with
+  composer.json modified for Travis, so completely split those.
+
 Panopoly 7.x-1.70, 2019-06-28
 -------------------
 - Issue #2971163 by dsnopek: Attempt to fix extra 'drush rn' output mixing

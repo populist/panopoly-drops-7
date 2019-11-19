@@ -20,6 +20,9 @@ function admin_views_views_default_views() {
 
   // Collect all modules providing admin_views_default.
   $modules = module_list();
+  // Place admin_views at the start of the list to allow other modules to
+  // override the default views.
+  $modules = array('admin_views' => 'admin_views') + $modules;
   foreach ($modules as $module) {
     $dir = DRUPAL_ROOT . '/' . drupal_get_path('module', $module) . '/admin_views_default';
     if (is_dir($dir)) {

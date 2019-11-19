@@ -1,3 +1,10 @@
+Panopoly Test 7.x-1.71, 2019-11-19
+-------------------
+- Display type setting doesn't work for overridden views displays.
+- Backport support for PANOPOLY_BEHAT_WINDOW_SIZE from 8.x-2.x.
+- Preview doesn't update when editing the value of a field via FAPE.
+- Live preview doesn't update when Views pane uses Views caching.
+
 Panopoly Test 7.x-1.70, 2019-06-28
 -------------------
 - Replace all scripts and Phing build process with Robo.

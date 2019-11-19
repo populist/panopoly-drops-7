@@ -1,3 +1,7 @@
+Panopoly Widgets 7.x-1.71, 2019-11-19
+-------------------
+- No changes since last release.
+
 Panopoly Widgets 7.x-1.70, 2019-06-28
 -------------------
 - Hide "Always display title" option on Submenu widget.

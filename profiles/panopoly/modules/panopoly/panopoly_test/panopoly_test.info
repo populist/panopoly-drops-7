@@ -93,14 +93,16 @@ features[variable][] = panelizer_node:panopoly_test_landing_page_default
 features[variable][] = panelizer_node:panopoly_test_page:page_manager_selection
 features[variable][] = panelizer_node:panopoly_test_page_allowed_layouts_default
 features[variable][] = panelizer_node:panopoly_test_page_allowed_types_default
+features[views_view][] = panopoly_test_magic_display_content
 features[views_view][] = panopoly_test_magic_display_type
 features[views_view][] = panopoly_test_magic_view_modes
+features[views_view][] = panopoly_test_magic_views_cache
 features_exclude[dependencies][panopoly_pages] = panopoly_pages
 features_exclude[dependencies][panelizer] = panelizer
 hidden = 1
 
-; Information added by Drupal.org packaging script on 2019-06-28
-version = "7.x-1.70"
+; Information added by Drupal.org packaging script on 2019-11-19
+version = "7.x-1.71"
 core = "7.x"
 project = "panopoly"
-datestamp = "1561745086"
+datestamp = "1574200089"

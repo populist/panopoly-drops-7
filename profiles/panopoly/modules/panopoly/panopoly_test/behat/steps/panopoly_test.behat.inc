@@ -58,6 +58,11 @@ class TestSubContext extends RawDrupalContext implements DrupalSubContextInterfa
   protected $private_path_overridden = FALSE;
 
   /**
+   * Set to TRUE after the window has been resized.
+   */
+  protected $window_resized = FALSE;
+
+  /**
    * Initializes context.
    */
   public function __construct(DrupalDriverManager $drupal) {
@@ -89,6 +94,31 @@ class TestSubContext extends RawDrupalContext implements DrupalSubContextInterfa
    */
   public function setJavascript() {
     $this->javascript = true;
+  }
+
+  /**
+   * Resize the window before first Javascript scenarios.
+   *
+   * @BeforeScenario @javascript
+   */
+  public function resizeWindow($event) {
+    if (!$this->window_resized) {
+      $session = $this->getSession();
+      if (!$session->isStarted()) {
+        $session->start();
+      }
+
+      $dimensions = getenv('PANOPOLY_BEHAT_WINDOW_SIZE');
+      if (!empty($dimensions)) {
+        list ($width, $height) = explode('x', $dimensions);
+        $session->resizeWindow((int) $width, (int) $height, 'current');
+      }
+      else {
+        $session->getDriver()->maximizeWindow();
+      }
+
+      $this->window_resized = TRUE;
+    }
   }
 
   /**

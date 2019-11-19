@@ -29,8 +29,8 @@ function admin_views_views_plugins() {
     ),
     'access' => array(
       'menu' => array(
-        'title' => t('Menu system path'),
-        'help' => t('Access will be granted based on the original system path.'),
+        'title' => t('(Deprecated) Menu system path'),
+        'help' => t('This has been deprecated. <strong>DO NOT USE!</strong>'),
         'handler' => 'views_plugin_access_menu',
         'uses options' => FALSE,
         'path' => "$path/plugins",

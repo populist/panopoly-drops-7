@@ -21,6 +21,7 @@ panopoly_build_distribution
 # Install the behat extension.
 panopoly_header Installing Behat
 cd "$TRAVIS_BUILD_DIR"
+cp composer.json-travis composer.json
 cp composer.lock-travis composer.lock
 composer install --no-interaction --prefer-source --dev
 

@@ -89,6 +89,16 @@ function panopoly_magic_ajax_form_callback() {
     $form = ctools_content_form($form_state['op'], $form_state['form_info'], $form_state, $form_state['plugin'], $form_state['subtype_name'], $form_state['conf'], $form_state['step']);
   }
 
+  // Hack to set the 'triggering_element' when previewing field formatter
+  // settings (where it strangely doesn't get set).
+  if (empty($form_state['triggering_element']) && !empty($form_state['input']['_triggering_element_value']) && !empty($form_state['complete form']['buttons'])) {
+    foreach ($form_state['complete form']['buttons'] as $button) {
+      if (is_array($button) && isset($button['#value']) && $button['#value'] == $form_state['input']['_triggering_element_value']) {
+        $form_state['triggering_element'] = $button;
+      }
+    }
+  }
+
   if (!empty($form_state['triggering_element'])) {
     $callback = $form_state['triggering_element']['#ajax']['callback'];
   }
@@ -669,7 +679,44 @@ function _panopoly_magic_process_field_collection_fields($entity_type, $bundle, 
 function panopoly_magic_ajax_update_preview($form, $form_state) {
   if (isset($form_state['values']) && isset($form['#panopoly_magic_preview_info']['configuration'])) {
     $form['#panopoly_magic_preview_info']['configuration'] = $form_state['values'] + $form['#panopoly_magic_preview_info']['configuration'];
+
+    // For some reason, the formatter options aren't in $form_state['values']
+    // but only $form_state['input']. Copy those explicitly.
+    if ($form['#form_id'] == 'ctools_entity_field_content_type_formatter_options') {
+      foreach ($form['#panopoly_magic_preview_info']['configuration']['formatter_settings'] as $formatter_setting_key => $formatter_setting_value) {
+        $form['#panopoly_magic_preview_info']['configuration']['formatter_settings'][$formatter_setting_key] = isset($form_state['input'][$formatter_setting_key]) ? $form_state['input'][$formatter_setting_key] : $formatter_setting_value;
+      }
+    }
   }
+
+  // If this is a field is being editted via FAPE, then we need to update the
+  // entity in context with the temporary value of the field, in order for it
+  // to be rendered correctly in the preview.
+  if (isset($form_state['values']) && $form_state['plugin']['name'] == 'entity_field' && isset($form_state['subform_id']) && $form_state['subform_id'] == 'fape_field_edit_field_form' && isset($form['#panopoly_magic_preview_info']['context']['panelizer'])) {
+    $entity_type = $form['#panopoly_magic_preview_info']['context']['panelizer']->type[2];
+    $entity =& $form['#panopoly_magic_preview_info']['context']['panelizer']->data;
+    foreach ($form_state['field'] as $field_name => $lang_field) {
+      field_attach_form_validate($entity_type, $entity, $form, $form_state, array('field_name' => $field_name));
+      field_attach_submit($entity_type, $entity, $form, $form_state, array('field_name' => $field_name));
+
+      // Run the hook_field_load() before rendering. This is necessary for some
+      // fields, like file and image fields.
+      list ($entity_id,,) = entity_extract_ids($entity_type, $entity);
+      $a = FIELD_LOAD_CURRENT;
+      $b = NULL;
+      _field_invoke_multiple('load', $entity_type, array($entity_id => $entity), $a, $b, array('field_name' => $field_name));
+    }
+  }
+
+  // If this is a preview for a View, and it's using any caching, then clear
+  // the cache before rendering the View.
+  if (isset($form_state['view']) && get_class($form_state['view']) == 'view') {
+    $view = $form_state['view'];
+    if ($cache = $view->display_handler->get_plugin('cache')) {
+      $cache->cache_flush();
+    }
+  }
+
   return panopoly_magic_form_post_render_preview('', $form);
 }
 
@@ -1027,7 +1074,7 @@ function panopoly_magic_form_views_content_views_panes_content_type_edit_form_al
 
   // Determine if this is a fielded view. If so, add magic display type changer
   $view_handler = $form_state['view']->display_handler;
-  if ($view_handler->options['row_plugin'] == 'fields') {
+  if ($view_handler->get_option('row_plugin') == 'fields') {
     // Set to default view settings if there isn't one.
     if (empty($conf['view_settings'])) {
       if ($form_state['view']->style_plugin->plugin_name == 'table') {
@@ -1100,9 +1147,10 @@ function panopoly_magic_form_views_content_views_panes_content_type_edit_form_al
   $view_modes = panopoly_magic_view_mode_options(panopoly_magic_get_entity_type($form_state['view']));
 
   // Get the default view mode.
-  $options_default_view_mode = ($view_handler->options['row_plugin'] == 'fields') ? 'teaser' : 'full';
-  if (isset($form_state['view']->style_plugin->display->display_options['row_options']['view_mode'])) {
-    $options_default_view_mode = $form_state['view']->style_plugin->display->display_options['row_options']['view_mode'];
+  $options_default_view_mode = ($view_handler->get_option('row_plugin') == 'fields') ? 'teaser' : 'full';
+  $row_options = $view_handler->get_option('row_options');
+  if (isset($form_state['view']->style_plugin->row_plugin->options['view_mode'])) {
+    $options_default_view_mode = $form_state['view']->style_plugin->row_plugin->options['view_mode'];
   }
   if (!array_key_exists($options_default_view_mode, $view_modes)){
     $options_default_view_mode = current(array_keys($view_modes));
@@ -1119,7 +1167,26 @@ function panopoly_magic_form_views_content_views_panes_content_type_edit_form_al
       ),
     ),
   );
-   
+
+  // Show view mode selection if the display type setting exists because the
+  // view mode will get shown/hidden by Javascript.
+  if (isset($form['display_settings']['view_settings'])) {
+    $form['content_settings']['view_mode']['#access'] = TRUE;
+  }
+  // Hide the view mode selection in situations where it'll have no effect.
+  // ex. when not on a node/entity row plugin (except when a table which
+  // inexplicably uses that row plugin).
+  elseif (!in_array($view_handler->get_option('row_plugin'), array('node', 'entity')) || $form_state['view']->style_plugin->plugin_name == 'table') {
+    $form['content_settings']['view_mode']['#access'] = FALSE;
+  }
+  // If the View has opted out of 'View mode' then we hide it from the form.
+  // We do the is_a() check to not break things in the case the user has
+  // upgraded panopoly_magic, but hasn't yet rebuilt the Views cache.
+  $view_allow = $view_handler->get_option('allow');
+  if (is_a($view_handler, 'panopoly_magic_plugin_display_panel_pane') && empty($view_allow['panopoly_magic_view_mode'])) {
+    $form['content_settings']['view_mode']['#access'] = FALSE;
+  }
+
   // Define a general settings fieldset if we have exposed values
   if (!empty($form['exposed']) && count(_panopoly_magic_visible_element_children($form['exposed'])) > 0) {
     $form['exposed']['#type'] = 'fieldset';
@@ -1209,7 +1276,7 @@ function panopoly_magic_form_ctools_entity_field_content_type_formatter_options_
   $form['#pre_render'][] = 'panopoly_magic_panelizer_pre_render';
 
   // When moving backwards through form steps, ensure image widgets properly retain their value.
-  if (!empty($form_state['field_instance']) && $form_state['triggering_element']['#value'] == 'Back') {
+  if (!empty($form_state['field_instance']) && isset($form_state['triggering_element']['#value']) && $form_state['triggering_element']['#value'] == 'Back') {
     $field_name = $form_state['field_instance']['field_name'];
     $field_type = $form_state['field_instance']['widget']['module'];
     $entity = $form_state['entity'];

@@ -59,8 +59,11 @@ class views_plugin_display_system extends views_plugin_display {
     // @see options_summary()
     $options['defaults']['default']['access'] = FALSE;
     $options['access'] = array(
+      // This isn't actually used, but we set it to a reasonable value, in case
+      // this gets cloned to a display of a different type.
       'default' => array(
-        'type' => 'menu',
+        'type' => 'perm',
+        'perm' => 'access administration pages',
       ),
     );
 
