@@ -1,3 +1,8 @@
+Panopoly Test 7.x-1.72, 2019-12-19
+-------------------
+- Switch File widget to use Media Browser.
+- Tests fail with Radix.
+
 Panopoly Test 7.x-1.71, 2019-11-19
 -------------------
 - Display type setting doesn't work for overridden views displays.

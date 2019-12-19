@@ -435,9 +435,9 @@ function theme_panopoly_spotlight_wrapper($variables){
       $output .= '<ul>';
     }
     else {
-      // We're not displaying a full pager but we still want to render the full pager, and just hide it
-      // in an accessible way, instead of not rendering it at all.
-      $output .= '<ul class="element-invisible">';
+      // We're not displaying a full pager but we still want to put the links
+      // in the DOM, because the Javascript depends on them.
+      $output .= '<ul style="display: none;">';
     }
     foreach ($items as $delta => $item_data) {
       $output .= '<li>' . '<a href="#panopoly-spotlight-' . $delta . '">' . ($delta+1) . '</a></li>';
@@ -449,13 +449,13 @@ function theme_panopoly_spotlight_wrapper($variables){
 
       // Have to split up previous and next so that we can squeeze pause between them if needed.
       if ($pager_style == 'mini') {
-        $output .= '<a href="#panopoly-spotlight" class="panopoly-spotlight-previous">' . t('Prev') . '</a>';
+        $output .= '<a href="#" class="panopoly-spotlight-previous">' . t('Prev') . '</a>';
       }
       if (variable_get('panopoly_widgets_spotlight_pause_play_buttons', 1)) {
         $output .= '<a href="#" class="panopoly-spotlight-pause-play">' . t('Pause') . '</a>';
       }
       if ($pager_style == 'mini') {
-        $output .= '<a href="#panopoly-spotlight" class="panopoly-spotlight-next">' . t('Next') . '</a>';
+        $output .= '<a href="#" class="panopoly-spotlight-next">' . t('Next') . '</a>';
       }
 
       $output .= '</div>';

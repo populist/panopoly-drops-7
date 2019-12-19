@@ -1,3 +1,10 @@
+Panopoly Widgets 7.x-1.72, 2019-12-19
+-------------------
+- Switch File widget to use Media Browser.
+- Add "Crop" tool to Spotlight widget.
+- Accessibility improvements for the mini pager on the Spotlight widget.
+- PHP notices when Piece of Content widget is empty.
+
 Panopoly Widgets 7.x-1.71, 2019-11-19
 -------------------
 - No changes since last release.

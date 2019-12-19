@@ -22,7 +22,7 @@ Feature: Panopoly Magic allows the admin to toggle displaying seldom used pane s
       And I should see "Testing text body field"
     When I click "Style" in the "Boxton Content" region
     Then I should see "No markup at all"
-    Then I click "Close window"
+    Then I click "Close Window" link or button
       And I press "Save"
       And I wait for the Panels IPE to deactivate
 
@@ -45,6 +45,6 @@ Feature: Panopoly Magic allows the admin to toggle displaying seldom used pane s
       And I should see "Testing text body field"
     When I click "Style" in the "Boxton Content" region
     Then I should not see "No markup at all"
-    Then I click "Close window"
+    Then I click "Close Window" link or button
       And I press "Save"
       And I wait for the Panels IPE to deactivate

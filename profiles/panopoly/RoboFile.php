@@ -505,6 +505,10 @@ EOF;
       $collection->taskExec("patch -p1 -d {$patch_path} < {$patch_file}");
     }
 
+    // Remove .orig and .rej files
+    $collection->taskExec("find -name \*.orig -exec rm \{\} \;");
+    $collection->taskExec("find -name \*.rej -exec rm \{\} \;");
+
     // Regenerate the .make files (in case a patch changed them)
     $collection->addCode([$this, 'buildDrupalOrgMake']);
 

@@ -1,3 +1,22 @@
+Panopoly 7.x-1.72, 2019-12-19
+-------------------
+- Issue #3102147: Update to Drupal 7.69 for SA-CORE-2019-012.
+- Issue #2884143 by dsnopek, cboyden: Switch File widget to use Media
+  Browser.
+- Issue #2574369 by dsnopek, cboyden: Tests fail with Radix.
+- Fix 'robo create-test-branch' for patches that make .orig or .rej files.
+- Issue #2975934 by dsnopek, cboyden: Accessibility improvements for the
+  mini pager on the Spotlight widget.
+- Issue #2672468 by cboyden: PHP notices when Piece of Content widget is
+  empty.
+- Issue #3087510 by cboyden: PHP notice when panes have no titles.
+- Issue #3030478 by collinhaines, junaidpv, cboyden: Notice: Only variables
+  should be passed by reference in
+  panopoly_magic_form_ctools_entity_field_content_type_formatter_options_alter().
+- Issue #2743231 by dsnopek: Add Views Pane error - Undefined index:
+  #type.
+- Start testing upgrades from the 1.71 release.
+
 Panopoly 7.x-1.71, 2019-11-19
 -------------------
 - Issue #3094252:  Update admin_views to 7.x-1.7 for SA-CONTRIB-2019-076.

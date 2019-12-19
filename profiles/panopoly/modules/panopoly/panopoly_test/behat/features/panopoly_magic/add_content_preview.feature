@@ -49,7 +49,7 @@ Feature: Preview of widgets on 'Add content' dialog
       And I click "Add new pane"
       And I click "Panopoly Test" in the "CTools modal" region
     Then I should not see "Abracadabra! Here is a simple pane."
-      And I should see "Add Simple Pane" in the "div" element with the "class" attribute set to "panopoly-magic-preview-title" in the "CTools modal" region
+      And I should see the link "Preview Simple Pane widget" in the "CTools modal" region
     When I click "Preview Simple Pane widget" in the "CTools modal" region
     Then I should see "Abracadabra! Here is a simple pane."
     When I click "A simple pane for testing." in the "CTools modal" region
@@ -70,7 +70,7 @@ Feature: Preview of widgets on 'Add content' dialog
     # Check for signs of the automatic preview
     Then I should not see "Abracadabra! Here is a simple pane."
     # ... and manual preview
-    And I should not see "Add" in the "div" element with the "class" attribute set to "panopoly-magic-preview-title" in the "CTools modal" region
+    And I should not see the link "Preview Simple Pane widget" in the "CTools modal" region
     # ... and the single preview
     And I should not see "Select a widget to show its preview"
     # Finally, make sure the add link still works

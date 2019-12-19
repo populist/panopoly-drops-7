@@ -367,7 +367,7 @@ Feature: Live preview
       And I press "Update Preview"
     Then I should not see "Widget content 1" in the "Live preview" region
       And I should see "THIS WILL BE CANCELLED" in the "Live preview" region
-    When I click "Close Window"
+    When I click "Close Window" link or button
       And I click "Edit" in the "Boxton Content" region
     Then I should see "Widget content 1" in the "Live preview" region
     When I fill in the "edit-field-basic-text-text-und-0-value" WYSIWYG editor with "Widget content 2"

@@ -759,7 +759,7 @@ function panopoly_widgets_views_post_execute(&$view) {
 
     // If we are rendering the actual node, rather than showing fields or a
     // table, then we need to move the title override to the node itself.
-    if (is_a($row_plugin, 'entity_views_plugin_row_entity_view')) {
+    if (is_a($row_plugin, 'entity_views_plugin_row_entity_view') && !empty($view->result[0])) {
       $nid = $view->result[0]->nid;
       $overridden_title = $display->handler->options['title'];
       if (!empty($overridden_title)) {
@@ -786,7 +786,7 @@ function panopoly_widgets_views_post_render(&$view) {
   if ($view->name == 'panopoly_widgets_general_content' && $view->current_display == 'piece_of_content') {
     // Reset the title to its original value.
     $display = $view->display[$view->current_display];
-    if (is_a($view->style_plugin->row_plugin, 'entity_views_plugin_row_entity_view')) {
+    if (is_a($view->style_plugin->row_plugin, 'entity_views_plugin_row_entity_view') && !empty($view->result[0])) {
       _panopoly_widgets_content_item_title_rewrite($view->result[0]->nid);
     }
   }

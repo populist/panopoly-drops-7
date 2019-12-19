@@ -1,3 +1,7 @@
+Panopoly WYSIWYG 7.x-1.72, 2019-12-19
+-------------------
+- No changes since last release.
+
 Panopoly WYSIWYG 7.x-1.71, 2019-11-19
 -------------------
 - No changes since last release.

@@ -1,3 +1,10 @@
+Panopoly Magic 7.x-1.72, 2019-12-19
+-------------------
+- PHP notice when panes have no titles.
+- Notice: Only variables should be passed by reference in
+  panopoly_magic_form_ctools_entity_field_content_type_formatter_options_alter().
+- Add Views Pane error - Undefined index: #type.
+
 Panopoly Magic 7.x-1.71, 2019-11-19
 -------------------
 - Display type setting doesn't work for overridden views displays.

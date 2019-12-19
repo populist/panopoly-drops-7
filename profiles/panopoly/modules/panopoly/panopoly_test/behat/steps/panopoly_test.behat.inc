@@ -638,6 +638,25 @@ class TestSubContext extends RawDrupalContext implements DrupalSubContextInterfa
   }
 
   /**
+   * @When I click :text link or button
+   */
+  public function iClickLinkOrButton($text) {
+    $link = $this->getSession()->getPage()->findLink($text);
+    if ($link !== NULL) {
+      $link->click();
+      return;
+    }
+
+    $button = $this->getSession()->getPage()->findButton($text);
+    if ($button !== NULL) {
+      $button->press();
+      return;
+    }
+
+    throw new \Exception(sprintf('The link or button "%s" was not found on the page %s', $text, $this->getSession()->getCurrentUrl()));
+  }
+
+  /**
    * @Then I should see :text in the :tag element in the :region region
    */
   public function assertRegionElementText($text, $tag, $region) {
@@ -783,7 +802,7 @@ class TestSubContext extends RawDrupalContext implements DrupalSubContextInterfa
     if ($div) {
       $radios = $div->find('xpath', "//input[@type='radio']");
       if ($radios) {
-        $checkedRadio = $div->find('xpath', "//input[@type='radio' and @checked='checked']/following-sibling::label[contains(text(), '$option')] ");
+        $checkedRadio = $div->find('xpath', "//input[@type='radio' and @checked='checked' and @id=(//label[contains(., '$option')]/@for)] ");
         if (!$checkedRadio) {
           throw new \Exception(sprintf('We found the radio buttons for "%s", but "%s" was not selected.', $field, $option));
         }
