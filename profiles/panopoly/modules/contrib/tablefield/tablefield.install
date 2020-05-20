@@ -414,3 +414,31 @@ function tablefield_update_7007() {
   ));
   drupal_set_message(t('Module !themeless will substitute tablefield_themeless submodule. If you are using tablefield_themeless submodule then disable it and use !themeless', array('!themeless' => $themeless)), 'status');
 }
+
+/**
+ * Move 'Header orientation' from formatter settings to default field value.
+ */
+function tablefield_update_7008() {
+  // Make sure Drupal is using the updated tablefield_field_formatter_info(),
+  // otherwise, unsetting the 'header_orientation' on the field formatter
+  // will only reset it to its default value, rather than remove it.
+  field_cache_clear();
+
+  $instances = field_info_instances();
+  foreach ($instances as $entity_type => $entities) {
+    foreach ($entities as $bundle => $fields) {
+      foreach ($fields as $field_name => $instance) {
+        $field_info = field_info_field($field_name);
+        if ($instance['display']['default']['type'] == 'tablefield_default') {
+          if (isset($instance['display']['default']['settings']['header_orientation'])) {
+            // Copy 'Header orientation' from field formatter into the
+            // fields default value.
+            $instance['default_value'][0]['tablefield']['rebuild']['header_orientation'] = $instance['display']['default']['settings']['header_orientation'];
+            unset($instance['display']['default']['settings']['header_orientation']);
+            field_update_instance($instance);
+          }
+        }
+      }
+    }
+  }
+}

@@ -242,11 +242,9 @@ class RoboFile extends RoboTasks {
   }
 
   /**
-   * Builds the top-level drupal-org.make file from the panopoly_* features.
-   *
-   * @todo This should probably use $this->taskConcat()
+   * Gets the contents for the top-level drupal-org.make file from the features.
    */
-  public function buildDrupalOrgMake() {
+  protected function getDrupalOrgMakeContents() {
     $drupal_org_make = <<<EOF
 ;
 ; GENERATED FILE - DO NOT EDIT!
@@ -261,7 +259,62 @@ EOF;
       }
     }
 
-    file_put_contents(__DIR__ . '/drupal-org.make', $drupal_org_make);
+    return $drupal_org_make;
+  }
+
+  /**
+   * Builds the top-level drupal-org.make file from the panopoly_* features.
+   */
+  public function buildDrupalOrgMake() {
+    file_put_contents(__DIR__ . '/drupal-org.make', $this->getDrupalOrgMakeContents());
+  }
+
+  /**
+   * Setup git for use by maintainers.
+   */
+  public function gitSetup() {
+    $pre_commit_script = <<<EOF
+#!/bin/bash
+
+exec ./vendor/bin/robo git:pre-commit
+EOF;
+
+    $pre_commit_filename = __DIR__ . '/.git/hooks/pre-commit';
+    file_put_contents($pre_commit_filename, $pre_commit_script);
+    chmod($pre_commit_filename, 0774);
+  }
+
+  /**
+   * Perform pre-commit checks. Intended to be run as a Git pre-commit hook.
+   */
+  public function gitPreCommit() {
+    // @todo This should really use 'git show :FILE' to get the current file from the index rather than disk
+    if (file_get_contents(__DIR__ . '/drupal-org.make') !== $this->getDrupalOrgMakeContents()) {
+      throw new \Exception("drupal-org.make contents out-of-date! Run 'robo build:drupal-org-make'");
+    }
+  }
+
+  /**
+   * Makes a diff of a single module which can be used in a child distro.
+   *
+   * @param string $module
+   *   The module to make a diff of (ex. panopoly_search)
+   * @option bool $uncommitted
+   *   Uncommitted changes
+   */
+  public function diff($module, $opts = ['uncommitted' => FALSE]) {
+    $diff_spec = '';
+    if (!$opts['uncommitted']) {
+      $diff_spec = static::PANOPOLY_DEFAULT_BRANCH . '..';
+    }
+
+    $module_path = __DIR__ . "/modules/panopoly/{$module}";
+
+    $output = $this->runProcess("git diff {$diff_spec} -- {$module_path}")->getOutput();
+    $output = preg_replace("|^diff --git a/modules/panopoly/{$module}/(.*?) b/modules/panopoly/{$module}/(.*?)$|m", 'diff --git a/\1 b/\2', $output);
+    $output = preg_replace("|^--- a/modules/panopoly/{$module}/(.*?)$|m", '--- a/\1', $output);
+    $output = preg_replace("|^\\+\\+\\+ b/modules/panopoly/{$module}/(.*?)$|m", '+++ b/\1', $output);
+    print $output;
   }
 
   /**
@@ -504,7 +557,7 @@ EOF;
 
       $collection->taskExec("patch -p1 -d {$patch_path} < {$patch_file}");
     }
-
+    
     // Remove .orig and .rej files
     $collection->taskExec("find -name \*.orig -exec rm \{\} \;");
     $collection->taskExec("find -name \*.rej -exec rm \{\} \;");

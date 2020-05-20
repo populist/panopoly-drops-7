@@ -191,6 +191,7 @@ Feature: Live preview
     Then I should see "Testing WYSIWYG preview" in the "Live preview" region
     # Try with MarkItUp
     When I select "HTML" from "Editor"
+      And I confirm the popup
       And I type "Using HTML editor" in the "edit-field-basic-text-text-und-0-value" WYSIWYG editor
       And I wait for live preview to finish
     Then I should see "Using HTML editor" in the "Live preview" region
@@ -207,6 +208,7 @@ Feature: Live preview
     Then I should see "Testing plain text" in the "Live preview" region
     # And verify that switching back to TinyMCE will still work.
     When I select "WYSIWYG" from "Editor"
+      And I confirm the popup
       And I type "Testing WYSIWYG again" in the "edit-field-basic-text-text-und-0-value" WYSIWYG editor
       And I wait for live preview to finish
     Then I should see "Testing WYSIWYG again" in the "Live preview" region

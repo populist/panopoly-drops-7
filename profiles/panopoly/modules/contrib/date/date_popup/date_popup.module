@@ -367,6 +367,9 @@ function date_popup_process_date_part(&$element) {
   $mock = NULL;
   $callback_values = date_popup_element_value_callback($element, FALSE, $mock);
   if (!isset($element['#value']['date']) && isset($callback_values['date'])) {
+    if (!is_array($element['#value'])) {
+      $element['#value'] = array();
+    }
     $element['#value']['date'] = $callback_values['date'];
   }
   $date = '';

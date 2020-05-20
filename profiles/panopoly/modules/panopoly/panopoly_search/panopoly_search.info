@@ -49,14 +49,11 @@ features[search_api_server][] = database_server
 features[search_api_server][] = solr_server
 features[variable][] = facetapi:block_cache:search_api@database_node_index
 features[variable][] = facetapi:block_cache:search_api@node_index
-features[variable][] = search_active_modules
-features[variable][] = search_api_facets_search_ids
-features[variable][] = search_cron_limit
 features[views_view][] = panopoly_database_search
 features[views_view][] = panopoly_search
 
-; Information added by Drupal.org packaging script on 2019-12-19
-version = "7.x-1.72"
+; Information added by Drupal.org packaging script on 2020-05-20
+version = "7.x-1.74"
 core = "7.x"
 project = "panopoly"
-datestamp = "1576775301"
+datestamp = "1590007069"

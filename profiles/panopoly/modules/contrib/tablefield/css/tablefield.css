@@ -40,3 +40,10 @@
 .tablefield-form-align {
   text-align: right; /* LTR */
 }
+/* Styling headers on the tablefield widget. */
+.form-tablefield.tablefield-header-orientation-horizontal input.tablefield-row-0 {
+  font-weight: bold;
+}
+.form-tablefield.tablefield-header-orientation-vertical td.col-0 input {
+  font-weight: bold;
+}

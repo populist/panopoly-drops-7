@@ -6,13 +6,9 @@ core = 7.x
 ; The WYSIWYG Module Family
 
 projects[wysiwyg][subdir] = contrib
-projects[wysiwyg][version] = 2.5
-projects[wysiwyg][patch][1489096] = http://drupal.org/files/wysiwyg-table-format.patch
-projects[wysiwyg][patch][1786732] = http://drupal.org/files/wysiwyg-arbitrary_image_paths_markitup-1786732-3.patch
-projects[wysiwyg][patch][2884691] = https://www.drupal.org/files/issues/wysiwyg-theme-css-v24-2884691-8.patch
-projects[wysiwyg][patch][2884761] = https://www.drupal.org/files/issues/wysiwyg-tinymce-css-array-2884761-5.patch
-projects[wysiwyg][patch][2890066] = https://www.drupal.org/files/issues/wysiwyg-isnode-2890066-2.patch
-projects[wysiwyg][patch][2903753] = https://www.drupal.org/files/issues/wysiwyg.tinymce_fullscreen.2903753.6.patch
+projects[wysiwyg][version] = 2.6
+projects[wysiwyg][patch][1489096] = https://www.drupal.org/files/issues/2019-11-16/wysiwyg-table-format-1489096-10.patch
+projects[wysiwyg][patch][1786732] = https://www.drupal.org/files/issues/2019-11-16/wysiwyg-arbitrary_image_paths_markitup-1786732-6.patch
 
 projects[wysiwyg_filter][version] = 1.6-rc9
 projects[wysiwyg_filter][subdir] = contrib

@@ -981,7 +981,10 @@ class SearchApiSolrConnection implements SearchApiSolrConnectionInterface {
    *   The response received from Solr.
    */
   protected function logResponse($response) {
-    $data = $response->code . ' ' . $response->status_message . "\n" . print_r($response->response, TRUE);
+    $data = $response->code . ' ' . $response->status_message;
+    if (!empty($response->response)) {
+      $data .= "\n" . print_r($response->response, TRUE);
+    }
     watchdog('search_api_solr', 'Response: <div style="white-space: pre-wrap;">@response</div>', array('@response' => $data), WATCHDOG_DEBUG);
 
     if (!empty($response->facet_counts)) {

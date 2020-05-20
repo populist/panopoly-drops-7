@@ -1,5 +1,24 @@
-Search API Solr Search 1.x, dev (xxxx-xx-xx):
----------------------------------------------
+Search API Solr Search 1.15 (2019-11-07):
+-----------------------------------------
+- #3082039 by xlin, drunken monkey: Added a hidden variable for switching the
+  Solr connection class.
+- #3074587 by michel.settembrino, drunken monkey: Fixed excerpt generation in
+  some edge cases.
+- #3059045 by tomdearden, drunken monkey: Fixed problems with multi-valued date
+  fields at search time.
+- #3048646 by drunken monkey: Fixed edge case problem when logging Solr
+  responses.
+- #2128537 by Frando, drunken monkey, Ronino, g089h515r806, jmdeleon: Added
+  support for facet queries.
+- #3012216 by drunken monkey: Fixed excerpts for multi-index search views.
+- #3013932 by drunken monkey, RajeevChoudhary: Fixed error with unset query
+  fields.
+- #3006424 by drunken monkey: Fixed problem when retrieving multi-valued date
+  fields.
+
+Search API Solr Search 1.14 (2018-10-10):
+-----------------------------------------
+- Security issue: Fixed possible information disclosure in generated excerpts.
 - #3003819 by mandclu, drunken monkey: Added support for indexing nested
   documents.
 

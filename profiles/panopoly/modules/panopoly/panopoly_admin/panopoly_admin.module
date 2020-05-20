@@ -312,7 +312,7 @@ function panopoly_admin_pathauto_submit($form, &$form_state) {
  * Validate function for adding menu validation
  */
 function panopoly_admin_menu_validate($form, &$form_state) {
-  if ($form_state['input']['menu']['enabled'] && !$form_state['input']['menu']['link_title']) {
+  if (!empty($form_state['input']['menu']['enabled']) && empty($form_state['input']['menu']['link_title'])) {
     form_set_error('link_title', t('Menu link title is required.'));
   }
 }

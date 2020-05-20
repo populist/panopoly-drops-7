@@ -1,3 +1,16 @@
+Panopoly Widgets 7.x-1.74, 2020-05-20
+-------------------
+- File widget doesn't seem to switch to Media browser in update tests.
+- Fix Features overridden after tablefield patch from #3130749.
+- Update Panopoly Widgets with latest version of Media (media-7.x-2.26).
+- Update Panopoly Widgets with latest version of TableField
+  (tablefield-7.x-3.6).
+- Fieldable Panels Panes fields missing from UI.
+- Patch Tablefield for header row orientation per widget.
+- Modifying content of reusable widgets doesn't actually save when first
+  adding the widget.
+- Update Media modules in Panopoly Widgets.
+
 Panopoly Widgets 7.x-1.72, 2019-12-19
 -------------------
 - Switch File widget to use Media Browser.

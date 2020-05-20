@@ -1,3 +1,13 @@
+Panopoly Core 7.x-1.74, 2020-05-20
+-------------------
+- Update Panopoly Core with latest version of Views (views-7.x-3.24).
+- Fix fatal error in Date with PHP 7.1+.
+- Prevent PHP notice (Undefined index: title in link_field_load()) during
+  live preview of Image widgets.
+- Update Link to version 1.7.
+- Update Panopoly Core with latest version of Views (views-7.x-3.23).
+- Update Panopoly Core with latest version of Views (views-7.x-3.23).
+
 Panopoly Core 7.x-1.72, 2019-12-19
 -------------------
 - No changes since last release.

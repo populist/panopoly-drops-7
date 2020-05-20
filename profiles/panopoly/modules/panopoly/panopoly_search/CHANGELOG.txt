@@ -1,3 +1,8 @@
+Panopoly Search 7.x-1.74, 2020-05-20
+-------------------
+- Moving (some?) panopoly_search variables out of strongarm.
+- Update Facet API and Search API Solr.
+
 Panopoly Search 7.x-1.72, 2019-12-19
 -------------------
 - No changes since last release.

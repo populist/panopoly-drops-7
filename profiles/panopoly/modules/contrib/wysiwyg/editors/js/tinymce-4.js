@@ -7,14 +7,13 @@
  */
 Drupal.wysiwyg.editor.init.tinymce = function (settings, pluginInfo) {
   // Fix Drupal toolbar obscuring editor toolbar in fullscreen mode.
-  var $drupalToolbars = $('#toolbar, #admin-menu', Drupal.overlayChild ? window.parent.document : document);
   tinymce.on('AddEditor', function (e) {
     e.editor.on('FullscreenStateChanged', function (e) {
       if (e.state) {
-        $drupalToolbars.hide();
+        Drupal.wysiwyg.utilities.onFullscreenEnter();
       }
       else {
-        $drupalToolbars.show();
+        Drupal.wysiwyg.utilities.onFullscreenExit();
       }
     });
   });
@@ -68,10 +67,14 @@ Drupal.wysiwyg.editor.attach.tinymce = function (context, params, settings) {
   // Attach editor.
   settings.selector = '#' + params.field;
   var oldSetup = settings.setup;
+  var wysiwygInstance = this;
   settings.setup = function (editor) {
     editor._drupalWysiwygInstance = wysiwygInstance;
     editor.on('focus', function (e) {
       Drupal.wysiwyg.activeId = this.id;
+    });
+    editor.on('change', function () {
+      wysiwygInstance.contentsChanged();
     });
     if (oldSetup) {
       oldSetup(editor);

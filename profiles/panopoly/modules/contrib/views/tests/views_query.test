@@ -152,6 +152,23 @@ abstract class ViewsTestCase extends DrupalWebTestCase {
     $this->drupalLogin($account);
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  protected function verbose($message, $title = NULL) {
+    // Handle arrays, objects, etc.
+    if (!is_string($message)) {
+      $message = "<pre>\n" . print_r($message, TRUE) . "\n</pre>\n";
+    }
+
+    // Optional title to go before the output.
+    if (!empty($title)) {
+      $title = '<h2>' . check_plain($title) . "</h2>\n";
+    }
+
+    parent::verbose($title . $message);
+  }
+
 }
 
 /**
@@ -162,8 +179,10 @@ abstract class ViewsSqlTest extends ViewsTestCase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
-    parent::setUp('views', 'views_ui');
+  public function setUp(array $modules = array()) {
+    $modules[] = 'views';
+    $modules[] = 'views_ui';
+    parent::setUp($modules);
 
     // Define the schema and views data variable before enabling the test
     // module.

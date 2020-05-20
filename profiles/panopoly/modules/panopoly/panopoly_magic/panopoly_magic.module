@@ -661,6 +661,10 @@ function _panopoly_magic_process_field_collection_fields($entity_type, $bundle, 
 
         // Stash it for later use.
         $field_collection_fields[$field_name][$langcode][] = array(
+          // Use 'field_collection' for field_collection 7.x-1.0 or later.
+          // @see https://www.drupal.org/project/field_collection/issues/3111102
+          'field_collection' => $field_collection_item,
+          // Use 'entity' for all earlier versions.
           'entity' => $field_collection_item,
         );
       }

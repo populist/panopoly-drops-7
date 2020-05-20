@@ -1,3 +1,8 @@
+Panopoly Magic 7.x-1.74, 2020-05-20
+-------------------
+- Panopoly_magic doesn't render previews for field_collection's with
+  field_collection 7.x-1.1.
+
 Panopoly Magic 7.x-1.72, 2019-12-19
 -------------------
 - PHP notice when panes have no titles.

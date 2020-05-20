@@ -33,11 +33,12 @@ projects[fape][subdir] = contrib
 
 ; Views Magic
 
-projects[views][version] = 3.22
+projects[views][version] = 3.24
 projects[views][subdir] = contrib
 projects[views][patch][2037469] = https://www.drupal.org/files/issues/views-exposed-sorts-2037469-26.patch
-projects[views][patch][2885660] = https://www.drupal.org/files/issues/2018-06-28/2885660-13.patch
-projects[views][patch][2977851] = https://www.drupal.org/files/issues/2019-03-13/2977851-views-php72-count-8.patch
+projects[views][patch][2977851] = https://www.drupal.org/files/issues/2019-09-23/2977851-views-php72-count-14_0.patch
+projects[views][patch][2284423] = https://www.drupal.org/files/issues/2019-04-29/views-same_sort_twice-2284423-3.patch
+projects[views][patch][3076826] = https://www.drupal.org/files/issues/2019-08-23/views-php7-3076826-2.patch
 
 projects[views_autocomplete_filters][version] = 1.2
 projects[views_autocomplete_filters][subdir] = contrib
@@ -69,6 +70,11 @@ projects[transliteration][subdir] = contrib
 
 projects[date][version] = 2.10
 projects[date][subdir] = contrib
+projects[date][patch][2449261] = https://www.drupal.org/files/issues/2018-08-30/date-cannot_create_references_to_from_string_offsets-2449261-14.patch
+projects[date][patch][2889759] = https://www.drupal.org/files/issues/date-php7Offset-2889759-1.patch
+projects[date][patch][2995679] = https://www.drupal.org/files/issues/2018-08-28/date-array_conversion-2995679-2-D7.patch
+projects[date][patch][2843367-1] = https://www.drupal.org/files/issues/2019-01-16/2843367-php71-string-offset-47.patch
+projects[date][patch][2843367-2] = https://www.drupal.org/files/issues/2843367-php71-string-offset-26.patch
 
 projects[entityreference][version] = 1.5
 projects[entityreference][subdir] = contrib
@@ -76,9 +82,10 @@ projects[entityreference][subdir] = contrib
 projects[field_group][version] = 1.6
 projects[field_group][subdir] = contrib
 
-projects[link][version] = 1.6
+projects[link][version] = 1.7
 projects[link][subdir] = contrib
-projects[link][patch][2666912] = https://www.drupal.org/files/issues/2019-01-24/link-revert_url_validation-2666912-7.x-1.5.patch
+projects[link][patch][2666912] = https://www.drupal.org/files/issues/2019-11-18/link-revert-url-validation-2666912-54.patch
+projects[link][patch][3120382] = https://www.drupal.org/files/issues/2020-03-17/link-panopoly-magic-notice-3120382-2.patch
 
 ; Harness the Power of Features and Apps with Default Content
 

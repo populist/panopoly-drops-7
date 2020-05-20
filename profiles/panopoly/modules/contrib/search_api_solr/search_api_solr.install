@@ -65,6 +65,7 @@ function search_api_solr_uninstall() {
   variable_del('search_api_solr_http_get_max_length');
   variable_del('search_api_solr_cron_action');
   variable_del('search_api_solr_site_hash');
+  variable_del('search_api_solr_connection_class');
 }
 
 /**

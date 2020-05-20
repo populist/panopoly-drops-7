@@ -101,8 +101,11 @@ class views_handler_area_result extends views_handler_area {
       $replacements["@$item"] = ${$item};
     }
     // Send the output.
-    if (!empty($total)) {
-      $output .= filter_xss_admin(str_replace(array_keys($replacements), array_values($replacements), $format));
+    if (!empty($total) || !empty($this->options['empty'])) {
+      // We don't want to sanitize with filter_xss_admin() here because Views
+      // administrators are trusted users and should be allowed to insert
+      // arbitrary markup.
+      $output .= str_replace(array_keys($replacements), array_values($replacements), $format);
     }
     return $output;
   }

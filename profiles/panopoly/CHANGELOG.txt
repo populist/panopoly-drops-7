@@ -1,3 +1,48 @@
+Panopoly 7.x-1.74, 2020-05-20
+-------------------
+- Merge tag '7.x-1.73' into 7.x-1.x.
+- Update to Drupal 7.70 for SA-CORE-2020-002 and SA-CORE-2020-003.
+- File widget doesn't seem to switch to Media browser in update tests.
+- Modernize the set of PHP versions used in the tests.
+- Drop support for updating from Panopoly version that were release more
+  than a year ago.
+- Fix Features overridden after tablefield patch from #3130749.
+- Update Panopoly Widgets with latest version of Media (media-7.x-2.26).
+- Update Panopoly Widgets with latest version of TableField
+  (tablefield-7.x-3.6).
+- Update Panopoly Core with latest version of Views (views-7.x-3.24).
+- Fix fatal error in Date with PHP 7.1+.
+- Panopoly_magic doesn't render previews for field_collection's with
+  field_collection 7.x-1.1.
+- Fieldable Panels Panes fields missing from UI.
+- Moving (some?) panopoly_search variables out of strongarm.
+- Patch Tablefield for header row orientation per widget.
+- Prevent PHP notice (Undefined index: title in link_field_load()) during
+  live preview of Image widgets.
+- Modifying content of reusable widgets doesn't actually save when first
+  adding the widget.
+- Update WYSIWYG to version 2.6.
+- Add a 'robo git:pre-commit' to ensure we run 'robo build:drupal-org-make'
+  before committing.
+- Revert "Issue #3094890 by cboyden: Update WYSIWYG to version 2.6".
+- Forgot to run 'robo build:drupal-org-make' before last two commits!.
+- Update Media modules in Panopoly Widgets.
+- Update WYSIWYG to version 2.6.
+- Update Link to version 1.7.
+- Add 'robo diff --uncommitted' for making patches from local changes.
+- Fix undefined index in panopoly_admin_menu_validate.
+- Add Robo command to easily make single module patches for Drupal.org.
+- Forgot to run 'robo build:drupal-org-make' after the latest .make file
+  updates.
+- Update Panopoly Core with latest version of Views (views-7.x-3.23).
+- Update Facet API and Search API Solr.
+- Update Panopoly Core with latest version of Views (views-7.x-3.23).
+- Start testing upgrades from the 1.72 release.
+
+Panopoly 7.x-1.73, 2020-05-20
+-------------------
+- Issue #3138388: Update to Drupal 7.70 for SA-CORE-2020-002 and SA-CORE-2020-003
+
 Panopoly 7.x-1.72, 2019-12-19
 -------------------
 - Issue #3102147: Update to Drupal 7.69 for SA-CORE-2019-012.

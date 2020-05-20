@@ -12,6 +12,7 @@ use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Drupal\DrupalExtension\Hook\Scope\AfterUserCreateScope;
 use Behat\Testwork\Tester\Result\TestResult;
 use Behat\Mink\Exception\UnsupportedDriverActionException;
+use WebDriver\Exception\NoAlertOpenError;
 
 class TestSubContext extends RawDrupalContext implements DrupalSubContextInterface {
 
@@ -970,6 +971,36 @@ class TestSubContext extends RawDrupalContext implements DrupalSubContextInterfa
     }
 
     throw new \Exception(sprintf("Cannot find link with text '%s' and index %d", $link, $count));
+  }
+
+  /**
+   * @When (I )confirm the popup
+   */
+  public function iConfirmPopup() {
+    for ($i = 0; $i < 5; $i++) {
+      try {
+        $this->getSession()->getDriver()->getWebDriverSession()->accept_alert();
+        break;
+      }
+      catch (NoAlertOpenError $e) {
+        sleep(1);
+      }
+    }
+  }
+
+  /**
+   * @When (I )cancel the popup
+   */
+  public function iCancelPopup() {
+    for ($i = 0; $i < 5; $i++) {
+      try {
+        $this->getSession()->getDriver()->getWebDriverSession()->dismiss_alert();
+        break;
+      }
+      catch (NoAlertOpenError $e) {
+        sleep(1);
+      }
+    }
   }
 
 }

@@ -507,14 +507,15 @@ class SearchApiSolrService extends SearchApiAbstractService {
    */
   protected function connect() {
     if (!$this->solr) {
-      if (!class_exists($this->connection_class)) {
-        throw new SearchApiException(t('Invalid class @class set as Solr connection class.', array('@class' => $this->connection_class)));
+      $connection_class = $this->getConnectionClass();
+      if (!class_exists($connection_class)) {
+        throw new SearchApiException(t('Invalid class @class set as Solr connection class.', array('@class' => $connection_class)));
       }
       $options = $this->options + array('server' => $this->server->machine_name);
-      $this->solr = new $this->connection_class($options);
+      $this->solr = new $connection_class($options);
       if (!($this->solr instanceof SearchApiSolrConnectionInterface)) {
         $this->solr = NULL;
-        throw new SearchApiException(t('Invalid class @class set as Solr connection class.', array('@class' => $this->connection_class)));
+        throw new SearchApiException(t('Invalid class @class set as Solr connection class.', array('@class' => $connection_class)));
       }
     }
   }
@@ -831,7 +832,7 @@ class SearchApiSolrService extends SearchApiAbstractService {
       $query = array();
       if ($index) {
         $index_id = $this->getIndexId($index->machine_name);
-        $index_id = call_user_func(array($this->connection_class, 'phrase'), $index_id);
+        $index_id = call_user_func(array($this->getConnectionClass(), 'phrase'), $index_id);
         $query[] = "index_id:$index_id";
       }
       if (!empty($this->options['site_hash'])) {
@@ -870,7 +871,7 @@ class SearchApiSolrService extends SearchApiAbstractService {
 
     // Set searched fields.
     $options = $query->getOptions();
-    $search_fields = $query->getFields();
+    $search_fields = $this->getQueryFields($query);
     // Get the index fields to be able to retrieve boosts.
     $index_fields = $index->getFields() + array(
       'search_api_relevance' => array('type' => 'decimal', 'indexed' => TRUE),
@@ -885,7 +886,7 @@ class SearchApiSolrService extends SearchApiAbstractService {
     // Extract filters.
     $filter = $query->getFilter();
     $fq = $this->createFilterQueries($filter, $fields, $index->options['fields']);
-    $fq[] = 'index_id:' . call_user_func(array($this->connection_class, 'phrase'), $index_id);
+    $fq[] = 'index_id:' . call_user_func(array($this->getConnectionClass(), 'phrase'), $index_id);
     if (!empty($this->options['site_hash'])) {
       // We don't need to escape the site hash, as that consists only of
       // alphanumeric characters.
@@ -947,7 +948,7 @@ class SearchApiSolrService extends SearchApiAbstractService {
       }
       $mlt_params['mlt.fl'] = implode(',', $mlt_fl);
       $id = $this->createId($index_id, $mlt['id']);
-      $id = call_user_func(array($this->connection_class, 'phrase'), $id);
+      $id = call_user_func(array($this->getConnectionClass(), 'phrase'), $id);
       $keys = 'id:' . $id;
       // In (early versions of) Solr 5, facets aren't supported with MLT.
       if ($version >= 5) {
@@ -965,7 +966,7 @@ class SearchApiSolrService extends SearchApiAbstractService {
 
         unset($radius);
         $field = $fields[$spatial['field']];
-        $escaped_field = call_user_func(array($this->connection_class, 'escapeFieldName'), $field);
+        $escaped_field = call_user_func(array($this->getConnectionClass(), 'escapeFieldName'), $field);
 
         // If proper bbox coordinates were given use them to filter.
         if (isset($spatial['bbox'])) {
@@ -1313,13 +1314,19 @@ class SearchApiSolrService extends SearchApiAbstractService {
       foreach ($fields as $search_api_property => $solr_property) {
         if (isset($doc->{$solr_property})) {
           $value = $doc->{$solr_property};
+
           // Date fields need some special treatment to become valid date values
           // (i.e., timestamps) again.
+          $first_value = $value;
+          while (is_array($first_value)) {
+            $first_value = reset($first_value);
+          }
           if (isset($field_options[$search_api_property]['type'])
               && search_api_extract_inner_type($field_options[$search_api_property]['type']) === 'date'
-              && preg_match('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/', $value)) {
+              && preg_match('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/', $first_value)) {
             $value = is_array($value) ? array_map('strtotime', $value) : strtotime($value);
           }
+
           $result['fields'][$search_api_property] = $value;
         }
       }
@@ -1348,7 +1355,7 @@ class SearchApiSolrService extends SearchApiAbstractService {
 
       $index_id = $this->getIndexId($index->machine_name);
       $solr_id = $this->createId($index_id, $result['id']);
-      $excerpt = $this->getExcerpt($response, $solr_id, $result['fields'], $fields, $query->getFields());
+      $excerpt = $this->getExcerpt($response, $solr_id, $result['fields'], $fields, $this->getQueryFields($query));
       if ($excerpt) {
         $result['excerpt'] = $excerpt;
       }
@@ -1504,71 +1511,72 @@ class SearchApiSolrService extends SearchApiAbstractService {
    *   An array of short, highlighted snippets extracted from the field value.
    */
   protected function extractHighlightingSnippets($value) {
-    $snippets = array();
     $parts = preg_split('#\[/?HIGHLIGHT\]#', $value);
-    $i = 0;
+    $num_parts = count($parts);
+    if ($num_parts < 3) {
+      return array();
+    }
+
+    $snippets = array();
+    $snippet = '';
     $combined_length = 0;
-    while (isset($parts[$i + 2])) {
-      $prefix = $parts[$i];
-      $short_prefix = FALSE;
-      $key = $parts[++$i];
-      $suffix = $parts[++$i];
-
-      // Make sure prefix and suffix are not too long.
-      $length = drupal_strlen($prefix);
-      if ($length > 30) {
-        $space = strrpos(substr($prefix, 0, -25), ' ');
-        // Fall back to just cutting at an arbitrary position, space or no.
-        if ($space === FALSE) {
-          $space = $length - 30;
-        }
-        $prefix = substr($prefix, $space + 1);
-      }
-      else {
-        $short_prefix = TRUE;
+    foreach ($parts as $i => $part) {
+      // Is this a match (even) or context (odd)?
+      if ($i % 2 === 1) {
+        $snippet .= '[HIGHLIGHT]' . $part . '[/HIGHLIGHT]';
+        continue;
       }
 
-      $length = drupal_strlen($suffix);
-      if ($length > 30) {
-        $space = strpos($suffix, ' ', 25);
+      // If there is less than 60 characters between them, we want to fuse two
+      // snippets.
+      if ($snippet && drupal_strlen($part) < 60) {
+        $snippet .= $part;
+        continue;
+      }
+
+      // Add a suffix context to the existing snippet.
+      if ($snippet) {
+        $space = strpos($part, ' ', 25);
         // Fall back to just cutting at an arbitrary position, space or no.
         if ($space === FALSE) {
           $space = 30;
         }
-        $suffix = substr($suffix, 0, $space);
-      }
+        $snippet .= ' ' . substr($part, 0, $space);
 
-      // Fuse two snippets if they are separated by less than 30 characters.
-      $previous = NULL;
-      if ($short_prefix) {
-        $previous = array_pop($snippets);
-        if ($previous) {
-          $prefix = '';
+        $combined_length += drupal_strlen($snippet);
+        $snippets[] = $this->sanitizeAndFormatExcerptSnippet($snippet);
+        $snippet = '';
+
+        // Restrict ourselves to three snippets or 300 characters.
+        if (count($snippets) >= 3 || $combined_length >= 300) {
+          break;
         }
-      }
-      $snippet = $prefix . '[HIGHLIGHT]' . $key . '[/HIGHLIGHT]' . $suffix;
 
-      // Sanitize and format the snippet.
-      $snippet = check_plain($snippet);
-      $snippet = $this->formatHighlighting($snippet);
-      // The created fragments sometimes have leading or trailing punctuation.
-      // We remove that here for all common cases, but take care not to remove
-      // < or > (so HTML tags stay valid).
-      $snippet = trim($snippet, "\00..\x2F:;=\x3F..\x40\x5B..\x60");
-
-      // Prepend the previous snippet if we're fusing.
-      if ($previous) {
-        $snippet = $previous . $snippet;
+        $part = substr($part, $space);
       }
 
-      $snippets[] = $snippet;
-      $combined_length += drupal_strlen($snippet);
-
-      // Restrict ourselves to three snippets or 300 characters.
-      if (count($snippets) >= 3 || $combined_length >= 300) {
+      // If there are no more matches, stop.
+      if ($num_parts <= $i + 1) {
         break;
       }
+
+      // Otherwise, prepare a new prefix for the next match.
+      $length = drupal_strlen($part);
+      if ($length > 30) {
+        $space = strrpos(substr($part, 0, -25), ' ');
+        // Fall back to just cutting at an arbitrary position, space or no.
+        if ($space === FALSE) {
+          $space = $length - 30;
+        }
+        $part = substr($part, $space + 1);
+      }
+      $snippet = $part;
     }
+
+    if ($snippet) {
+      $snippets[] = $this->sanitizeAndFormatExcerptSnippet($snippet);
+    }
+
     return $snippets;
   }
 
@@ -1593,91 +1601,115 @@ class SearchApiSolrService extends SearchApiAbstractService {
 
     $extract_facets = $query->getOption('search_api_facets', array());
 
+    $facet_fields = array();
+    $facet_queries = array();
     if (isset($response->facet_counts->facet_fields)) {
       $facet_fields = $response->facet_counts->facet_fields;
+    }
+    if (isset($response->facet_counts->facet_queries)) {
+      $facet_queries = $response->facet_counts->facet_queries;
+    }
 
-      // The key for the "missing" facet (empty string in the JSON). This will
-      // be either "" or "_empty_", depending on the PHP version.
-      $empty_key = key((array) json_decode('{"":5}'));
-      foreach ($extract_facets as $delta => $info) {
-        $field = $fields[$info['field']];
-        if (!empty($facet_fields->$field)) {
-          $min_count = $info['min_count'];
-          $terms = $facet_fields->$field;
-          if ($info['missing']) {
-            // We have to correctly incorporate the "missing" term ($empty_key).
-            // This will ensure that the term with the least results is dropped,
-            // if the limit would be exceeded.
-            if (isset($terms->$empty_key)) {
-              if ($terms->$empty_key < $min_count) {
-                unset($terms->$empty_key);
-              }
-              else {
-                $terms = (array) $terms;
-                arsort($terms);
-                if ($info['limit'] > 0 && count($terms) > $info['limit']) {
-                  array_pop($terms);
-                }
-              }
-            }
-          }
-          elseif (isset($terms->$empty_key)) {
-            $terms = clone $terms;
-            unset($terms->$empty_key);
-          }
-          $type = isset($index->options['fields'][$info['field']]['type']) ? search_api_extract_inner_type($index->options['fields'][$info['field']]['type']) : 'string';
-          foreach ($terms as $term => $count) {
-            if ($count >= $min_count) {
-              if ($term === $empty_key) {
-                $term = '!';
-              }
-              elseif ($type == 'boolean') {
-                if ($term == 'true') {
-                  $term = '"1"';
-                }
-                elseif ($term == 'false') {
-                  $term = '"0"';
-                }
-              }
-              elseif ($type == 'date') {
-                $term = $term ? '"' . strtotime($term) . '"' : NULL;
-              }
-              else {
+    // The key for the "missing" facet (empty string in the JSON). This will
+    // be either "" or "_empty_", depending on the PHP version.
+    $empty_key = key((array) json_decode('{"":5}'));
+    foreach ($extract_facets as $delta => $info) {
+      $field = $fields[$info['field']];
+      // Fields that have solr facet queries set need special handling.
+      if (!empty($info['solr_facet_query'])) {
+        if (!empty($facet_queries)) {
+          foreach ($facet_queries as $term => $count) {
+            // Strip a leading local param so we can correctly detect the
+            // field. E.g. "{!ex=...}" might have been set in getFacetParams()
+            // for OR facets.
+            $term = preg_replace('/^{[^}]+}/', '', $term);
+
+            if (strpos($term, $field . ':') === 0) {
+              $term = substr($term, strlen($field) + 1);
+              if (!preg_match('/^(?:[(\[][^ ]+ .*[)\]]|".*"|!)$/', $term)) {
                 $term = "\"$term\"";
               }
-              if ($term) {
-                $facets[$delta][] = array(
-                  'filter' => $term,
-                  'count' => $count,
-                );
-              }
+              $facets[$delta][] = array(
+                'filter' => $term,
+                'count' => $count,
+                'solr_facet_query' => TRUE,
+              );
             }
-          }
-          if (empty($facets[$delta])) {
-            unset($facets[$delta]);
           }
         }
       }
-
+      elseif (!empty($facet_fields->$field)) {
+        $min_count = $info['min_count'];
+        $terms = $facet_fields->$field;
+        if ($info['missing']) {
+          // We have to correctly incorporate the "missing" term ($empty_key).
+          // This will ensure that the term with the least results is dropped,
+          // if the limit would be exceeded.
+          if (isset($terms->$empty_key)) {
+            if ($terms->$empty_key < $min_count) {
+              unset($terms->$empty_key);
+            }
+            else {
+              $terms = (array) $terms;
+              arsort($terms);
+              if ($info['limit'] > 0 && count($terms) > $info['limit']) {
+                array_pop($terms);
+              }
+            }
+          }
+        }
+        elseif (isset($terms->$empty_key)) {
+          $terms = clone $terms;
+          unset($terms->$empty_key);
+        }
+        $type = isset($index->options['fields'][$info['field']]['type']) ? search_api_extract_inner_type($index->options['fields'][$info['field']]['type']) : 'string';
+        foreach ($terms as $term => $count) {
+          if ($count >= $min_count) {
+            if ($term === $empty_key) {
+              $term = '!';
+            }
+            elseif ($type == 'boolean') {
+              if ($term == 'true') {
+                $term = '"1"';
+              }
+              elseif ($term == 'false') {
+                $term = '"0"';
+              }
+            }
+            elseif ($type == 'date') {
+              $term = $term ? '"' . strtotime($term) . '"' : NULL;
+            }
+            else {
+              $term = "\"$term\"";
+            }
+            if ($term) {
+              $facets[$delta][] = array(
+                'filter' => $term,
+                'count' => $count,
+              );
+            }
+          }
+        }
+        if (empty($facets[$delta])) {
+          unset($facets[$delta]);
+        }
+      }
     }
 
-    if (isset($response->facet_counts->facet_queries)) {
-      if ($spatials = $query->getOption('search_api_location')) {
-        $queries = array();
-        foreach ($response->facet_counts->facet_queries as $key => $count) {
-          if (!preg_match('/^spatial-(.*)-(\d+(?:\.\d+)?)$/', $key, $m)) {
-            continue;
-          }
-          if (empty($extract_facets[$m[1]])) {
-            continue;
-          }
-          $facet = $extract_facets[$m[1]];
-          if ($count >= $facet['min_count']) {
-            $facets[$m[1]][] = array(
-              'filter' => "[* {$m[2]}]",
-              'count' => $count,
-            );
-          }
+    if ($facet_queries && $query->getOption('search_api_location')) {
+      foreach ($facet_queries as $key => $count) {
+        if (!preg_match('/^spatial-(.*)-(\d+(?:\.\d+)?)$/', $key, $m)) {
+          continue;
+        }
+        if (empty($extract_facets[$m[1]])) {
+          continue;
+        }
+        $facet = $extract_facets[$m[1]];
+        if ($count >= $facet['min_count']) {
+          $facets[$m[1]][] = array(
+            'filter' => "[* {$m[2]}]",
+            'count' => $count,
+          );
         }
       }
     }
@@ -1718,7 +1750,7 @@ class SearchApiSolrService extends SearchApiAbstractService {
       }
       else {
         $key = trim($key);
-        $key = call_user_func(array($this->connection_class, 'phrase'), $key);
+        $key = call_user_func(array($this->getConnectionClass(), 'phrase'), $key);
         $k[] = $key;
       }
     }
@@ -1802,7 +1834,7 @@ class SearchApiSolrService extends SearchApiAbstractService {
    * and operator.
    */
   protected function createFilterQuery($field, $value, $operator, $field_info) {
-    $field = call_user_func(array($this->connection_class, 'escapeFieldName'), $field);
+    $field = call_user_func(array($this->getConnectionClass(), 'escapeFieldName'), $field);
     // Special handling for location fields.
     if (isset($field_info['real_type']) && $field_info['real_type'] == 'location') {
       // Empty / non-empty comparison has to take place in one of the subfields
@@ -1865,9 +1897,9 @@ class SearchApiSolrService extends SearchApiAbstractService {
         $value = format_date($value, 'custom', self::SOLR_DATE_FORMAT, 'UTC');
         break;
       case 'text':
-        return '(' . call_user_func(array($this->connection_class, 'escape'), $value) . ')';
+        return '(' . call_user_func(array($this->getConnectionClass(), 'escape'), $value) . ')';
     }
-    return call_user_func(array($this->connection_class, 'phrase'), $value);
+    return call_user_func(array($this->getConnectionClass(), 'phrase'), $value);
   }
 
   /**
@@ -1890,10 +1922,29 @@ class SearchApiSolrService extends SearchApiAbstractService {
       $field = $fields[$info['field']];
       // Check for the "or" operator.
       if (isset($info['operator']) && $info['operator'] === 'or') {
-        // Remember that filters for this field should be tagged.
+        // This tag should automatically be placed on any filters created via
+        // this filter by the Facet API integration. We here use it to exclude
+        // those filters from the logic creating OR facet filters.
         $tag = 'facet:' . $info['field'];
-        // Add the facet field.
-        $facet_params['facet.field'][] = "{!ex=$tag}$field";
+
+        // Check whether Solr facet queries were set for this facet and use
+        // those.
+        if (!empty($info['solr_facet_query'])) {
+          foreach ($info['solr_facet_query'] as $expression) {
+            $facet_params['facet.query'][] = "{!ex=$tag}$field:$expression";
+          }
+        }
+        // Otherwise, add the field through a regular "facet.field" parameter.
+        else {
+          $facet_params['facet.field'][] = "{!ex=$tag}$field";
+        }
+      }
+      elseif (!empty($info['solr_facet_query'])) {
+        // No tagging and excluding like above is necessary as facets are built
+        // with all filters applied.
+        foreach ($info['solr_facet_query'] as $expression) {
+          $facet_params['facet.query'][] = "$field:$expression";
+        }
       }
       else {
         // Add the facet field.
@@ -2047,8 +2098,7 @@ class SearchApiSolrService extends SearchApiAbstractService {
     }
 
     // Set searched fields
-    $options = $query->getOptions();
-    $search_fields = $query->getFields();
+    $search_fields = $this->getQueryFields($query);
     $qf = array();
     foreach ($search_fields as $f) {
       $qf[] = $fields[$f];
@@ -2057,7 +2107,7 @@ class SearchApiSolrService extends SearchApiAbstractService {
     // Extract filters
     $fq = $this->createFilterQueries($query->getFilter(), $fields, $index->options['fields']);
     $index_id = $this->getIndexId($index->machine_name);
-    $fq[] = 'index_id:' . call_user_func(array($this->connection_class, 'phrase'), $index_id);
+    $fq[] = 'index_id:' . call_user_func(array($this->getConnectionClass(), 'phrase'), $index_id);
     if (!empty($this->options['site_hash'])) {
       // We don't need to escape the site hash, as that consists only of
       // alphanumeric characters.
@@ -2276,7 +2326,7 @@ class SearchApiSolrService extends SearchApiAbstractService {
     foreach ($query->getIndexes() as $index) {
       $index_id = $this->getIndexId($index->machine_name);
       $indexes[$index_id] = $index;
-      $index_filter[] = 'index_id:' . call_user_func(array($this->connection_class, 'phrase'), $index_id);
+      $index_filter[] = 'index_id:' . call_user_func(array($this->getConnectionClass(), 'phrase'), $index_id);
     }
     $fq[] = implode(' OR ', $index_filter);
     if (!empty($this->options['site_hash'])) {
@@ -2355,38 +2405,50 @@ class SearchApiSolrService extends SearchApiAbstractService {
     $results = array();
     $results['result count'] = $response->response->numFound;
     $results['results'] = array();
-    $tmp = array();
+    $fulltext_fields_by_index = array();
+    foreach ($search_fields as $field) {
+      list ($index_id, $field) = explode(':', $field, 2);
+      $fulltext_fields_by_index[$index_id][] = $field;
+    }
     foreach ($response->response->docs as $id => $doc) {
-      if (isset($indexes[$doc->index_id])) {
-        $index = $indexes[$doc->index_id];
+      $index_id = $doc->index_id;
+      if (isset($indexes[$index_id])) {
+        $index = $indexes[$index_id];
       }
       else {
-        $index = new SearchApiIndex(array('machine_name' => $doc->index_id));
+        $index = new SearchApiIndex(array('machine_name' => $index_id));
       }
       $fields = $this->getFieldNames($index);
       $field_options = $index->options['fields'];
       $result = array(
         'id' => NULL,
-        'index_id' => $doc->index_id,
+        'index_id' => $index_id,
         'score' => NULL,
         'fields' => array(),
       );
-      $solr_id = $this->createId($doc->index_id, $doc->item_id);
+      $solr_id = $this->createId($index_id, $doc->item_id);
       foreach ($fields as $search_api_property => $solr_property) {
         if (isset($doc->{$solr_property})) {
           $value = $doc->{$solr_property};
+
           // Date fields need some special treatment to become valid date values
           // (i.e., timestamps) again.
+          $first_value = $value;
+          while (is_array($first_value)) {
+            $first_value = reset($first_value);
+          }
           if (isset($field_options[$search_api_property]['type'])
               && search_api_extract_inner_type($field_options[$search_api_property]['type']) === 'date'
-              && preg_match('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/', $value)) {
+              && preg_match('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/', $first_value)) {
             $value = is_array($value) ? array_map('strtotime', $value) : strtotime($value);
           }
+
           $result['fields'][$search_api_property] = $value;
         }
       }
 
-      $excerpt = $this->getExcerpt($response, $solr_id, $result['fields'], $fields, $search_fields);
+      $fulltext_fields = isset($fulltext_fields_by_index[$index_id]) ? $fulltext_fields_by_index[$index_id] : array();
+      $excerpt = $this->getExcerpt($response, $solr_id, $result['fields'], $fields, $fulltext_fields);
       if ($excerpt) {
         $result['excerpt'] = $excerpt;
       }
@@ -2534,7 +2596,7 @@ class SearchApiSolrService extends SearchApiAbstractService {
    *   The name of a class which implements SearchApiSolrConnectionInterface.
    */
   public function getConnectionClass() {
-    return $this->connection_class;
+    return variable_get('search_api_solr_connection_class', $this->connection_class);
   }
 
   /**
@@ -2591,7 +2653,7 @@ class SearchApiSolrService extends SearchApiAbstractService {
   public function getFile($file = NULL) {
     $this->connect();
 
-    $file_servlet_name = constant($this->connection_class . '::FILE_SERVLET');
+    $file_servlet_name = constant($this->getConnectionClass() . '::FILE_SERVLET');
 
     $params['contentType'] = 'text/xml;charset=utf-8';
     if ($file) {
@@ -2620,6 +2682,47 @@ class SearchApiSolrService extends SearchApiAbstractService {
     // Prepend environment prefix.
     $id = variable_get('search_api_solr_index_prefix', '') . $id;
     return $id;
+  }
+
+  /**
+   * Retrieves the effective fulltext fields from the query.
+   *
+   * Automatically translates a NULL value in the query object to all fulltext
+   * fields in the search index.
+   *
+   * If a specific backend supports any "virtual" fulltext fields not listed in
+   * the index, it should override this method to add them, if appropriate.
+   *
+   * @param SearchApiQueryInterface $query
+   *   The search query.
+   *
+   * @return string[]
+   *   The fulltext fields in which to search for the search keys.
+   *
+   * @see SearchApiQueryInterface::getFields()
+   */
+  protected function getQueryFields(SearchApiQueryInterface $query) {
+    $fulltext_fields = $query->getFields();
+    $index_fields = $query->getIndex()->getFulltextFields();
+    return $fulltext_fields === NULL ? $index_fields : array_intersect($fulltext_fields, $index_fields);
+  }
+
+  /**
+   *
+   *
+   * @param $snippet
+   *
+   * @return string|string[]
+   */
+  protected function sanitizeAndFormatExcerptSnippet($snippet) {
+    // Sanitize and format the snippet.
+    $snippet = check_plain($snippet);
+    $snippet = $this->formatHighlighting($snippet);
+    // The created fragments sometimes have leading or trailing punctuation.
+    // We remove that here for all common cases, but take care not to remove
+    // < or > (so HTML tags stay valid).
+    $snippet = trim($snippet, "\00..\x2F:;=\x3F..\x40\x5B..\x60");
+    return $snippet;
   }
 
 }

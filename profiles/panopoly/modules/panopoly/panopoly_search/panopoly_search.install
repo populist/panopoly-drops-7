@@ -9,10 +9,34 @@
  * Implementation of hook_install()
  */
 function panopoly_search_install() {
-
   // Allow anonymous and authenticated users to search content
   user_role_grant_permissions(DRUPAL_ANONYMOUS_RID, array('search content'));
   user_role_grant_permissions(DRUPAL_AUTHENTICATED_RID, array('search content'));
+
+  // Set initial values for some variables. We are avoiding defaultconfig here
+  // because we don't want to add a new dependency on the 7.x-1.x branch.
+  $variables = array(
+    'search_active_modules' => array(
+      'node' => 'node',
+      'user' => 0,
+    ),
+    'search_api_facets_search_ids' => array(
+      'node_index' => array(
+        'search_api_views:panopoly_search:search_solr_results' => 'search_api_views:panopoly_search:search_solr_results',
+        'search_api_views:panopoly_search:page_1' => 'search_api_views:panopoly_search:page_1',
+      ),
+      'database_node_index' => array(
+        'search_api_views:panopoly_database_search:default' => 'search_api_views:panopoly_database_search:default',
+        'search_api_views:panopoly_database_search:panel_pane_1' => 'search_api_views:panopoly_database_search:panel_pane_1',
+        'search_api_views:panopoly_database_search:search_database_results' => 'search_api_views:panopoly_database_search:search_database_results',
+        'search_api_views:panopoly_database_search:page_1' => 'search_api_views:panopoly_database_search:page_1',
+      ),
+    ),
+    'search_cron_limit' => '10',
+  );
+  foreach ($variables as $name => $value) {
+    variable_set($name, $value);
+  }
 }
 
 /**

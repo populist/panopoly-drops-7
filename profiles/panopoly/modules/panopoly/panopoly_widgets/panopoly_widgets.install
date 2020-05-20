@@ -541,21 +541,17 @@ function panopoly_widgets_update_7024() {
 }
 
 /**
- * Switch the file widget to the Media browser widget.
+ * Replaced by panopoly_widgets_update_7026().
  */
 function panopoly_widgets_update_7025() {
-  $old_widget = array(
-    'widget' => array(
-      'active' => 1,
-      'module' => 'file',
-      'settings' => array(
-        'progress_indicator' => 'throbber',
-      ),
-      'type' => 'file_generic',
-      'weight' => 2,
-    ),
-  );
+  // This was a broken version of panopoly_widgets_update_7026() that was
+  // too brittle and didn't work in all situations.
+}
 
+/**
+ * Switch the file widget to the Media browser widget.
+ */
+function panopoly_widgets_update_7026() {
   $new_widget = array(
     'active' => 1,
     'module' => 'media',
@@ -595,10 +591,10 @@ function panopoly_widgets_update_7025() {
     'weight' => 2,
   );
 
-
   $info = field_info_instance("fieldable_panels_pane", "field_basic_file_file", "basic_file");
-  if ($info['widget'] == $old_widget) {
+  if ($info['widget']['type'] == 'file_generic') {
     $info['widget'] = $new_widget;
+    $info['widget']['weight'] = $info['widget']['weight'];
     field_update_instance($info);
   }
 }
