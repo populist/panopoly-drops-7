@@ -1,3 +1,7 @@
+Panopoly Magic 7.x-1.75, 2020-06-18
+-------------------
+- No changes since last release.
+
 Panopoly Magic 7.x-1.74, 2020-05-20
 -------------------
 - Panopoly_magic doesn't render previews for field_collection's with

@@ -1,3 +1,14 @@
+Panopoly 7.x-1.75, 2020-06-18
+-------------------
+- Update to Drupal 7.72 for SA-CORE-2020-004.
+- Update the Behat Drupal extension to 4.0.1.
+- Revert "Update the composer files for Travis".
+- Update the composer files for Travis.
+- Detect PHP notices/errors.
+- Removing 7.x-1.73 because it will fail for not having been a "complete"
+  release.
+- Start testing upgrades from 1.72 and 1.73.
+
 Panopoly 7.x-1.74, 2020-05-20
 -------------------
 - Merge tag '7.x-1.73' into 7.x-1.x.

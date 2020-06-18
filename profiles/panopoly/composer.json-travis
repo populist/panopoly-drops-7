@@ -15,7 +15,7 @@
     },
     "require-dev": {
         "consolidation/robo": "^1.4",
-        "drupal/drupal-extension": "3.2.2"
+        "drupal/drupal-extension": "4.0.1"
     },
     "replace": {
         "drupal/panopoly_core": "self.version",

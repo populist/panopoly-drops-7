@@ -3,7 +3,7 @@ imports:
 
 default:
   extensions:
-    Behat\MinkExtension:
+    Drupal\MinkExtension:
       # Set 'base_url' to the URL to view your Drupal site.
       # For example: http://mydrupalsite.com
       base_url: '@BASE_URL@'

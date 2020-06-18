@@ -14,7 +14,7 @@ Feature: Link to page on the site
   @api @javascript @panopoly_wysiwyg
   Scenario: Add a link to an internal page
     When I click the "Link to content" button in the "edit-body-und-0-value" WYSIWYG editor
-      And I fill in "edit-linkit-search" with "target"
+      And I type "target" into "edit-linkit-search" field
       And I wait 1 seconds
       And I press the "Tab" key in the "edit-linkit-search" field
     When I click "Options" in the "Linkit modal" region
