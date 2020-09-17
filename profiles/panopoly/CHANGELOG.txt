@@ -1,3 +1,8 @@
+Panopoly 7.x-1.76, 2020-09-17
+-------------------
+- Update to Drupal 7.73 for SA-CORE-2020-007.
+- Start testing upgrade from 1.75.
+
 Panopoly 7.x-1.75, 2020-06-18
 -------------------
 - Update to Drupal 7.72 for SA-CORE-2020-004.

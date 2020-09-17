@@ -1,3 +1,7 @@
+Panopoly Test 7.x-1.76, 2020-09-17
+-------------------
+- No changes since last release.
+
 Panopoly Test 7.x-1.75, 2020-06-18
 -------------------
 - Update the Behat Drupal extension to 4.0.1.

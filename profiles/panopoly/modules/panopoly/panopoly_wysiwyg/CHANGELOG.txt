@@ -1,3 +1,7 @@
+Panopoly WYSIWYG 7.x-1.76, 2020-09-17
+-------------------
+- No changes since last release.
+
 Panopoly WYSIWYG 7.x-1.75, 2020-06-18
 -------------------
 - No changes since last release.
