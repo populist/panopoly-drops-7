@@ -192,7 +192,7 @@ function ctools_component_features_export_render($component, $module, $data) {
     $export = $schema['export']['to hook code callback']($data, $module);
     $code = explode("{\n", $export);
     array_shift($code);
-    $code = explode('}', implode($code, "{\n"));
+    $code = explode('}', implode("{\n", $code));
     array_pop($code);
     $code = implode('}', $code);
   }

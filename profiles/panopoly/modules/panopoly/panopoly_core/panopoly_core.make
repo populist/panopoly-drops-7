@@ -75,12 +75,15 @@ projects[date][patch][2889759] = https://www.drupal.org/files/issues/date-php7Of
 projects[date][patch][2995679] = https://www.drupal.org/files/issues/2018-08-28/date-array_conversion-2995679-2-D7.patch
 projects[date][patch][2843367-1] = https://www.drupal.org/files/issues/2019-01-16/2843367-php71-string-offset-47.patch
 projects[date][patch][2843367-2] = https://www.drupal.org/files/issues/2843367-php71-string-offset-26.patch
+projects[date][patch][3145639] = https://www.drupal.org/files/issues/2020-06-04/date-php74-3145639-2.patch
 
 projects[entityreference][version] = 1.5
 projects[entityreference][subdir] = contrib
 
 projects[field_group][version] = 1.6
 projects[field_group][subdir] = contrib
+projects[field_group][patch][3085340] = https://www.drupal.org/files/issues/2019-10-03/3085340-2.patch
+projects[field_group][patch][3083542] = https://www.drupal.org/files/issues/2020-06-09/field_group-php-7.2-compatible-3083542-5.patch
 
 projects[link][version] = 1.7
 projects[link][subdir] = contrib
@@ -95,6 +98,8 @@ projects[apps][patch][2945929] = https://www.drupal.org/files/issues/apps-php7-c
 
 projects[features][version] = 2.11
 projects[features][subdir] = contrib
+projects[features][patch][3075578] = https://www.drupal.org/files/issues/2019-10-20/features-7.x-2.x-3075578-4-implode-arg-order.patch
+projects[features][patch][3086633] = https://www.drupal.org/files/issues/2020-03-18/features-7.x-2.11-3086633-array-offset-7.patch
 
 projects[strongarm][version] = 2.0
 projects[strongarm][subdir] = contrib
@@ -108,6 +113,7 @@ projects[defaultcontent][subdir] = contrib
 projects[defaultcontent][patch][1754428] = http://drupal.org/files/1754428-allow-node-export-alter.patch
 projects[defaultcontent][patch][1757782] = http://drupal.org/files/1757782-cannot-import-menu-hierarchy-8.patch
 projects[defaultcontent][patch][2946138] = https://www.drupal.org/files/issues/defaultcontent-php7-compat-2946138.patch
+projects[defaultcontent][patch][3172478] = https://www.drupal.org/files/issues/2020-09-22/defaultcontent-php74-implode-3172478-2.patch
 
 projects[migrate][version] = "2.11"
 projects[migrate][type] = "module"

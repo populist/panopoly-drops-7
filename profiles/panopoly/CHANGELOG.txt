@@ -1,3 +1,10 @@
+Panopoly 7.x-1.77, 2020-11-19
+-------------------
+- Update to Drupal 7.74 for SA-CORE-2020-012.
+- Fix Travis builds with composer 2.x.
+- Patch contrib modules for PHP 7.4.
+- Start testing upgrade from 1.76.
+
 Panopoly 7.x-1.76, 2020-09-17
 -------------------
 - Update to Drupal 7.73 for SA-CORE-2020-007.

@@ -164,7 +164,7 @@ function defaultcontent_cron($allow_first_content = TRUE) {
   //arrays are value copied when assigned in php - so this is safe
   $inverse = $hashes;
   foreach ($default_menu_links as $key => $default) {
-    $str = implode(array_keys($default), ',');
+    $str = implode(',', array_keys($default));
     $hash = md5($key . $str);
     $run = variable_get('defaultcontent_run_' . $hash, FALSE);
     if (!$run) {
