@@ -1,3 +1,7 @@
+Panopoly Pages 7.x-1.78, 2020-11-30
+-------------------
+- No changes since last release.
+
 Panopoly Pages 7.x-1.77, 2020-11-19
 -------------------
 - No changes since last release.
