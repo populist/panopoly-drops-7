@@ -1,3 +1,9 @@
+Panopoly 7.x-1.79, 2021-01-20
+-------------------
+- Update to Drupal 7.78 for SA-CORE-2021-001.
+- Patch media_youtube to fix failing embeds.
+- Start testing upgrade from 1.78.
+
 Panopoly 7.x-1.78, 2020-11-30
 -------------------
 - Update to Drupal 7.75 for SA-CORE-2020-013.

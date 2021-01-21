@@ -29,6 +29,7 @@ projects[media][subdir] = contrib
 
 projects[media_youtube][version] = 3.9
 projects[media_youtube][subdir] = contrib
+projects[media_youtube][patch][1572550] = https://www.drupal.org/files/issues/2020-12-15/the_youtube_video_id_is_invalid_or_the_video_was_deleted-1572550-076.patch
 
 projects[media_vimeo][version] = 2.1
 projects[media_vimeo][subdir] = contrib
