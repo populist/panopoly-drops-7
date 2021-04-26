@@ -52,8 +52,8 @@ features[variable][] = facetapi:block_cache:search_api@node_index
 features[views_view][] = panopoly_database_search
 features[views_view][] = panopoly_search
 
-; Information added by Drupal.org packaging script on 2021-01-20
-version = "7.x-1.79"
+; Information added by Drupal.org packaging script on 2021-04-26
+version = "7.x-1.80"
 core = "7.x"
 project = "panopoly"
-datestamp = "1611174008"
+datestamp = "1619462542"
