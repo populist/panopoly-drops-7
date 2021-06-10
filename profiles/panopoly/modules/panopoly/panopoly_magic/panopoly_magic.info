@@ -15,8 +15,8 @@ stylesheets[all][] = css/panopoly-modal.css
 features[features_api][] = api:2
 files[] = plugins/views/panopoly_magic_plugin_display_panel_pane.inc
 
-; Information added by Drupal.org packaging script on 2021-04-26
-version = "7.x-1.80"
+; Information added by Drupal.org packaging script on 2021-06-10
+version = "7.x-1.81"
 core = "7.x"
 project = "panopoly"
-datestamp = "1619462542"
+datestamp = "1623355787"

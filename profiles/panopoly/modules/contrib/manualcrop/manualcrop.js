@@ -22,11 +22,21 @@ ManualCrop.init = function(context) {
     });
   }
 
-  // Trigger the change event of the crop data storage fields to set all css
-  // classes for the crop lists/buttons and to update the default image
-  // so it reflects the cropped image.
   $('.manualcrop-cropdata', context).once('manualcrop-init', function() {
+    $(this).change(function () {
+      ManualCrop.selectionStored(this, $(this).attr('data-manualcrop-fid'), $(this).attr('data-manualcrop-style'));
+    });
+
+    // Trigger the change event of the crop data storage fields to set all css
+    // classes for the crop lists/buttons and to update the default image
+    // so it reflects the cropped image.
     $(this).trigger('change');
+  });
+
+  $('.manualcrop-style-select', context).once('manualcrop-init', function() {
+    $(this).change(function () {
+      ManualCrop.showCroptool($(this).attr('data-manualcrop-id'), this, $(this).attr('data-manualcrop-fid'));
+    });
   });
 
   // Blur the buttons on mousedown.
@@ -66,6 +76,16 @@ ManualCrop.init = function(context) {
       ManualCrop.init(this);
     });
   });
+
+  // Add event handler for showing the croptool.
+  $('.manualcrop-show', ManualCrop.croptool)
+    .click(function () { return false; })
+    .mousedown(function () {
+      ManualCrop.showCroptool(
+        $(this).attr('data-manualcrop-id'),
+        $(this).attr('data-manualcrop-style'),
+        $(this).attr('data-manualcrop-fid'));
+    });
 }
 
 /**
@@ -121,6 +141,24 @@ ManualCrop.showCroptool = function(identifier, style, fid) {
       ManualCrop.croptool = origContainer.clone()
         .removeAttr('id')
         .removeClass('element-hidden');
+
+      // Add event handlers.
+      $('.manualcrop-button', ManualCrop.croptool).click(function (e) { return false; });
+      $('.manualcrop-cancel', ManualCrop.croptool).mousedown(function () {
+        ManualCrop.closeCroptool(true);
+      });
+      $('.manualcrop-close', ManualCrop.croptool).mousedown(function () {
+        ManualCrop.closeCroptool();
+      });
+      $('.manualcrop-maximize', ManualCrop.croptool).mousedown(function () {
+        ManualCrop.maximizeSelection();
+      });
+      $('.manualcrop-clear', ManualCrop.croptool).mousedown(function () {
+        ManualCrop.clearSelection();
+      });
+      $('.manualcrop-reset', ManualCrop.croptool).mousedown(function () {
+        ManualCrop.resetSelection();
+      });
 
       // Get the container maximum width and height.
       if (cropType == 'overlay') {

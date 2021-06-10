@@ -8,13 +8,13 @@ core = 7.x
 projects[facetapi][version] = 1.6
 projects[facetapi][subdir] = contrib
 
-projects[search_api][version] = 1.26
+projects[search_api][version] = 1.27
 projects[search_api][subdir] = contrib
 
 projects[search_api_solr][version] = 1.15
 projects[search_api_solr][subdir] = contrib
 
-projects[search_api_db][version] = 1.7
+projects[search_api_db][version] = 1.8
 projects[search_api_db][subdir] = contrib
 
 ; Solr PHP Client Library

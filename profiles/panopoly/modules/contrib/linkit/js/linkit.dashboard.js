@@ -169,6 +169,9 @@ Drupal.linkit.profileChanger = function(context) {
   $('#linkit-profile-changer .form-radio', context).each(function() {
     var id = $(this).attr('id');
     var profile = $(this).val();
+    if (Drupal.settings.linkit.currentInstance.enabled_profiles) {
+      $(this).closest('.form-item').toggle(!!Drupal.settings.linkit.currentInstance.enabled_profiles[profile]);
+    }
     if (typeof Drupal.ajax[id] != 'undefined') {
       // @TODO: Jquery 1.5 accept success setting to be an array of functions.
       // But we have to wait for jquery to get updated in Drupal core.

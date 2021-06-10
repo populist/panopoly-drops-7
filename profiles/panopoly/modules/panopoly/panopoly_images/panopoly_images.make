@@ -7,6 +7,7 @@ core = 7.x
 
 projects[manualcrop][version] = 1.7
 projects[manualcrop][subdir] = contrib
+projects[manualcrop][patch][3177209] = https://www.drupal.org/files/issues/2020-10-23/manualcrop-csp-3177209-5.patch
 
 ; jquery.imagesLoaded library for manualcrop
 libraries[jquery.imagesloaded][download][type] = file

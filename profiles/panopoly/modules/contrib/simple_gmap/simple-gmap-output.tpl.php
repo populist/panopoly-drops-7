@@ -25,8 +25,12 @@
  * @ingroup themeable
  */
 if ($include_map) {
+  $new_map_type = 0;
+  if ($map_type == 'k') {
+    $new_map_type = 1;
+  }
 ?>
-<iframe width="<?php print $width; ?>" height="<?php print $height; ?>" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?hl=<?php print $langcode; ?>&amp;q=<?php print $url_suffix; ?>&amp;z=<?php print $zoom; ?>&amp;t=<?php print $map_type; ?>&amp;output=embed" title="<?php print $iframe_title; ?>"></iframe>
+<iframe width="<?php print $width; ?>" height="<?php print $height; ?>" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.google.com/maps/embed?origin=mfe&amp;pb=!1m4!2m1!1s<?php print $url_suffix; ?>!5e<?php print $new_map_type; ?>!6i<?php print $zoom; ?>!5m1!1s<?php print $langcode; ?>" title="<?php print $iframe_title; ?>"></iframe>
 <?php
 }
 if ($include_static_map) {
@@ -41,7 +45,7 @@ if ($include_static_map) {
 }
 if ($include_link) {
 ?>
-<p class="simple-gmap-link"><a href="https://maps.google.com/maps?q=<?php print $url_suffix; ?>&amp;hl=<?php print $langcode; ?>&amp;z=<?php print $zoom; ?>&amp;t=<?php print $map_type; ?>" target="_blank"><?php print $link_text; ?></a></p>
+<p class="simple-gmap-link"><a href="https://www.google.com/maps?q=<?php print $url_suffix; ?>&amp;hl=<?php print $langcode; ?>&amp;z=<?php print $zoom; ?>&amp;t=<?php print $map_type; ?>" target="_blank"><?php print $link_text; ?></a></p>
 <?php
 }
 if (!empty($address_text)) {

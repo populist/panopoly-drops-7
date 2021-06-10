@@ -29,7 +29,7 @@
 
 #linkit-modal .description,
 #linkit-modal a.fieldset-title {
-  color: #999;
+  color: #666;
 }
 
 #linkit-modal .form-item input,
@@ -126,7 +126,7 @@
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
-  color: #999;
+  color: #666;
   display: none;
   margin: 0;
   padding: 10px 20px;
@@ -144,7 +144,7 @@
   -webkit-border-bottom-right-radius: 3px;
   -moz-border-radius-bottomright: 3px;
   border-bottom-right-radius: 3px;
-  color: #999;
+  color: #666;
   cursor:pointer;
   float: right;
   font-size: 10px;
@@ -224,5 +224,5 @@
 }
 
 .ui-dialog.ui-front.linkit-wrapper {
-  z-index: 2000;
+  z-index: 210000;
 }

@@ -55,6 +55,8 @@
           }
           // Set profile based on the current text format of this field.
           Drupal.settings.linkit.currentInstance.profile = Drupal.settings.linkit.formats[format].profile;
+          // Set the list of enabled profiles.
+          Drupal.settings.linkit.currentInstance.enabled_profiles = Drupal.settings.linkit.formats[format].enabled_profiles;
           // Set the name of the source field.
           Drupal.settings.linkit.currentInstance.source = editor.name;
           // Set the source type.
@@ -152,6 +154,15 @@
   });
 
   /**
+   * Decode HTML entities.
+   */
+  function decodeHtmlEntities(encoded) {
+    var textarea = document.createElement('textarea');
+    textarea.innerHTML = encoded;
+    return textarea.value;
+  }
+
+  /**
    * Create or update a link element in the editor.
    */
   function insertLink(data, editor) {
@@ -163,9 +174,9 @@
 
     if (!Drupal.settings.linkit.currentInstance.selectedElement) {
       // We have not selected any link element so lets create a new one.
-      var range = selection.getRanges(1)[0];
+      var range = (selection.getType() === CKEDITOR.SELECTION_ELEMENT) ? selection.getRanges()[0] : selection.getRanges(1)[0];
       if (range.collapsed) {
-        var content = (Drupal.settings.linkit.currentInstance.linkContent) ? Drupal.settings.linkit.currentInstance.linkContent : data.path;
+        var content = (Drupal.settings.linkit.currentInstance.linkContent) ? decodeHtmlEntities(Drupal.settings.linkit.currentInstance.linkContent) : data.path;
         var text = new CKEDITOR.dom.text(content , editor.document);
         range.insertNode(text);
         range.selectNodeContents(text);

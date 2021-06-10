@@ -1,3 +1,31 @@
+Panopoly 7.x-1.81, 2021-06-10
+-------------------
+- Tests on Travis broken with warning: Invalid argument supplied for
+  foreach() - fix accidental changes to composer.json.
+- Update Link to 1.9.
+- Update Simple GMap.
+- Tests on Travis broken with warning: Invalid argument supplied for
+  foreach() - second try.
+- Drop support for updating from Panopoly version that were release more
+  than a year ago.
+- Tests on Travis broken with warning: Invalid argument supplied for
+  foreach().
+- "Content item" widget gives validation error if attempting to use a piece
+  of content with a title longer than 128 characters.
+- Multiple Spotlight widgets on the same page leads to duplicate IDs.
+- Show descriptions when adding widgets and preview mode is "Automatic" or
+  "Manual".
+- Manual Crop doesn't work with strong Content Security Policy.
+- Current page title on taxonomy term page is put before parent page title
+  in breadcrumb.
+- Update Views Bulk Operations to 3.6.
+- Update Token to 1.8.
+- Update Search API and DB.
+- Update Linkit to 3.6.
+- Update Media, YouTube, File Entity.
+- Update Features to 2.13.
+- Update Panels to 3.10 and CTools to 1.19.
+
 Panopoly 7.x-1.80, 2021-04-26
 -------------------
 - Update to Drupal 7.80 for SA-CORE-2021-002.

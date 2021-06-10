@@ -794,12 +794,44 @@ function panopoly_widgets_views_post_render(&$view) {
 }
 
 /**
+ * Implements hook_form_views_exposed_form_alter().
+ */
+function panopoly_widgets_form_views_exposed_form_alter(&$form, &$form_state) {
+  $view = $form_state['view'];
+  // We have to do this here, as well as below in the alter hook for the
+  // 'views_content_views_panes_content_type_edit_form' because that doesn't
+  // always happen early enough.
+  if ($view->name == 'panopoly_widgets_general_content' && $view->current_display == 'piece_of_content') {
+    // This needs to happen in an #after_build so that it runs after all the
+    // other processing that happens on this exposed form.
+    $form['#after_build'][] = '_panopoly_widgets_piece_of_content_after_build';
+  }
+}
+
+/**
+ * After build callback for the "Content item" widget's exposed form.
+ *
+ */
+function _panopoly_widgets_piece_of_content_after_build(&$form, &$form_state) {
+  // Disable maxlength on autocomplete field because node titles can be long,
+  // leading to a validation error, preventing the user from referencing them.
+  $form['title']['#maxlength'] = NULL;
+  return $form;
+}
+
+/**
  * Implements hook_form_FORM_ID_alter().
  */
 function panopoly_widgets_form_views_content_views_panes_content_type_edit_form_alter(&$form, &$form_state) {
   $view = $form_state['view'];
   if ($view->name == 'panopoly_widgets_general_content' && $view->current_display == 'piece_of_content') {
     $exposed =& $form['exposed'];
+
+    // Disable maxlength on autocomplete field because node titles can be long,
+    // leading to a validation error, preventing the user from referencing them.
+    // We need to do this here as well as above in the alter hook for
+    // 'views_exposed_form' because there situations where that doesn't run.
+    $exposed['filter-title']['title']['#maxlength'] = NULL;
 
     // Set required on the form rather than the View because we need to allow
     // either 'title' or 'nid' when actually rendering the View.

@@ -34,6 +34,14 @@ $plugin = array(
 function linkit_profiles_form(&$form, &$form_state) {
   $profile = $form_state['item'];
 
+  // Add the weight field.
+  $form['weight'] = array(
+    '#type' => 'weight',
+    '#title' => t('Profile weight'),
+    '#description' => t('Used when sorting profiles in a list. Heavier profiles go to the bottom of the list, lighter profiles rise to the top. The first profile in a list will be the default.'),
+    '#default_value' => isset($profile->weight) ? $profile->weight : 0,
+  );
+
   // Set data as a tree.
   $form['data'] = array(
     '#tree' => TRUE,
@@ -72,6 +80,11 @@ function linkit_profiles_form_validate(&$form, &$form_state) {
     && empty($form_state['values']['data']['insert_plugin']['plugin'])) {
     form_set_error('data][insert_plugin][plugin', t('You have to select a insert plugin for profiles used with fields.'));
   }
+
+  // If the profile type is menu, then button text is required.
+  if ($form_state['values']['profile_type'] == LINKIT_PROFILE_TYPE_MENU && empty($form_state['values']['data']['button_text'])) {
+    form_set_error('data][profile_type][button_text', t('You have to provide the button text for profiles used with menu links.'));
+  }
 }
 
 /**
@@ -88,6 +101,12 @@ function linkit_profiles_form_submit(&$form, &$form_state) {
   // Unset some variables used by "editor profiles" to make it clean.
   if ($form_state['values']['profile_type'] == LINKIT_PROFILE_TYPE_FIELD) {
     unset($form_state['values']['data']['text_formats']);
+  }
+
+  // Force raw URL plugin and method for 'menu' profiles.
+  if ($form_state['values']['profile_type'] == LINKIT_PROFILE_TYPE_MENU) {
+    $form_state['values']['data']['insert_plugin']['plugin'] = 'raw_url';
+    $form_state['values']['data']['insert_plugin']['url_method'] = LINKIT_URL_METHOD_RAW;
   }
 
   // Unset active tab state, we dont need to save this.
@@ -118,12 +137,16 @@ function _linkit_build_profile_type_form_fields(&$form, LinkitProfile $profile) 
     '#options' => array(
       LINKIT_PROFILE_TYPE_EDITOR => t('Editors'),
       LINKIT_PROFILE_TYPE_FIELD => t('Fields'),
+      LINKIT_PROFILE_TYPE_MENU => t('Menus'),
     ),
     LINKIT_PROFILE_TYPE_EDITOR => array(
       '#description' => t('This profile will be used with editors like CKeditor or TinyMCE.'),
     ),
     LINKIT_PROFILE_TYPE_FIELD => array(
       '#description' => t('This profile will be used with fields that do not have any editors.'),
+    ),
+    LINKIT_PROFILE_TYPE_MENU => array(
+      '#description' => t('This profile will be used with menu links.'),
     ),
     '#default_value' =>  isset($profile->profile_type) ? $profile->profile_type : 'editor',
     '#required' => TRUE,
@@ -150,6 +173,22 @@ function _linkit_build_profile_type_form_fields(&$form, LinkitProfile $profile) 
       ),
     ),
     '#parents' => array('data', 'text_formats'),
+  );
+
+  // Button text (for Menu type only).
+  $form['data']['profile_type']['button_text'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Button text that activates Linkit modal'),
+    '#default_value' => isset($profile->data['button_text']) ? $profile->data['button_text'] : t('Search'),
+    '#states' => array(
+      'visible' => array(
+        'input[name="profile_type"]' => array('value' => LINKIT_PROFILE_TYPE_MENU),
+      ),
+      'required' => array(
+        'input[name="profile_type"]' => array('value' => LINKIT_PROFILE_TYPE_MENU),
+      ),
+    ),
+    '#parents' => array('data', 'button_text'),
   );
 }
 

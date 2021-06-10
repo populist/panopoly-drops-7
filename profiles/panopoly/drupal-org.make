@@ -67,14 +67,12 @@ core = 7.x
 
 ; Panels and Chaos Tools Magic
 
-projects[ctools][version] = 1.15
+projects[ctools][version] = 1.19
 projects[ctools][subdir] = contrib
 projects[ctools][patch][1000146] = https://www.drupal.org/files/issues/2018-03-26/views_panes-more_link_text-1000146-28.patch
 
-projects[panels][version] = 3.9
+projects[panels][version] = 3.10
 projects[panels][subdir] = contrib
-projects[panels][patch][1570120] = https://www.drupal.org/files/issues/move-image-1570120-31.patch
-projects[panels][patch][2897658] = https://www.drupal.org/files/issues/panels-menu-block-ipe-2897658-3.patch
 
 projects[panels_breadcrumbs][version] = 2.4
 projects[panels_breadcrumbs][subdir] = contrib
@@ -108,7 +106,7 @@ projects[views_autocomplete_filters][patch][2374709] = http://www.drupal.org/fil
 projects[views_autocomplete_filters][patch][2317351] = http://www.drupal.org/files/issues/views_autocomplete_filters-content-pane-2317351-4.patch
 projects[views_autocomplete_filters][patch][2404893] = https://www.drupal.org/files/issues/2404893-grammar_correction-11.patch
 
-projects[views_bulk_operations][version] = 3.5
+projects[views_bulk_operations][version] = 3.6
 projects[views_bulk_operations][subdir] = contrib
 
 ; The Usual Suspects
@@ -116,7 +114,7 @@ projects[views_bulk_operations][subdir] = contrib
 projects[pathauto][version] = 1.3
 projects[pathauto][subdir] = contrib
 
-projects[token][version] = 1.7
+projects[token][version] = 1.8
 projects[token][subdir] = contrib
 
 projects[entity][version] = 1.9
@@ -147,10 +145,8 @@ projects[field_group][subdir] = contrib
 projects[field_group][patch][3085340] = https://www.drupal.org/files/issues/2019-10-03/3085340-2.patch
 projects[field_group][patch][3083542] = https://www.drupal.org/files/issues/2020-06-09/field_group-php-7.2-compatible-3083542-5.patch
 
-projects[link][version] = 1.7
+projects[link][version] = 1.9
 projects[link][subdir] = contrib
-projects[link][patch][2666912] = https://www.drupal.org/files/issues/2019-11-18/link-revert-url-validation-2666912-54.patch
-projects[link][patch][3120382] = https://www.drupal.org/files/issues/2020-03-17/link-panopoly-magic-notice-3120382-2.patch
 
 ; Harness the Power of Features and Apps with Default Content
 
@@ -158,10 +154,8 @@ projects[apps][version] = 1.1
 projects[apps][subdir] = contrib
 projects[apps][patch][2945929] = https://www.drupal.org/files/issues/apps-php7-compat-2945929.patch
 
-projects[features][version] = 2.11
+projects[features][version] = 2.13
 projects[features][subdir] = contrib
-projects[features][patch][3075578] = https://www.drupal.org/files/issues/2019-10-20/features-7.x-2.x-3075578-4-implode-arg-order.patch
-projects[features][patch][3086633] = https://www.drupal.org/files/issues/2020-03-18/features-7.x-2.11-3086633-array-offset-7.patch
 
 projects[strongarm][version] = 2.0
 projects[strongarm][subdir] = contrib
@@ -213,6 +207,7 @@ core = 7.x
 
 projects[manualcrop][version] = 1.7
 projects[manualcrop][subdir] = contrib
+projects[manualcrop][patch][3177209] = https://www.drupal.org/files/issues/2020-10-23/manualcrop-csp-3177209-5.patch
 
 ; jquery.imagesLoaded library for manualcrop
 libraries[jquery.imagesloaded][download][type] = file
@@ -234,13 +229,13 @@ core = 7.x
 projects[facetapi][version] = 1.6
 projects[facetapi][subdir] = contrib
 
-projects[search_api][version] = 1.26
+projects[search_api][version] = 1.27
 projects[search_api][subdir] = contrib
 
 projects[search_api_solr][version] = 1.15
 projects[search_api_solr][subdir] = contrib
 
-projects[search_api_db][version] = 1.7
+projects[search_api_db][version] = 1.8
 projects[search_api_db][subdir] = contrib
 
 ; Solr PHP Client Library
@@ -303,9 +298,9 @@ projects[tablefield][subdir] = contrib
 projects[tablefield][patch][3128030] = https://www.drupal.org/files/issues/2020-04-22/tablefield-header-orientation-3128030-5.patch
 projects[tablefield][patch][3137640] = https://www.drupal.org/files/issues/2020-05-18/tablefield-7008-fix-3137640-2.patch
 
-projects[simple_gmap][version] = 1.4
+projects[simple_gmap][version] = 1.5
 projects[simple_gmap][subdir] = contrib
-projects[simple_gmap][patch][2902178] = https://www.drupal.org/files/issues/simple_gmap-iframe-title-2902178-15.patch
+projects[simple_gmap][patch][2902178] = https://www.drupal.org/files/issues/2021-06-09/simple_gmap-iframe-title-2902178-19.patch
 
 ; Panopoly - Contrib - Widgets
 
@@ -314,15 +309,14 @@ projects[menu_block][subdir] = contrib
 
 ; Panopoly - Contrib - Files & Media
 
-projects[file_entity][version] = 2.27
+projects[file_entity][version] = 2.30
 projects[file_entity][subdir] = contrib
 
-projects[media][version] = 2.26
+projects[media][version] = 2.27
 projects[media][subdir] = contrib
 
-projects[media_youtube][version] = 3.9
+projects[media_youtube][version] = 3.10
 projects[media_youtube][subdir] = contrib
-projects[media_youtube][patch][1572550] = https://www.drupal.org/files/issues/2020-12-15/the_youtube_video_id_is_invalid_or_the_video_was_deleted-1572550-076.patch
 
 projects[media_vimeo][version] = 2.1
 projects[media_vimeo][subdir] = contrib
@@ -346,9 +340,8 @@ projects[wysiwyg_filter][subdir] = contrib
 
 ; The WYSIWYG Helpers
 
-projects[linkit][version] = 3.5
+projects[linkit][version] = 3.6
 projects[linkit][subdir] = contrib
-projects[linkit][patch][2651404] = https://www.drupal.org/files/issues/linkit-add-to-any-element-2651404-3.patch
 
 projects[image_resize_filter][version] = 1.16
 projects[image_resize_filter][subdir] = contrib

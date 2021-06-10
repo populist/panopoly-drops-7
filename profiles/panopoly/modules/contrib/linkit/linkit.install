@@ -50,7 +50,7 @@ function linkit_schema() {
       ),
       'admin_description' => array(
         'type' => 'text',
-        'not null' => TRUE,
+        'not null' => FALSE,
         'size' => 'medium',
         'description' => 'Administrative description for this profile.',
       ),
@@ -59,6 +59,7 @@ function linkit_schema() {
         'length' => 128,
         'not null' => TRUE,
         'description' => 'The profile type.',
+        'default' => 1,
       ),
       'data' => array(
         'type' => 'blob',
@@ -66,6 +67,12 @@ function linkit_schema() {
         'not null' => TRUE,
         'serialize' => TRUE,
         'description' => 'Serialized data containing the profile settings.',
+      ),
+      'weight' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'The profile weight to set order of profile options.',
       ),
     ),
     'primary key' => array('pid'),
@@ -258,4 +265,26 @@ function linkit_update_7303() {
       return t('A previous update may have changed the settings for the "managed file" search plugin in all your linkit profiles.');
     }
   }
+}
+
+/**
+ * Make sure admin_description can be null.
+ */
+function linkit_update_7304() {
+  $schema = drupal_get_schema_unprocessed('linkit', 'linkit_profiles');
+
+  // Admin description should allow null values as field is not required.
+  db_change_field('linkit_profiles', 'admin_description', 'admin_description', $schema['fields']['admin_description']);
+
+  // Profile type should have a default value assigned, Editor.
+  db_change_field('linkit_profiles', 'profile_type', 'profile_type', $schema['fields']['profile_type']);
+}
+
+/**
+ * Add profile 'weight' column.
+ */
+function linkit_update_7305() {
+  $schema = drupal_get_schema_unprocessed('linkit', 'linkit_profiles');
+
+  db_add_field('linkit_profiles', 'weight', $schema['fields']['weight']);
 }

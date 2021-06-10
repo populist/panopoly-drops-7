@@ -18,17 +18,29 @@
         // Set the editor object.
         Drupal.settings.linkit.currentInstance.editor = editor;
 
+        // Get the instance id.  Full screen mode is a completly separate
+        // instance of TinyMCE added to the page subsequently by the TinyMCE
+        // external library.  As such this bypasses a lot of built in Drupal
+        // functionality from modules like WYSIWYG and distributions like
+        // Panopoly.
+        // @see https://www.drupal.org/node/1125582
+        var instanceId = editor.id == 'mce_fullscreen' ? editor.getParam('fullscreen_editor_id') : editor.id;
+
         // Find the current input format of the field we're looking at. Note that we get it in the form
         // "format<formatname" instead of just "<formatname>" so we use .substring() to remove the "format".
-        if (Drupal.wysiwyg && Drupal.wysiwyg.instances[editor.id].format) {
-          var format = Drupal.wysiwyg.instances[editor.id].format.substring(6);
-        } else {
+        if (Drupal.wysiwyg && Drupal.wysiwyg.instances[instanceId] && Drupal.wysiwyg.instances[instanceId].format) {
+          var format = Drupal.wysiwyg.instances[instanceId].format.substring(6);
+        }
+        else {
           alert(Drupal.t('Could not find the Linkit profile.'));
           return;
         }
 
         // Set profile based on the current text format of this field.
         Drupal.settings.linkit.currentInstance.profile = Drupal.settings.linkit.formats[format].profile;
+
+        // Set the list of enabled profiles.
+        Drupal.settings.linkit.currentInstance.enabled_profiles = Drupal.settings.linkit.formats[format].enabled_profiles;
 
         // Set the name of the source field..
         Drupal.settings.linkit.currentInstance.source = editor.id;

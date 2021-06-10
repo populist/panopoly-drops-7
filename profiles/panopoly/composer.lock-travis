@@ -1176,38 +1176,33 @@
         },
         {
             "name": "drupal/drupal-driver",
-            "version": "v2.0.0",
+            "version": "v2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jhedstrom/DrupalDriver.git",
-                "reference": "b648a6e80f926e59146b8a67ffe33ee0d0d8d84a"
+                "reference": "a33cb7618476997e1b7330ae9225c91cbab32e1c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jhedstrom/DrupalDriver/zipball/b648a6e80f926e59146b8a67ffe33ee0d0d8d84a",
-                "reference": "b648a6e80f926e59146b8a67ffe33ee0d0d8d84a",
+                "url": "https://api.github.com/repos/jhedstrom/DrupalDriver/zipball/a33cb7618476997e1b7330ae9225c91cbab32e1c",
+                "reference": "a33cb7618476997e1b7330ae9225c91cbab32e1c",
                 "shasum": ""
             },
             "require": {
-                "drupal/core-utility": "^8.4",
+                "drupal/core-utility": "^8.4 || ^9",
                 "php": ">=5.6",
-                "symfony/dependency-injection": "~2.6|~3.0",
-                "symfony/process": "~2.5|~3.0"
+                "symfony/dependency-injection": "~2.6|~3.0|~4.4",
+                "symfony/process": "~2.5|~3.0|~4.4"
             },
             "require-dev": {
-                "drupal/coder": "~8.2.0",
+                "drupal/coder": "~8.3.0",
                 "drush-ops/behat-drush-endpoint": "*",
-                "jakub-onderka/php-parallel-lint": "^0.9.2",
+                "jakub-onderka/php-parallel-lint": "^1.0",
                 "mockery/mockery": "0.9.4",
-                "phpspec/phpspec": "~2.0 || ~4.0",
-                "phpunit/phpunit": "~4.0"
+                "phpspec/phpspec": "~2.0 || ~4.0 || ~6.1",
+                "phpunit/phpunit": "~6.0 || ~7.0"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.0.x-dev"
-                }
-            },
             "autoload": {
                 "psr-0": {
                     "Drupal\\Driver": "src/",
@@ -1231,7 +1226,11 @@
                 "test",
                 "web"
             ],
-            "time": "2019-09-27T19:33:08+00:00"
+            "support": {
+                "issues": "https://github.com/jhedstrom/DrupalDriver/issues",
+                "source": "https://github.com/jhedstrom/DrupalDriver/tree/v2.1.1"
+            },
+            "time": "2021-05-07T20:47:33+00:00"
         },
         {
             "name": "drupal/drupal-extension",
@@ -3309,5 +3308,5 @@
     "platform-overrides": {
         "php": "5.6"
     },
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.0.0"
 }

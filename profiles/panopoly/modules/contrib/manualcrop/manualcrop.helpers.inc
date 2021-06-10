@@ -443,7 +443,8 @@ function _manualcrop_add_croptool(&$element, $value, &$form_state, $fid, $js_ide
       '#attributes' => array(
         'id' => 'manualcrop-area-' . $fid . '-' . $style_name,
         'class' => array('manualcrop-cropdata'),
-        'onchange' => 'ManualCrop.selectionStored(this, ' . $fid . ', \'' . $style_name . '\');',
+        'data-manualcrop-fid' => $fid,
+        'data-manualcrop-style' => $style_name,
       ),
     );
 
@@ -473,6 +474,7 @@ function _manualcrop_add_croptool(&$element, $value, &$form_state, $fid, $js_ide
         'attributes' => array(
           'class' => array_merge(
             array(
+              'manualcrop-show',
               'manualcrop-style-thumb',
               'manualcrop-style-thumb-' . $fid,
               'manualcrop-style-thumb-' . $fid . '-' . $style_name,
@@ -481,9 +483,10 @@ function _manualcrop_add_croptool(&$element, $value, &$form_state, $fid, $js_ide
             ),
             (in_array($style_name, $required) ? array('manualcrop-style-required') : array())
           ),
-          'href' => 'javascript:void(0);',
-          'onmousedown' => "ManualCrop.showCroptool('" . $js_identifier . "', '" . $style_name . "', " . $fid . ");",
-          'onclick' => 'return false;',
+          'href' => '#',
+          'data-manualcrop-id' => $js_identifier,
+          'data-manualcrop-style' => $style_name,
+          'data-manualcrop-fid' => $fid,
         ),
       ));
     }
@@ -506,9 +509,10 @@ function _manualcrop_add_croptool(&$element, $value, &$form_state, $fid, $js_ide
       '#type' => 'button',
       '#value' => t('Crop'),
       '#attributes' => array(
-        'class' => array_merge(array('manualcrop-style-button', 'manualcrop-style-button-' . $fid), (in_array($style_name, $required) ? array('manualcrop-style-required') : array())),
-        'onmousedown' => "ManualCrop.showCroptool('" . $js_identifier . "', '" . $style_name . "', " . $fid . ");",
-        'onclick' => 'return false;',
+        'class' => array_merge(array('manualcrop-show', 'manualcrop-style-button', 'manualcrop-style-button-' . $fid), (in_array($style_name, $required) ? array('manualcrop-style-required') : array())),
+        'data-manualcrop-id' => $js_identifier,
+        'data-manualcrop-style' => $style_name,
+        'data-manualcrop-fid' => $fid,
       ),
       '#prefix' => '<div class="manualcrop-style-button-holder">',
       '#suffix' => '</div>',
@@ -528,7 +532,8 @@ function _manualcrop_add_croptool(&$element, $value, &$form_state, $fid, $js_ide
           'manualcrop-style-select',
           'manualcrop-style-select-' . $fid
         ),
-        'onchange' => "ManualCrop.showCroptool('" . $js_identifier . "', this, " . $fid . ");",
+        'data-manualcrop-id' => $js_identifier,
+        'data-manualcrop-fid' => $fid,
       ),
     ));
   }

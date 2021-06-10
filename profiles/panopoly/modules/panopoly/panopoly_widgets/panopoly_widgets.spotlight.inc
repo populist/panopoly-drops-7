@@ -440,7 +440,9 @@ function theme_panopoly_spotlight_wrapper($variables){
       $output .= '<ul style="display: none;">';
     }
     foreach ($items as $delta => $item_data) {
-      $output .= '<li>' . '<a href="#panopoly-spotlight-' . $delta . '">' . ($delta+1) . '</a></li>';
+      $slide_id = drupal_html_id('panopoly-spotlight-' . $delta);
+      $variables['element']['slides'][$delta]['#slide_id'] = $slide_id;
+      $output .= '<li>' . '<a href="#' . $slide_id . '">' . ($delta+1) . '</a></li>';
     }
     $output .= '</ul>';
 
@@ -483,11 +485,12 @@ function theme_panopoly_spotlight_view($variables) {
   $alt = $variables['element']['#items']['alt'];
   $settings = $variables['element']['#settings'];
   $delta = $variables['element']['#delta'];
+  $slide_id = isset($variables['element']['#slide_id']) ? $variables['element']['#slide_id'] : ('panopoly-spotlight-' . $delta);
 
   $image = $variables['element']['#items']['image'];
   $image_markup = theme('image_style', array('style_name' => $settings['image_style'], 'path' => $image->uri, 'alt' => $alt));
 
-  $output = '<div id="' . 'panopoly-spotlight-' . $delta . '" class="' . 'panopoly-spotlight' . '">';
+  $output = '<div id="' . $slide_id . '" class="' . 'panopoly-spotlight' . '">';
 
   if ($link) {
     $output .= l($image_markup, $link, array('html' => TRUE));

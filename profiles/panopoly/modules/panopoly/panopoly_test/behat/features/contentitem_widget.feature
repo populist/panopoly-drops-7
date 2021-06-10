@@ -84,6 +84,29 @@ Feature: Add content item
      And I should not see "Test Page 1"
 
   @api @javascript @panopoly_widgets
+  Scenario: Add content item with long title
+    Given I am logged in as a user with the "administrator" role
+      And Panopoly magic live previews are disabled
+      And "panopoly_test_page" content:
+      | title       | body      | created            | status |
+      | Very long title nunc nec posuere eros praesent malesuada ante vel nibh imperdiet volutpat aliquam tincidunt elementum sem in aliquet tellus semper ac proin | Very long body text | 01/01/2001 11:00am |      1 |
+      And I am viewing a landing page
+    When I customize this page with the Panels IPE
+      And I click "Add new pane"
+      And I click "Add content item" in the "CTools modal" region
+    Then I should see "Configure new Add content item"
+    When I select "Test Page" from "exposed[type]"
+      And I fill in the following:
+      | exposed[title] | Very long title nunc nec posuere eros praesent malesuada ante vel nibh imperdiet volutpat aliquam tincidunt elementum sem in aliquet tellus semper ac proin |
+      And I select the radio button "Content"
+      And I select the radio button "Teaser"
+      And I press "Add" in the "CTools modal" region
+      And I press "Save"
+      And I wait for the Panels IPE to deactivate
+    Then I should see "Very long title nunc nec posuere eros praesent malesuada ante vel nibh imperdiet volutpat aliquam tincidunt elementum sem in aliquet tellus semper ac proin"
+      And I should see "Very long body text"
+
+  @api @javascript @panopoly_widgets
   Scenario: Title override should work for all view modes
     Given I am logged in as a user with the "administrator" role
       And Panopoly magic live previews are disabled

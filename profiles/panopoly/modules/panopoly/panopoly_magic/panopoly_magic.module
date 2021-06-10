@@ -187,15 +187,15 @@ function panopoly_magic_configure_form($form, &$form_state) {
   );
 
   $form['panopoly_magic_pane_show_description'] = array(
-    '#title' => t('Show pane descriptions when previews are in Single mode'),
+    '#title' => t('Show pane descriptions when adding panes'),
     '#type' => 'checkbox',
     '#states' => array(
-      'visible' => array(
-        ':input[name="panopoly_magic_pane_add_preview"]' => array('value' => PANOPOLY_ADD_PREVIEW_SINGLE),
+      'invisible' => array(
+        ':input[name="panopoly_magic_pane_add_preview"]' => array('value' => PANOPOLY_ADD_PREVIEW_DISABLED),
       ),
     ),
     '#default_value' => variable_get('panopoly_magic_pane_show_description', 1),
-    '#description' => t('Do you want to show text descriptions for available panes in the Add Content dialog when previews are in Single mode?'),
+    '#description' => t('Do you want to show text descriptions for available panes in the Add Content dialog?'),
   );
 
   $form['panopoly_magic_show_panels_styles'] = array(
@@ -1890,13 +1890,11 @@ function panopoly_magic_process_panels_add_content_modal(&$vars) {
       $legend_title = !empty($title) ? $title : t('Select a widget to show its preview');
       $add_content_link = !empty($title) ? _panopoly_magic_render_add_content_link($vars, $content[$title], $title) : '';
       $preview = !empty($vars['preview_single']) ? $vars['preview_single'] : t('No Preview');
-      $description = !empty($content[$title]['description']) && variable_get('panopoly_magic_pane_show_description', 1) ? $content[$title]['description'] : '';
 
       $vars['columns'][0] = theme('panopoly_magic_preview', array(
         'title' => $legend_title,
         'add_link' => $add_content_link,
         'preview' => $preview,
-        'description' => $description,
       ));
     }
 
@@ -1923,6 +1921,7 @@ function panopoly_magic_process_panels_add_content_modal(&$vars) {
           'add_link' => $add_content_link,
           'preview' => $preview,
           'preview_subtype_name' => $content[$title]['subtype_name'],
+          'description' => $description,
         ));
       }
     }

@@ -2,6 +2,24 @@
 /**
  * @file
  * Implementation for Fields and Linkit.
+ *
+ * Linkit can be added to any eligible element.
+ * Add a #linkit array to the field, with the following key/value pairs:
+ * - "profile": A Linkit field profile.
+ * - "enable": (optional) TRUE or FALSE.
+ * - "button_text": (optional) The text on the button.
+ * - "js_settings": (only used internal).
+ *
+ * @code
+ * $form['my_field'] = array(
+ *   '#type' => 'textfield',
+ *   '#linkit' => array(
+ *    'profile' => 'my_profile',
+ *    'enable' => TRUE,
+ *    'button_text' => t('Search'),
+ *   ),
+ * );
+ * @endcode
  */
 
 /**
@@ -256,7 +274,7 @@ function linkit_field_element_after_build(array $element, array &$form_state) {
   $element['#attached']['js'][] = array(
     'type' => 'setting',
     'data' => array(
-      'linkit' => array('fields' => array($js_settings)),
+      'linkit' => array('fields' => array($element['#id'] => $js_settings)),
     ),
   );
 

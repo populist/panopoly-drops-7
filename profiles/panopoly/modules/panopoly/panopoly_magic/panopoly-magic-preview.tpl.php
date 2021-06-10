@@ -10,7 +10,7 @@
       <?php if (!empty($add_link)): ?>
         <div class="panopoly-magic-preview-title"><?php print $add_link; ?></div>
       <?php endif; ?>
-      <span class="panopoly-magic-preview-title-inner"><?php print $title; ?></span>
+      <span class="panopoly-magic-preview-title-inner"><?php print $title; ?><?php print !empty($description) ? ': ' . $description : '' ?> </span>
     </div>
     <div class="panopoly-magic-preview-inner">
       <?php print $preview; ?>

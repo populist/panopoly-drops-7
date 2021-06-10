@@ -50,6 +50,7 @@ default:
         Media web tab: '#media-tab-media_internet'
         Media upload tab: '#media-tab-upload'
         Media library tab: '#media-tab-media_default--media_browser_1'
+        Manual Crop: '.page-media-browser > .manualcrop-overlay'
         # These are the regions for responsive_bartik.
         Main menu: "#main-menu"
         Header: ".region-header"

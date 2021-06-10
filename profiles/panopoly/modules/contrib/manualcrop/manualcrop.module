@@ -635,11 +635,11 @@ function theme_manualcrop_croptool_overlay($variables) {
   $output .= '</div>';
 
   $output .= '<div class="manualcrop-buttons">';
-  $output .= '<a class="manualcrop-button manualcrop-cancel" href="javascript:void(0);" onmousedown="ManualCrop.closeCroptool(true);">' . t('Cancel') . '</a>';
-  $output .= '<a class="manualcrop-button manualcrop-maximize" href="javascript:void(0);" onmousedown="ManualCrop.maximizeSelection();">' . t('Maximize selection') . '</a>';
-  $output .= '<a class="manualcrop-button manualcrop-clear" href="javascript:void(0);" onmousedown="ManualCrop.clearSelection();">' . t('Remove selection') . '</a>';
-  $output .= '<a class="manualcrop-button manualcrop-reset" href="javascript:void(0);" onmousedown="ManualCrop.resetSelection();">' . t('Revert selection') . '</a>';
-  $output .= '<a class="manualcrop-button manualcrop-close" href="javascript:void(0);" onmousedown="ManualCrop.closeCroptool();">' . t('Save') . '</a>';
+  $output .= '<a class="manualcrop-button manualcrop-cancel" href="#">' . t('Cancel') . '</a>';
+  $output .= '<a class="manualcrop-button manualcrop-maximize" href="#">' . t('Maximize selection') . '</a>';
+  $output .= '<a class="manualcrop-button manualcrop-clear" href="#">' . t('Remove selection') . '</a>';
+  $output .= '<a class="manualcrop-button manualcrop-reset" href="#">' . t('Revert selection') . '</a>';
+  $output .= '<a class="manualcrop-button manualcrop-close" href="#">' . t('Save') . '</a>';
   $output .= '</div>';
 
   $output .= '</div>';
@@ -696,11 +696,11 @@ function theme_manualcrop_croptool_inline($variables) {
   }
 
   $output .= '<div class="manualcrop-buttons">';
-  $output .= '<input type="button" value="' . t('Save') . '" class="manualcrop-button manualcrop-close form-submit" onmousedown="ManualCrop.closeCroptool();" />';
-  $output .= '<input type="button" value="' . t('Revert selection') . '" class="manualcrop-button manualcrop-reset form-submit" onmousedown="ManualCrop.resetSelection();" />';
-  $output .= '<input type="button" value="' . t('Remove selection') . '" class="manualcrop-button manualcrop-clear form-submit" onmousedown="ManualCrop.clearSelection();" />';
-  $output .= '<input type="button" value="' . t('Maximize selection') . '" class="manualcrop-button manualcrop-maximize form-submit" onmousedown="ManualCrop.maximizeSelection();" />';
-  $output .= '<input type="button" value="' . t('Cancel') . '" class="manualcrop-button manualcrop-cancel form-submit" onmousedown="ManualCrop.closeCroptool(true);" />';
+  $output .= '<input type="button" value="' . t('Save') . '" class="manualcrop-button manualcrop-close form-submit" />';
+  $output .= '<input type="button" value="' . t('Revert selection') . '" class="manualcrop-button manualcrop-reset form-submit" />';
+  $output .= '<input type="button" value="' . t('Remove selection') . '" class="manualcrop-button manualcrop-clear form-submit" />';
+  $output .= '<input type="button" value="' . t('Maximize selection') . '" class="manualcrop-button manualcrop-maximize form-submit" />';
+  $output .= '<input type="button" value="' . t('Cancel') . '" class="manualcrop-button manualcrop-cancel form-submit" />';
   $output .= '</div>';
 
   $output .= '</div>';

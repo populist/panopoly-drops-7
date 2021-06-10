@@ -110,10 +110,15 @@ class LinkitSearchPluginFile extends LinkitSearchPluginEntity {
       case LINKIT_FILE_URL_TYPE_DIRECT:
         // Check if this is a local file.
         $wrapper = file_stream_wrapper_get_instance_by_uri($entity->uri);
-        if ($wrapper instanceof DrupalLocalStreamWrapper) {
-          // Create a relative URL to the local file.
+        if ($wrapper instanceof DrupalPublicStreamWrapper) {
+          // Create a relative URL to the public file.
           // See https://www.drupal.org/node/837794.
           $path = $wrapper->getDirectoryPath() . '/' . file_uri_target($entity->uri);
+        }
+        elseif ($wrapper instanceof DrupalPrivateStreamWrapper) {
+          // Create a relative URL to the private file.
+          // See DrupalPrivateStreamWrapper::getExternalUrl().
+          $path = 'system/files/' . str_replace('\\', '/', file_uri_target($entity->uri));
         }
         else {
           $path = file_create_url($entity->uri);

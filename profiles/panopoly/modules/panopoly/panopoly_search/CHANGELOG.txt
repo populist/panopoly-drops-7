@@ -1,3 +1,7 @@
+Panopoly Search 7.x-1.81, 2021-06-10
+-------------------
+- Update Search API and DB.
+
 Panopoly Search 7.x-1.80, 2021-04-26
 -------------------
 - No changes since last release.

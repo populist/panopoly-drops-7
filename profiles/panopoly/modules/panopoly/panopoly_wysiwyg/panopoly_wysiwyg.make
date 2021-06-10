@@ -15,9 +15,8 @@ projects[wysiwyg_filter][subdir] = contrib
 
 ; The WYSIWYG Helpers
 
-projects[linkit][version] = 3.5
+projects[linkit][version] = 3.6
 projects[linkit][subdir] = contrib
-projects[linkit][patch][2651404] = https://www.drupal.org/files/issues/linkit-add-to-any-element-2651404-3.patch
 
 projects[image_resize_filter][version] = 1.16
 projects[image_resize_filter][subdir] = contrib

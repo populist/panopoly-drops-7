@@ -230,13 +230,6 @@ function theme_panels_ipe_add_pane_button($vars) {
 }
 
 /**
- * @deprecated
- */
-function panels_ipe_get_cache_key($key = NULL) {
-  return array();
-}
-
-/**
  * Add a button to the IPE toolbar.
  */
 function panels_ipe_toolbar_add_button($cache_key, $id, $button) {
